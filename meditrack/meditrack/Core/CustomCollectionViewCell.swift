@@ -27,7 +27,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
     private func setupUI() {
         contentView.addSubviews([stackView])
         stackView.snp.makeConstraints({ make in
-            make.top.bottom.equalToSuperview()
+            make.top.bottom.equalToSuperview().inset(4)
             make.leading.trailing.equalToSuperview()
         })
         stackView.addArrangedSubviews([weekDayLabel, dateLabel])
@@ -47,12 +47,12 @@ class CustomCollectionViewCell: UICollectionViewCell {
         
         formatter.dateFormat = "dd"
         dateLabel.text = formatter.string(from: date)
-        dateLabel.font = Constants.Fonts.nunitoRegularDates
+        dateLabel.font = Constants.Fonts.nunitoRegularSubtitle
         dateLabel.textColor = isSelected ? Constants.Colors.grayBackground : Constants.Colors.grayAccent
 
         formatter.dateFormat = "EEE"
         weekDayLabel.text = formatter.string(from: date).uppercased()
-        weekDayLabel.font = Constants.Fonts.nunitoRegularDates
+        weekDayLabel.font = Constants.Fonts.nunitoRegularSubtitle
         weekDayLabel.textColor =  isSelected ? Constants.Colors.grayBackground : Constants.Colors.grayAccent
     }
 }

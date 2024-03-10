@@ -22,7 +22,7 @@
 		21F438742B9C21D9004408EF /* CustomListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438732B9C21D9004408EF /* CustomListViewModel.swift */; };
 		21F438762B9C21E3004408EF /* CustomListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438752B9C21E3004408EF /* CustomListViewController.swift */; };
 		21F438792B9C4525004408EF /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438782B9C4525004408EF /* DataService.swift */; };
-		21F4387B2B9C468D004408EF /* DrugInfoRealmData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4387A2B9C468D004408EF /* DrugInfoRealmData.swift */; };
+		21F4387B2B9C468D004408EF /* DrugInfoRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4387A2B9C468D004408EF /* DrugInfoRealm.swift */; };
 		21F4387D2B9C4843004408EF /* DrugType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4387C2B9C4843004408EF /* DrugType.swift */; };
 		21F438822B9C4A94004408EF /* FrequencyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438812B9C4A94004408EF /* FrequencyType.swift */; };
 		21F438842B9C4C1A004408EF /* DrugInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438832B9C4C1A004408EF /* DrugInfo.swift */; };
@@ -34,6 +34,8 @@
 		21F438952B9D9FAE004408EF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438942B9D9FAE004408EF /* Colors.swift */; };
 		21F438AA2B9DAA46004408EF /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438A92B9DAA46004408EF /* CustomCollectionViewCell.swift */; };
 		21F438AE2B9DC0D8004408EF /* DatesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438AD2B9DC0D8004408EF /* DatesModel.swift */; };
+		21F438B02B9DDF9D004408EF /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438AF2B9DDF9D004408EF /* CalendarTableViewCell.swift */; };
+		21F438B22B9E056C004408EF /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438B12B9E056C004408EF /* Images.swift */; };
 		682A9D2577E2031727D7AED8 /* Pods_meditrack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 478748B2D0F6E4176CDDC0EE /* Pods_meditrack.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,7 +57,7 @@
 		21F438732B9C21D9004408EF /* CustomListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomListViewModel.swift; sourceTree = "<group>"; };
 		21F438752B9C21E3004408EF /* CustomListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomListViewController.swift; sourceTree = "<group>"; };
 		21F438782B9C4525004408EF /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
-		21F4387A2B9C468D004408EF /* DrugInfoRealmData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrugInfoRealmData.swift; sourceTree = "<group>"; };
+		21F4387A2B9C468D004408EF /* DrugInfoRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrugInfoRealm.swift; sourceTree = "<group>"; };
 		21F4387C2B9C4843004408EF /* DrugType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrugType.swift; sourceTree = "<group>"; };
 		21F438812B9C4A94004408EF /* FrequencyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyType.swift; sourceTree = "<group>"; };
 		21F438832B9C4C1A004408EF /* DrugInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrugInfo.swift; sourceTree = "<group>"; };
@@ -67,6 +69,8 @@
 		21F438942B9D9FAE004408EF /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		21F438A92B9DAA46004408EF /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
 		21F438AD2B9DC0D8004408EF /* DatesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesModel.swift; sourceTree = "<group>"; };
+		21F438AF2B9DDF9D004408EF /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
+		21F438B12B9E056C004408EF /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		459A97B984E082BA75EBDFBC /* Pods-meditrack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-meditrack.debug.xcconfig"; path = "Target Support Files/Pods-meditrack/Pods-meditrack.debug.xcconfig"; sourceTree = "<group>"; };
 		478748B2D0F6E4176CDDC0EE /* Pods_meditrack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_meditrack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C809FF3CC1D144805FF1C1B5 /* Pods-meditrack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-meditrack.release.xcconfig"; path = "Target Support Files/Pods-meditrack/Pods-meditrack.release.xcconfig"; sourceTree = "<group>"; };
@@ -180,7 +184,7 @@
 			children = (
 				21F438782B9C4525004408EF /* DataService.swift */,
 				21F438872B9C4E74004408EF /* DrugInfoRepository.swift */,
-				21F4387A2B9C468D004408EF /* DrugInfoRealmData.swift */,
+				21F4387A2B9C468D004408EF /* DrugInfoRealm.swift */,
 				21F438832B9C4C1A004408EF /* DrugInfo.swift */,
 				21F438892B9C5051004408EF /* Enums */,
 			);
@@ -203,6 +207,7 @@
 				21F4388D2B9D8408004408EF /* Constants */,
 				21F4384B2B9B8C04004408EF /* Fonts */,
 				21F438A92B9DAA46004408EF /* CustomCollectionViewCell.swift */,
+				21F438AF2B9DDF9D004408EF /* CalendarTableViewCell.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -214,6 +219,7 @@
 				21F438902B9D8481004408EF /* Texts.swift */,
 				21F438922B9D867A004408EF /* Fonts.swift */,
 				21F438942B9D9FAE004408EF /* Colors.swift */,
+				21F438B12B9E056C004408EF /* Images.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -370,17 +376,19 @@
 				21F438762B9C21E3004408EF /* CustomListViewController.swift in Sources */,
 				21F438382B9B897E004408EF /* AppDelegate.swift in Sources */,
 				21F438AE2B9DC0D8004408EF /* DatesModel.swift in Sources */,
-				21F4387B2B9C468D004408EF /* DrugInfoRealmData.swift in Sources */,
+				21F4387B2B9C468D004408EF /* DrugInfoRealm.swift in Sources */,
 				21F438882B9C4E74004408EF /* DrugInfoRepository.swift in Sources */,
 				21F4383A2B9B897E004408EF /* SceneDelegate.swift in Sources */,
 				21F438822B9C4A94004408EF /* FrequencyType.swift in Sources */,
 				21F4387D2B9C4843004408EF /* DrugType.swift in Sources */,
+				21F438B22B9E056C004408EF /* Images.swift in Sources */,
 				21F438842B9C4C1A004408EF /* DrugInfo.swift in Sources */,
 				21F4388B2B9D8323004408EF /* UIKitExtensions.swift in Sources */,
 				21F438792B9C4525004408EF /* DataService.swift in Sources */,
 				21F438AA2B9DAA46004408EF /* CustomCollectionViewCell.swift in Sources */,
 				21F438912B9D8481004408EF /* Texts.swift in Sources */,
 				21F4388F2B9D845D004408EF /* Constants.swift in Sources */,
+				21F438B02B9DDF9D004408EF /* CalendarTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

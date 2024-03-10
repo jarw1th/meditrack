@@ -2,5 +2,7 @@
 extension Constants {
     enum Texts {
         static let labelRemidersMain = "Reminders"
+        
+        static let labelMedicationSub = "Medication"
     }
 }

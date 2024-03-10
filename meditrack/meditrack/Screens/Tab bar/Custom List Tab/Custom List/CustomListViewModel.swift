@@ -2,6 +2,7 @@ import Foundation
 
 protocol CustomListViewModelProtocol {
     func getItem(
+        index: Int,
         afterRowAt indexPath: IndexPath,
         completion: @escaping (String, DrugType) -> Void
     )
@@ -11,9 +12,11 @@ protocol CustomListViewModelProtocol {
         completion: @escaping () -> Void
     )
     
-    var numberOfRows: Int { get } // number of rows in table view
+    var numberOfRows: (_ index: Int) -> Int { get }// number of rows in table view
     
     var numberOfItems: Int { get } // number of items in collection view
+    
+    var todayIndex: Int { get }
     
     func getDate(
         afterRowAt indexPath: IndexPath,
@@ -33,7 +36,7 @@ final class CustomListViewModel: CustomListViewModelProtocol {
 //                            name: "Test 0",
 //                            descriptionDrug: "Null",
 //                            timeInterval: 0,
-//                            duration: 0,
+//                            duration: 3,
 //                            frequency: .daily,
 //                            drugType: .inhale,
 //                            dose: 0,
@@ -41,9 +44,10 @@ final class CustomListViewModel: CustomListViewModelProtocol {
 //        drugInfoRepository.saveDrugList([test])
     }
     
-    func getItem(afterRowAt indexPath: IndexPath, completion: @escaping (String, DrugType) -> Void) {
-        let name = drugInfoRepository.getDrugList()[indexPath.row].name
-        let drugType = drugInfoRepository.getDrugList()[indexPath.row].drugType
+    func getItem(index: Int, afterRowAt indexPath: IndexPath, completion: @escaping (String, DrugType) -> Void) {
+        let list = getItems(for: model.dates[index])
+        let name = list[indexPath.row].name
+        let drugType = list[indexPath.row].drugType
         completion(name, drugType)
     }
     
@@ -53,12 +57,16 @@ final class CustomListViewModel: CustomListViewModelProtocol {
         completion()
     }
     
-    var numberOfRows: Int {
-        return getDrugInfoList().count
-    }
+    lazy var numberOfRows: (Int) -> Int = getItemsNumber
     
     var numberOfItems: Int {
         return model.dates.count
+    }
+    
+    var todayIndex: Int {
+        let comps = Calendar.current.dateComponents([.year, .month, .day], from: Date())
+        var date = Calendar.current.date(from: comps) ?? Date()
+        return model.dates.firstIndex(of: date) ?? 0
     }
     
     func getDate(afterRowAt indexPath: IndexPath, completion: @escaping (Date) -> Void) {
@@ -82,5 +90,22 @@ final class CustomListViewModel: CustomListViewModelProtocol {
             date = cal.date(byAdding: .day, value: 1, to: date)!
         }
         return dates
+    }
+    
+    private func getItems(for day: Date) -> [DrugInfo] {
+        var list: [DrugInfo] = []
+        drugInfoRepository.getDrugList().forEach({ el in
+            let startDate = el.startDate
+            let endDate = Calendar.current.date(byAdding: .weekOfYear, value: el.duration, to: startDate) ?? Date()
+            if day.isBetween(start: startDate, end: endDate) {
+                list.append(el)
+            }
+        })
+        return list
+    }
+
+    private func getItemsNumber(_ index: Int) -> Int {
+        let rows = getItems(for: model.dates[index]).count
+        return rows
     }
 }
