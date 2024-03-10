@@ -1,20 +1,19 @@
 import Foundation
 import RealmSwift
 
-final class DataBase {
+final class DataService {
     private let storage: Realm?
     
     init(
-        _ configuration: Realm.Configuration = Realm.Configuration(
-            inMemoryIdentifier: "inMemory"
-        )
+        _ configuration: Realm.Configuration = Realm.Configuration()
     ) {
+//        print(Realm.Configuration.defaultConfiguration.fileURL!)
         self.storage = try? Realm(configuration: configuration)
     }
     
     func saveOrUpdateObject(object: Object) throws {
         guard let storage else { return }
-        storage.writeAsync {
+        try storage.write {
             storage.add(object, update: .all)
         }
     }
@@ -29,6 +28,13 @@ final class DataBase {
         guard let storage else { return }
         try storage.write {
             storage.delete(object)
+        }
+    }
+    
+    func delete(objects: [Object]) throws {
+        guard let storage else { return }
+        try objects.forEach {
+            try delete(object: $0)
         }
     }
     

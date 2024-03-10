@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		21F438382B9B897E004408EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438372B9B897E004408EF /* AppDelegate.swift */; };
 		21F4383A2B9B897E004408EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438392B9B897E004408EF /* SceneDelegate.swift */; };
-		21F4383C2B9B897E004408EF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4383B2B9B897E004408EF /* ViewController.swift */; };
 		21F438412B9B8980004408EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21F438402B9B8980004408EF /* Assets.xcassets */; };
 		21F438442B9B8980004408EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21F438422B9B8980004408EF /* LaunchScreen.storyboard */; };
 		21F4385D2B9B8C1E004408EF /* Nunito-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21F4384D2B9B8C1B004408EF /* Nunito-ExtraLight.ttf */; };
@@ -20,6 +19,21 @@
 		21F438642B9B8C1E004408EF /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21F438542B9B8C1C004408EF /* Nunito-Bold.ttf */; };
 		21F438652B9B8C1E004408EF /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21F438552B9B8C1C004408EF /* Nunito-Regular.ttf */; };
 		21F438662B9B8C1E004408EF /* Nunito-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21F438562B9B8C1C004408EF /* Nunito-SemiBold.ttf */; };
+		21F438742B9C21D9004408EF /* CustomListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438732B9C21D9004408EF /* CustomListViewModel.swift */; };
+		21F438762B9C21E3004408EF /* CustomListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438752B9C21E3004408EF /* CustomListViewController.swift */; };
+		21F438792B9C4525004408EF /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438782B9C4525004408EF /* DataService.swift */; };
+		21F4387B2B9C468D004408EF /* DrugInfoRealmData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4387A2B9C468D004408EF /* DrugInfoRealmData.swift */; };
+		21F4387D2B9C4843004408EF /* DrugType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4387C2B9C4843004408EF /* DrugType.swift */; };
+		21F438822B9C4A94004408EF /* FrequencyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438812B9C4A94004408EF /* FrequencyType.swift */; };
+		21F438842B9C4C1A004408EF /* DrugInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438832B9C4C1A004408EF /* DrugInfo.swift */; };
+		21F438882B9C4E74004408EF /* DrugInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438872B9C4E74004408EF /* DrugInfoRepository.swift */; };
+		21F4388B2B9D8323004408EF /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4388A2B9D8323004408EF /* UIKitExtensions.swift */; };
+		21F4388F2B9D845D004408EF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4388E2B9D845D004408EF /* Constants.swift */; };
+		21F438912B9D8481004408EF /* Texts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438902B9D8481004408EF /* Texts.swift */; };
+		21F438932B9D867A004408EF /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438922B9D867A004408EF /* Fonts.swift */; };
+		21F438952B9D9FAE004408EF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438942B9D9FAE004408EF /* Colors.swift */; };
+		21F438AA2B9DAA46004408EF /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438A92B9DAA46004408EF /* CustomCollectionViewCell.swift */; };
+		21F438AE2B9DC0D8004408EF /* DatesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438AD2B9DC0D8004408EF /* DatesModel.swift */; };
 		682A9D2577E2031727D7AED8 /* Pods_meditrack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 478748B2D0F6E4176CDDC0EE /* Pods_meditrack.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,7 +41,6 @@
 		21F438342B9B897E004408EF /* meditrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = meditrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21F438372B9B897E004408EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21F438392B9B897E004408EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		21F4383B2B9B897E004408EF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		21F438402B9B8980004408EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		21F438432B9B8980004408EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		21F438452B9B8980004408EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -39,6 +52,21 @@
 		21F438542B9B8C1C004408EF /* Nunito-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Bold.ttf"; sourceTree = "<group>"; };
 		21F438552B9B8C1C004408EF /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
 		21F438562B9B8C1C004408EF /* Nunito-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-SemiBold.ttf"; sourceTree = "<group>"; };
+		21F438732B9C21D9004408EF /* CustomListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomListViewModel.swift; sourceTree = "<group>"; };
+		21F438752B9C21E3004408EF /* CustomListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomListViewController.swift; sourceTree = "<group>"; };
+		21F438782B9C4525004408EF /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		21F4387A2B9C468D004408EF /* DrugInfoRealmData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrugInfoRealmData.swift; sourceTree = "<group>"; };
+		21F4387C2B9C4843004408EF /* DrugType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrugType.swift; sourceTree = "<group>"; };
+		21F438812B9C4A94004408EF /* FrequencyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyType.swift; sourceTree = "<group>"; };
+		21F438832B9C4C1A004408EF /* DrugInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrugInfo.swift; sourceTree = "<group>"; };
+		21F438872B9C4E74004408EF /* DrugInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrugInfoRepository.swift; sourceTree = "<group>"; };
+		21F4388A2B9D8323004408EF /* UIKitExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitExtensions.swift; sourceTree = "<group>"; };
+		21F4388E2B9D845D004408EF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		21F438902B9D8481004408EF /* Texts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texts.swift; sourceTree = "<group>"; };
+		21F438922B9D867A004408EF /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		21F438942B9D9FAE004408EF /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		21F438A92B9DAA46004408EF /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
+		21F438AD2B9DC0D8004408EF /* DatesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesModel.swift; sourceTree = "<group>"; };
 		459A97B984E082BA75EBDFBC /* Pods-meditrack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-meditrack.debug.xcconfig"; path = "Target Support Files/Pods-meditrack/Pods-meditrack.debug.xcconfig"; sourceTree = "<group>"; };
 		478748B2D0F6E4176CDDC0EE /* Pods_meditrack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_meditrack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C809FF3CC1D144805FF1C1B5 /* Pods-meditrack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-meditrack.release.xcconfig"; path = "Target Support Files/Pods-meditrack/Pods-meditrack.release.xcconfig"; sourceTree = "<group>"; };
@@ -77,11 +105,10 @@
 		21F438362B9B897E004408EF /* meditrack */ = {
 			isa = PBXGroup;
 			children = (
-				21F438372B9B897E004408EF /* AppDelegate.swift */,
-				21F4384B2B9B8C04004408EF /* Fonts */,
-				21F438392B9B897E004408EF /* SceneDelegate.swift */,
-				21F4383B2B9B897E004408EF /* ViewController.swift */,
-				21F438402B9B8980004408EF /* Assets.xcassets */,
+				21F4388C2B9D83FA004408EF /* Core */,
+				21F438772B9C4501004408EF /* Data */,
+				21F4386C2B9C2148004408EF /* System */,
+				21F4386D2B9C215E004408EF /* Screens */,
 				21F438422B9B8980004408EF /* LaunchScreen.storyboard */,
 				21F438452B9B8980004408EF /* Info.plist */,
 			);
@@ -101,6 +128,101 @@
 				21F438562B9B8C1C004408EF /* Nunito-SemiBold.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		21F4386C2B9C2148004408EF /* System */ = {
+			isa = PBXGroup;
+			children = (
+				21F438392B9B897E004408EF /* SceneDelegate.swift */,
+				21F4388A2B9D8323004408EF /* UIKitExtensions.swift */,
+				21F438372B9B897E004408EF /* AppDelegate.swift */,
+				21F438402B9B8980004408EF /* Assets.xcassets */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		21F4386D2B9C215E004408EF /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				21F4386E2B9C2183004408EF /* Tab bar */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		21F4386E2B9C2183004408EF /* Tab bar */ = {
+			isa = PBXGroup;
+			children = (
+				21F4386F2B9C21AA004408EF /* Custom List Tab */,
+			);
+			path = "Tab bar";
+			sourceTree = "<group>";
+		};
+		21F4386F2B9C21AA004408EF /* Custom List Tab */ = {
+			isa = PBXGroup;
+			children = (
+				21F438702B9C21B7004408EF /* Custom List */,
+			);
+			path = "Custom List Tab";
+			sourceTree = "<group>";
+		};
+		21F438702B9C21B7004408EF /* Custom List */ = {
+			isa = PBXGroup;
+			children = (
+				21F438AD2B9DC0D8004408EF /* DatesModel.swift */,
+				21F438732B9C21D9004408EF /* CustomListViewModel.swift */,
+				21F438752B9C21E3004408EF /* CustomListViewController.swift */,
+			);
+			path = "Custom List";
+			sourceTree = "<group>";
+		};
+		21F438772B9C4501004408EF /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				21F438782B9C4525004408EF /* DataService.swift */,
+				21F438872B9C4E74004408EF /* DrugInfoRepository.swift */,
+				21F4387A2B9C468D004408EF /* DrugInfoRealmData.swift */,
+				21F438832B9C4C1A004408EF /* DrugInfo.swift */,
+				21F438892B9C5051004408EF /* Enums */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		21F438892B9C5051004408EF /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				21F4387C2B9C4843004408EF /* DrugType.swift */,
+				21F438812B9C4A94004408EF /* FrequencyType.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		21F4388C2B9D83FA004408EF /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				21F438962B9DA2B5004408EF /* Customs */,
+				21F4388D2B9D8408004408EF /* Constants */,
+				21F4384B2B9B8C04004408EF /* Fonts */,
+				21F438A92B9DAA46004408EF /* CustomCollectionViewCell.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		21F4388D2B9D8408004408EF /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				21F4388E2B9D845D004408EF /* Constants.swift */,
+				21F438902B9D8481004408EF /* Texts.swift */,
+				21F438922B9D867A004408EF /* Fonts.swift */,
+				21F438942B9D9FAE004408EF /* Colors.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		21F438962B9DA2B5004408EF /* Customs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Customs;
 			sourceTree = "<group>";
 		};
 		D5B20F8D61A5DDABDA953027 /* Pods */ = {
@@ -242,9 +364,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21F4383C2B9B897E004408EF /* ViewController.swift in Sources */,
+				21F438932B9D867A004408EF /* Fonts.swift in Sources */,
+				21F438952B9D9FAE004408EF /* Colors.swift in Sources */,
+				21F438742B9C21D9004408EF /* CustomListViewModel.swift in Sources */,
+				21F438762B9C21E3004408EF /* CustomListViewController.swift in Sources */,
 				21F438382B9B897E004408EF /* AppDelegate.swift in Sources */,
+				21F438AE2B9DC0D8004408EF /* DatesModel.swift in Sources */,
+				21F4387B2B9C468D004408EF /* DrugInfoRealmData.swift in Sources */,
+				21F438882B9C4E74004408EF /* DrugInfoRepository.swift in Sources */,
 				21F4383A2B9B897E004408EF /* SceneDelegate.swift in Sources */,
+				21F438822B9C4A94004408EF /* FrequencyType.swift in Sources */,
+				21F4387D2B9C4843004408EF /* DrugType.swift in Sources */,
+				21F438842B9C4C1A004408EF /* DrugInfo.swift in Sources */,
+				21F4388B2B9D8323004408EF /* UIKitExtensions.swift in Sources */,
+				21F438792B9C4525004408EF /* DataService.swift in Sources */,
+				21F438AA2B9DAA46004408EF /* CustomCollectionViewCell.swift in Sources */,
+				21F438912B9D8481004408EF /* Texts.swift in Sources */,
+				21F4388F2B9D845D004408EF /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

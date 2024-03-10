@@ -31,7 +31,7 @@
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MediTrack" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1uv-mb-eG0">
-                                <rect key="frame" x="111" y="486" width="171" height="50"/>
+                                <rect key="frame" x="111" y="502" width="171" height="50"/>
                                 <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="36"/>
                                 <color key="textColor" name="AccentColor"/>
                                 <nil key="highlightedColor"/>
@@ -41,7 +41,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="w4W-3Y-qYF" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="2ws-bH-Qry"/>
-                            <constraint firstItem="1uv-mb-eG0" firstAttribute="top" secondItem="w4W-3Y-qYF" secondAttribute="bottom" id="IZ7-3r-7mA"/>
+                            <constraint firstItem="1uv-mb-eG0" firstAttribute="top" secondItem="w4W-3Y-qYF" secondAttribute="bottom" constant="16" id="IZ7-3r-7mA"/>
                             <constraint firstItem="1uv-mb-eG0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="d91-R4-WXz"/>
                             <constraint firstItem="w4W-3Y-qYF" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-40" id="srK-p1-sI9"/>
                         </constraints>
