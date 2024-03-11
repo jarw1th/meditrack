@@ -2,9 +2,8 @@ import Foundation
 
 protocol CustomListViewModelProtocol {
     func getItem(
-        index: Int,
         afterRowAt indexPath: IndexPath,
-        completion: @escaping (String, DrugType) -> Void
+        completion: @escaping (String, String, DrugType) -> Void
     )
     
     func deleteItem(
@@ -18,6 +17,16 @@ protocol CustomListViewModelProtocol {
     
     var todayIndex: Int { get }
     
+    var selectedIndex: Int { get set }
+    
+    func setCompletement(
+        objectId: String,
+        id: String,
+        value: Bool
+    )
+    
+    func getCompletedList() -> [String: (Bool, String)]
+    
     func getDate(
         afterRowAt indexPath: IndexPath,
         completion: @escaping (Date) -> Void
@@ -26,12 +35,15 @@ protocol CustomListViewModelProtocol {
 
 final class CustomListViewModel: CustomListViewModelProtocol {
     private let drugInfoRepository: DrugInfoRepositoryProtocol
+    private let drugCompletementRepository: DrugCompletementRepositoryProtocol
     
     private var model = DatesModel()
     
-    init(drugInfoRepository: DrugInfoRepositoryProtocol = DrugInfoRepository()) {
+    init(drugInfoRepository: DrugInfoRepositoryProtocol = DrugInfoRepository(),
+         drugCompletementRepository: DrugCompletementRepositoryProtocol = DrugCompletementRepository()) {
         self.drugInfoRepository = drugInfoRepository
-        self.model.addDates(getDays())
+        self.drugCompletementRepository = drugCompletementRepository
+        
 //        let test = DrugInfo(id: "",
 //                            name: "Test 0",
 //                            descriptionDrug: "Null",
@@ -42,13 +54,21 @@ final class CustomListViewModel: CustomListViewModelProtocol {
 //                            dose: 0,
 //                            startDate: nil)
 //        drugInfoRepository.saveDrugList([test])
+        
+        drugCompletementRepository.checkCache(drugInfoRepository.getDrugList())
+        
+        self.model.addDates(getDays())
+        
+        selectedIndex = todayIndex
+
     }
     
-    func getItem(index: Int, afterRowAt indexPath: IndexPath, completion: @escaping (String, DrugType) -> Void) {
-        let list = getItems(for: model.dates[index])
+    func getItem(afterRowAt indexPath: IndexPath, completion: @escaping (String, String, DrugType) -> Void) {
+        let list = getItems(for: model.dates[selectedIndex])
+        let id = list[indexPath.row].id
         let name = list[indexPath.row].name
         let drugType = list[indexPath.row].drugType
-        completion(name, drugType)
+        completion(id, name, drugType)
     }
     
     func deleteItem(afterRowAt indexPath: IndexPath, completion: @escaping () -> Void) {
@@ -65,8 +85,27 @@ final class CustomListViewModel: CustomListViewModelProtocol {
     
     var todayIndex: Int {
         let comps = Calendar.current.dateComponents([.year, .month, .day], from: Date())
-        var date = Calendar.current.date(from: comps) ?? Date()
+        let date = Calendar.current.date(from: comps) ?? Date()
         return model.dates.firstIndex(of: date) ?? 0
+    }
+    
+    var selectedIndex: Int = 0
+    
+    func getCompletedList() -> [String: (Bool, String)] {
+        let list = drugCompletementRepository.getCompletementList(date: model.dates[selectedIndex])
+        print(list)
+        return list
+    }
+    
+    func setCompletement(
+        objectId: String,
+        id: String,
+        value: Bool
+    ) {
+        drugCompletementRepository.setCompletementInfo(by: id,
+                                                       objectId: objectId,
+                                                       date: model.dates[selectedIndex],
+                                                       value: value)
     }
     
     func getDate(afterRowAt indexPath: IndexPath, completion: @escaping (Date) -> Void) {

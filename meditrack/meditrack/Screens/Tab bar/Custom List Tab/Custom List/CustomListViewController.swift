@@ -4,7 +4,6 @@ import SnapKit
 final class CustomListViewController: UIViewController {
     private var viewModel: CustomListViewModelProtocol? {
         didSet {
-            selectedIndex = viewModel?.todayIndex ?? 0
             setUI()
         }
     }
@@ -21,9 +20,6 @@ final class CustomListViewController: UIViewController {
     private let tableView = UITableView()
     private let backgroundView = UIView()
     private let subnameLabel = UILabel()
-    
-    private var selectedIndex: Int = 0
-    private var completedIndexes: [Int] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +39,7 @@ final class CustomListViewController: UIViewController {
         collectionView.performBatchUpdates({
             collectionView.reloadData()
         }, completion: { _ in
-            self.collectionView.scrollToItem(at: IndexPath(row: self.selectedIndex, section: 0),
+            self.collectionView.scrollToItem(at: IndexPath(row: self.viewModel?.todayIndex ?? 0, section: 0),
                                         at: .centeredHorizontally,
                                         animated: false)
         })
@@ -113,15 +109,18 @@ extension CustomListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let number = viewModel?.numberOfRows(selectedIndex) else {return 0}
+        guard let number = viewModel?.numberOfRows(viewModel?.selectedIndex ?? 0) else {return 0}
         return number
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarTableViewCell", for: indexPath) as? CalendarTableViewCell
         cell?.selectionStyle = .none
-        viewModel?.getItem(index: self.selectedIndex, afterRowAt: indexPath, completion: { name, drugType in
-            let isCompleted = self.completedIndexes.contains(indexPath.row)
+        
+        viewModel?.getItem(afterRowAt: indexPath, completion: { id, name, drugType in
+            let filteredList = self.viewModel?.getCompletedList().filter({ $0.key == id }).first?.value ?? (false, String())
+            var isCompleted: Bool
+            (isCompleted, _) = filteredList
             cell?.setup(name: name, drug: drugType, isCompleted: isCompleted)
         })
         return cell ?? UITableViewCell()
@@ -130,11 +129,17 @@ extension CustomListViewController: UITableViewDataSource {
 
 extension CustomListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if self.completedIndexes.contains(indexPath.row) {
-            let index = self.completedIndexes.firstIndex(of: indexPath.row)
-            self.completedIndexes.remove(at: index!)
+        var objectId = String()
+        viewModel?.getItem(afterRowAt: indexPath, completion: { id, name, type in
+            objectId = id
+        })
+        var reason: Bool
+        var id: String
+        (reason, id) = viewModel?.getCompletedList()[objectId] ?? (false, String())
+        if reason {
+            viewModel?.setCompletement(objectId: id, id: objectId, value: false)
         } else {
-            self.completedIndexes.append(indexPath.row)
+            viewModel?.setCompletement(objectId: id, id: objectId, value: true)
         }
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
@@ -163,7 +168,7 @@ extension CustomListViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCollectionViewCell", for: indexPath) as! CustomCollectionViewCell
 
         viewModel?.getDate(afterRowAt: indexPath, completion: { date in
-            let isSelected = self.selectedIndex == indexPath.row
+            let isSelected = self.viewModel?.selectedIndex == indexPath.row
             cell.setup(date: date, isSelected: isSelected)
         })
 
@@ -178,9 +183,10 @@ extension CustomListViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        let selectedIndex = IndexPath(row: self.selectedIndex, section: 0)
-        self.selectedIndex = indexPath.row
+        let selectedIndex = IndexPath(row: viewModel?.selectedIndex ?? 0, section: 0)
+        viewModel?.selectedIndex = indexPath.row
         collectionView.reloadItems(at: [indexPath, selectedIndex])
+        print(1)
         tableView.reloadData()
     }
 }

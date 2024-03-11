@@ -24,6 +24,7 @@ final class DataService {
         }
     }
     
+    
     func delete(object: Object) throws {
         guard let storage else { return }
         try storage.write {
@@ -32,7 +33,6 @@ final class DataService {
     }
     
     func delete(objects: [Object]) throws {
-        guard let storage else { return }
         try objects.forEach {
             try delete(object: $0)
         }

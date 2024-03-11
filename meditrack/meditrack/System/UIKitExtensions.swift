@@ -26,4 +26,10 @@ extension Date {
         let result = DateInterval(start: minDate, end: maxDate).contains(self)
         return result
     }
+    
+    func standartize() -> Date {
+        let comps = Calendar.current.dateComponents([.year, .month, .day], from: self)
+        return Calendar.current.date(from: comps) ?? Date()
+    }
 }
+
