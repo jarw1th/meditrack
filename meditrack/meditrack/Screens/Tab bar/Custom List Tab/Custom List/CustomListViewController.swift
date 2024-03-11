@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 
 final class CustomListViewController: UIViewController {
+    // MARK: - Variables
     private var viewModel: CustomListViewModelProtocol? {
         didSet {
             setUI()
@@ -21,6 +22,7 @@ final class CustomListViewController: UIViewController {
     private let backgroundView = UIView()
     private let subnameLabel = UILabel()
     
+    // MARK: - Body
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,6 +48,7 @@ final class CustomListViewController: UIViewController {
         
     }
     
+    // MARK: - Functions
     private func setupUI() {
         view.backgroundColor = Constants.Colors.grayBackground
         title = nil
@@ -109,7 +112,7 @@ extension CustomListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let number = viewModel?.numberOfRows(viewModel?.selectedIndex ?? 0) else {return 0}
+        guard let number = viewModel?.numberOfRows else {return 0}
         return number
     }
     
@@ -121,6 +124,7 @@ extension CustomListViewController: UITableViewDataSource {
             let filteredList = self.viewModel?.getCompletedList().filter({ $0.key == id }).first?.value ?? (false, String())
             var isCompleted: Bool
             (isCompleted, _) = filteredList
+            print(isCompleted)
             cell?.setup(name: name, drug: drugType, isCompleted: isCompleted)
         })
         return cell ?? UITableViewCell()
@@ -186,7 +190,6 @@ extension CustomListViewController: UICollectionViewDelegate {
         let selectedIndex = IndexPath(row: viewModel?.selectedIndex ?? 0, section: 0)
         viewModel?.selectedIndex = indexPath.row
         collectionView.reloadItems(at: [indexPath, selectedIndex])
-        print(1)
         tableView.reloadData()
     }
 }

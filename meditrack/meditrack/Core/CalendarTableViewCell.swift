@@ -19,6 +19,8 @@ class CalendarTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         [drugName, drugType].forEach({ $0.text = nil })
+        [drugName, drugType].forEach({ $0.attributedText = nil })
+        [drugName, drugType].forEach({ $0.layer.opacity = 1.0 })
     }
     
     override var reuseIdentifier: String? {
@@ -33,14 +35,14 @@ class CalendarTableViewCell: UITableViewCell {
         })
         stackView.addSubviews([drugName, drugType])
         drugName.snp.makeConstraints({ make in
-            make.top.equalTo(8)
-            make.leading.equalTo(16)
+            make.top.equalTo(12)
+            make.leading.equalTo(24)
             make.trailing.equalTo(drugImage.snp.leading).inset(-16)
         })
         drugType.snp.makeConstraints({ make in
-            make.top.equalTo(drugName.snp.bottom).inset(-4)
-            make.bottom.equalTo(-8)
-            make.leading.equalTo(16)
+            make.top.equalTo(drugName.snp.bottom)
+            make.bottom.equalTo(-12)
+            make.leading.equalTo(24)
             make.trailing.equalTo(drugImage.snp.leading).inset(-16)
         })
         drugImage.snp.makeConstraints({ make in
@@ -52,7 +54,9 @@ class CalendarTableViewCell: UITableViewCell {
         stackView.axis = .vertical
         
         self.backgroundColor = Constants.Colors.grayBackground
-        layer.cornerRadius = 10
+        layer.cornerRadius = 20
+        layer.borderColor = CGColor(red: 255, green: 255, blue: 255, alpha: 1)
+        layer.borderWidth = 5
     }
     
     // MARK: - Setup
@@ -72,8 +76,16 @@ class CalendarTableViewCell: UITableViewCell {
             
             [drugName, drugType].forEach({ $0.layer.opacity = 0.5 })
         } else {
-            drugName.text = name
-            drugType.text = drug.rawValue
+            var attributedString = NSAttributedString(string: name,
+                                                      attributes: [.strikethroughStyle: nil])
+            drugName.attributedText = attributedString
+            
+            attributedString = NSAttributedString(string: drug.rawValue,
+                                                  attributes: [.strikethroughStyle: nil])
+            drugType.attributedText = attributedString
+            
+            [drugName, drugType].forEach({ $0.layer.opacity = 1.0 })
+            
         }
         
         let imageData = GetImages().byType(drug)

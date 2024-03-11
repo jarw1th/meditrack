@@ -43,7 +43,6 @@ final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
     }
     
     func setCompletementInfo(by id: String, objectId: String, date: Date, value: Bool) {
-        print(value)
         let objectId = (try? ObjectId(string: objectId)) ?? ObjectId.generate()
         let object = DrugCompletementRealm(id: id,
                                            isCompleted: value,
@@ -69,7 +68,7 @@ final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
                                                  to: startDate)?.standartize() ?? Date()
                 let object = DrugCompletementRealm(id: drug.id, isCompleted: false, date: date)
                 let reason = checkExistens(objects: objects, object: object)
-                print(object)
+                
                 if !reason { try? storage.saveOrUpdateAllObjects(objects: [object]) }
             }
         }
@@ -83,7 +82,7 @@ final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
     private func checkExistens(objects: [DrugCompletementRealm], object: DrugCompletementRealm) -> Bool {
         var resultBool = false
         objects.forEach({ el in
-            if (el.objectId == object.objectId) { resultBool = true }
+            if (el.id == object.id && el.date == object.date) { resultBool = true }
         })
         return resultBool
     }

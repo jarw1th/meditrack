@@ -11,7 +11,7 @@ protocol CustomListViewModelProtocol {
         completion: @escaping () -> Void
     )
     
-    var numberOfRows: (_ index: Int) -> Int { get }// number of rows in table view
+    var numberOfRows: Int { get }// number of rows in table view
     
     var numberOfItems: Int { get } // number of items in collection view
     
@@ -34,6 +34,7 @@ protocol CustomListViewModelProtocol {
 }
 
 final class CustomListViewModel: CustomListViewModelProtocol {
+    // MARK: - Variables
     private let drugInfoRepository: DrugInfoRepositoryProtocol
     private let drugCompletementRepository: DrugCompletementRepositoryProtocol
     
@@ -63,6 +64,8 @@ final class CustomListViewModel: CustomListViewModelProtocol {
 
     }
     
+    // MARK: - Functions
+    
     func getItem(afterRowAt indexPath: IndexPath, completion: @escaping (String, String, DrugType) -> Void) {
         let list = getItems(for: model.dates[selectedIndex])
         let id = list[indexPath.row].id
@@ -77,7 +80,9 @@ final class CustomListViewModel: CustomListViewModelProtocol {
         completion()
     }
     
-    lazy var numberOfRows: (Int) -> Int = getItemsNumber
+    var numberOfRows: Int {
+        return getItems(for: self.model.dates[self.selectedIndex]).count
+    }
     
     var numberOfItems: Int {
         return model.dates.count
@@ -93,7 +98,7 @@ final class CustomListViewModel: CustomListViewModelProtocol {
     
     func getCompletedList() -> [String: (Bool, String)] {
         let list = drugCompletementRepository.getCompletementList(date: model.dates[selectedIndex])
-        print(list)
+        print(selectedIndex)
         return list
     }
     
@@ -113,6 +118,7 @@ final class CustomListViewModel: CustomListViewModelProtocol {
         completion(date)
     }
     
+    // MARK: - Private Functions
     private func getDrugInfoList() -> [DrugInfo] {
         return drugInfoRepository.getDrugList()
     }
@@ -141,10 +147,5 @@ final class CustomListViewModel: CustomListViewModelProtocol {
             }
         })
         return list
-    }
-
-    private func getItemsNumber(_ index: Int) -> Int {
-        let rows = getItems(for: model.dates[index]).count
-        return rows
     }
 }

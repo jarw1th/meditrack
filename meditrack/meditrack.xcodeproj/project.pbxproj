@@ -92,6 +92,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		215797CF2B9F4C83000B190A /* Add Drug */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Add Drug";
+			sourceTree = "<group>";
+		};
 		21F4382B2B9B897E004408EF = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +175,7 @@
 		21F4386F2B9C21AA004408EF /* Custom List Tab */ = {
 			isa = PBXGroup;
 			children = (
+				215797CF2B9F4C83000B190A /* Add Drug */,
 				21F438702B9C21B7004408EF /* Custom List */,
 			);
 			path = "Custom List Tab";
