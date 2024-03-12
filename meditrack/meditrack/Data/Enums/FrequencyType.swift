@@ -1,5 +1,5 @@
 import Foundation
 
-enum FrequencyType: String {
+enum FrequencyType: String, CaseIterable {
     case daily, weekly, monthly, annually
 }

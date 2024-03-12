@@ -10,6 +10,8 @@ extension Constants {
 
 class GetImages {
     func byType(_ drugType: DrugType) -> Data {
+        let image = UIImage(named: "Capsule")?.pngData() ?? Data()
+        return image
         switch drugType {
         case .capsule:
             return Data()

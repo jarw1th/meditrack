@@ -33,3 +33,18 @@ extension Date {
     }
 }
 
+extension UITextField {
+    func setHorizontalPaddings(left leftPadding: CGFloat? = nil, right rightPadding: CGFloat? = nil) {
+        let leftPadding = leftPadding ?? self.frame.size.width
+        let rightPadding = rightPadding ?? self.frame.size.width
+        
+        let leftPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: leftPadding, height: self.frame.size.height))
+        let rightPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: rightPadding, height: self.frame.size.height))
+        
+        self.leftView = leftPaddingView
+        self.rightView = rightPaddingView
+        
+        self.leftViewMode = .always
+        self.rightViewMode = .always
+    }
+}

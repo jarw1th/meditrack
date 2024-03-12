@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		215797D62B9F9233000B190A /* AddDrugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215797D52B9F9233000B190A /* AddDrugViewController.swift */; };
+		215797D82B9F949E000B190A /* AddDrugViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215797D72B9F949E000B190A /* AddDrugViewModel.swift */; };
+		215797DA2BA044C6000B190A /* TypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215797D92BA044C6000B190A /* TypeCollectionViewCell.swift */; };
+		215797DC2BA0B925000B190A /* PickerAddModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215797DB2BA0B925000B190A /* PickerAddModel.swift */; };
+		215797DE2BA0BE6E000B190A /* DropDownMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215797DD2BA0BE6E000B190A /* DropDownMenuButton.swift */; };
 		21F438382B9B897E004408EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438372B9B897E004408EF /* AppDelegate.swift */; };
 		21F4383A2B9B897E004408EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438392B9B897E004408EF /* SceneDelegate.swift */; };
 		21F438412B9B8980004408EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21F438402B9B8980004408EF /* Assets.xcassets */; };
@@ -32,7 +37,7 @@
 		21F438912B9D8481004408EF /* Texts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438902B9D8481004408EF /* Texts.swift */; };
 		21F438932B9D867A004408EF /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438922B9D867A004408EF /* Fonts.swift */; };
 		21F438952B9D9FAE004408EF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438942B9D9FAE004408EF /* Colors.swift */; };
-		21F438AA2B9DAA46004408EF /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438A92B9DAA46004408EF /* CustomCollectionViewCell.swift */; };
+		21F438AA2B9DAA46004408EF /* DateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438A92B9DAA46004408EF /* DateCollectionViewCell.swift */; };
 		21F438AE2B9DC0D8004408EF /* DatesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438AD2B9DC0D8004408EF /* DatesModel.swift */; };
 		21F438B02B9DDF9D004408EF /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438AF2B9DDF9D004408EF /* CalendarTableViewCell.swift */; };
 		21F438B22B9E056C004408EF /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438B12B9E056C004408EF /* Images.swift */; };
@@ -42,6 +47,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		215797D52B9F9233000B190A /* AddDrugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDrugViewController.swift; sourceTree = "<group>"; };
+		215797D72B9F949E000B190A /* AddDrugViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDrugViewModel.swift; sourceTree = "<group>"; };
+		215797D92BA044C6000B190A /* TypeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeCollectionViewCell.swift; sourceTree = "<group>"; };
+		215797DB2BA0B925000B190A /* PickerAddModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerAddModel.swift; sourceTree = "<group>"; };
+		215797DD2BA0BE6E000B190A /* DropDownMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownMenuButton.swift; sourceTree = "<group>"; };
 		21F438342B9B897E004408EF /* meditrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = meditrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21F438372B9B897E004408EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21F438392B9B897E004408EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,7 +79,7 @@
 		21F438902B9D8481004408EF /* Texts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texts.swift; sourceTree = "<group>"; };
 		21F438922B9D867A004408EF /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		21F438942B9D9FAE004408EF /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		21F438A92B9DAA46004408EF /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
+		21F438A92B9DAA46004408EF /* DateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCollectionViewCell.swift; sourceTree = "<group>"; };
 		21F438AD2B9DC0D8004408EF /* DatesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesModel.swift; sourceTree = "<group>"; };
 		21F438AF2B9DDF9D004408EF /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
 		21F438B12B9E056C004408EF /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
@@ -95,6 +105,9 @@
 		215797CF2B9F4C83000B190A /* Add Drug */ = {
 			isa = PBXGroup;
 			children = (
+				215797DB2BA0B925000B190A /* PickerAddModel.swift */,
+				215797D72B9F949E000B190A /* AddDrugViewModel.swift */,
+				215797D52B9F9233000B190A /* AddDrugViewController.swift */,
 			);
 			path = "Add Drug";
 			sourceTree = "<group>";
@@ -217,7 +230,8 @@
 				21F438962B9DA2B5004408EF /* Customs */,
 				21F4388D2B9D8408004408EF /* Constants */,
 				21F4384B2B9B8C04004408EF /* Fonts */,
-				21F438A92B9DAA46004408EF /* CustomCollectionViewCell.swift */,
+				21F438A92B9DAA46004408EF /* DateCollectionViewCell.swift */,
+				215797D92BA044C6000B190A /* TypeCollectionViewCell.swift */,
 				21F438AF2B9DDF9D004408EF /* CalendarTableViewCell.swift */,
 			);
 			path = Core;
@@ -238,6 +252,7 @@
 		21F438962B9DA2B5004408EF /* Customs */ = {
 			isa = PBXGroup;
 			children = (
+				215797DD2BA0BE6E000B190A /* DropDownMenuButton.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -404,9 +419,12 @@
 				21F438952B9D9FAE004408EF /* Colors.swift in Sources */,
 				21F438742B9C21D9004408EF /* CustomListViewModel.swift in Sources */,
 				21F438762B9C21E3004408EF /* CustomListViewController.swift in Sources */,
+				215797DC2BA0B925000B190A /* PickerAddModel.swift in Sources */,
+				215797D82B9F949E000B190A /* AddDrugViewModel.swift in Sources */,
 				21F438B62B9EC25E004408EF /* DrugCompletementRepository.swift in Sources */,
 				21F438382B9B897E004408EF /* AppDelegate.swift in Sources */,
 				21F438BA2B9EC282004408EF /* DrugCompletementRealm.swift in Sources */,
+				215797DA2BA044C6000B190A /* TypeCollectionViewCell.swift in Sources */,
 				21F438AE2B9DC0D8004408EF /* DatesModel.swift in Sources */,
 				21F4387B2B9C468D004408EF /* DrugInfoRealm.swift in Sources */,
 				21F438882B9C4E74004408EF /* DrugInfoRepository.swift in Sources */,
@@ -414,13 +432,15 @@
 				21F438822B9C4A94004408EF /* FrequencyType.swift in Sources */,
 				21F4387D2B9C4843004408EF /* DrugType.swift in Sources */,
 				21F438B22B9E056C004408EF /* Images.swift in Sources */,
+				215797D62B9F9233000B190A /* AddDrugViewController.swift in Sources */,
 				21F438842B9C4C1A004408EF /* DrugInfo.swift in Sources */,
 				21F4388B2B9D8323004408EF /* UIKitExtensions.swift in Sources */,
 				21F438792B9C4525004408EF /* DataService.swift in Sources */,
-				21F438AA2B9DAA46004408EF /* CustomCollectionViewCell.swift in Sources */,
+				21F438AA2B9DAA46004408EF /* DateCollectionViewCell.swift in Sources */,
 				21F438912B9D8481004408EF /* Texts.swift in Sources */,
 				21F4388F2B9D845D004408EF /* Constants.swift in Sources */,
 				21F438B02B9DDF9D004408EF /* CalendarTableViewCell.swift in Sources */,
+				215797DE2BA0BE6E000B190A /* DropDownMenuButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

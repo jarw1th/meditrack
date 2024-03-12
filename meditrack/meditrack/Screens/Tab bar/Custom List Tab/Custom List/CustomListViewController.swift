@@ -10,7 +10,7 @@ final class CustomListViewController: UIViewController {
     }
     
     private let nameLabel = UILabel()
-    private lazy var collectionView: UICollectionView = {
+    private lazy var dateCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -30,18 +30,18 @@ final class CustomListViewController: UIViewController {
         
         setupUI()
         
-        collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: "CustomCollectionViewCell")
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        dateCollectionView.register(DateCollectionViewCell.self, forCellWithReuseIdentifier: "DateCollectionViewCell")
+        dateCollectionView.dataSource = self
+        dateCollectionView.delegate = self
         
         tableView.register(CalendarTableViewCell.self, forCellReuseIdentifier: "CalendarTableViewCell")
         tableView.dataSource = self
         tableView.delegate = self
         
-        collectionView.performBatchUpdates({
-            collectionView.reloadData()
+        dateCollectionView.performBatchUpdates({
+            dateCollectionView.reloadData()
         }, completion: { _ in
-            self.collectionView.scrollToItem(at: IndexPath(row: self.viewModel?.todayIndex ?? 0, section: 0),
+            self.dateCollectionView.scrollToItem(at: IndexPath(row: self.viewModel?.todayIndex ?? 0, section: 0),
                                         at: .centeredHorizontally,
                                         animated: false)
         })
@@ -53,18 +53,19 @@ final class CustomListViewController: UIViewController {
         view.backgroundColor = Constants.Colors.grayBackground
         title = nil
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pushAddDrug))
         navigationController?.navigationBar.tintColor = Constants.Colors.grayAccent
         
         tableView.separatorStyle = .none
         
-        view.addSubviews([nameLabel, collectionView, backgroundView, subnameLabel, tableView])
+        view.addSubviews([nameLabel, dateCollectionView, backgroundView, subnameLabel, tableView])
         nameLabel.snp.makeConstraints({ make in
             make.leading.equalTo(16)
             make.trailing.equalTo(-16)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(48)
         })
-        collectionView.snp.makeConstraints({ make in
+        dateCollectionView.snp.makeConstraints({ make in
             make.height.equalTo(100)
             make.leading.equalTo(16)
             make.trailing.equalTo(-16)
@@ -73,7 +74,7 @@ final class CustomListViewController: UIViewController {
         backgroundView.snp.makeConstraints({ make in
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(64)
-            make.top.equalTo(collectionView.snp.bottom).inset(-12)
+            make.top.equalTo(dateCollectionView.snp.bottom).inset(-12)
         })
         subnameLabel.snp.makeConstraints({ make in
             make.leading.trailing.equalToSuperview().inset(24)
@@ -89,7 +90,7 @@ final class CustomListViewController: UIViewController {
         nameLabel.font = Constants.Fonts.nunitoMediumHeader1
         nameLabel.textColor = Constants.Colors.grayAccent
         
-        collectionView.backgroundColor = Constants.Colors.grayBackground
+        dateCollectionView.backgroundColor = Constants.Colors.grayBackground
         
         subnameLabel.text = Constants.Texts.labelMedicationSub
         subnameLabel.font = Constants.Fonts.nunitoRegularTitle
@@ -102,6 +103,10 @@ final class CustomListViewController: UIViewController {
     
     private func setUI() {
         tableView.reloadData()
+    }
+    
+    @objc private func pushAddDrug() {
+        self.navigationController?.pushViewController(AddDrugViewController(), animated: true)
     }
 }
 
@@ -124,7 +129,6 @@ extension CustomListViewController: UITableViewDataSource {
             let filteredList = self.viewModel?.getCompletedList().filter({ $0.key == id }).first?.value ?? (false, String())
             var isCompleted: Bool
             (isCompleted, _) = filteredList
-            print(isCompleted)
             cell?.setup(name: name, drug: drugType, isCompleted: isCompleted)
         })
         return cell ?? UITableViewCell()
@@ -169,7 +173,7 @@ extension CustomListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCollectionViewCell", for: indexPath) as! CustomCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DateCollectionViewCell", for: indexPath) as! DateCollectionViewCell
 
         viewModel?.getDate(afterRowAt: indexPath, completion: { date in
             let isSelected = self.viewModel?.selectedIndex == indexPath.row

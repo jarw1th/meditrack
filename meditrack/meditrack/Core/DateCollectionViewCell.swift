@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class CustomCollectionViewCell: UICollectionViewCell {
+class DateCollectionViewCell: UICollectionViewCell {
     private let stackView = UIStackView()
     private let weekDayLabel = UILabel()
     private let dateLabel = UILabel()
@@ -21,7 +21,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
     }
     
     override var reuseIdentifier: String? {
-        return "CustomCollectionViewCell"
+        return "DateCollectionViewCell"
     }
     
     private func setupUI() {

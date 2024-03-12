@@ -98,7 +98,6 @@ final class CustomListViewModel: CustomListViewModelProtocol {
     
     func getCompletedList() -> [String: (Bool, String)] {
         let list = drugCompletementRepository.getCompletementList(date: model.dates[selectedIndex])
-        print(selectedIndex)
         return list
     }
     
