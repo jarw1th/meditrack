@@ -3,6 +3,8 @@ import Foundation
 protocol AddDrugViewModelProtocol {
     func getItem(afterRowAt indexPath: IndexPath) -> DrugType
     
+    func createDrug(_ item: DrugInfo)
+    
     func getDose(at row: Int) -> String
     
     func getDuration(at row: Int) -> String
@@ -32,6 +34,10 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
     
     func getItem(afterRowAt indexPath: IndexPath) -> DrugType {
         return DrugType.allCases[indexPath.row]
+    }
+    
+    func createDrug(_ item: DrugInfo) {
+        drugInfoRepository.saveDrugList([item])
     }
     
     func getDose(at row: Int) -> String {

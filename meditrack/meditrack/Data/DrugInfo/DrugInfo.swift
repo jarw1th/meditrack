@@ -4,7 +4,7 @@ struct DrugInfo {
     let id: String
     let name: String
     let descriptionDrug: String
-    let timeInterval: Int // 1 hour interval
+    let timeInterval: Date // 1 hour interval
     let duration: Int // weeks
     let frequency: FrequencyType
     let drugType: DrugType
@@ -14,7 +14,7 @@ struct DrugInfo {
     init(id: String,
          name: String,
          descriptionDrug: String,
-         timeInterval: Int,
+         timeInterval: Date,
          duration: Int,
          frequency: FrequencyType,
          drugType: DrugType,

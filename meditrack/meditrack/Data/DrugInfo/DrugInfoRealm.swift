@@ -4,7 +4,7 @@ class DrugInfoRealm: Object {
     @Persisted(primaryKey: true) var _id: ObjectId
     @Persisted var name: String
     @Persisted var descriptionDrug: String
-    @Persisted var timeInterval: Int // 1 hour interval
+    @Persisted var timeInterval: Date // 1 hour interval
     @Persisted var duration: Int // weeks
     @Persisted var frequency: FrequencyType.RawValue
     @Persisted var drugType: DrugType.RawValue

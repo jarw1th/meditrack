@@ -22,12 +22,17 @@ final class AddDrugViewController: UIViewController {
     private let nameTextField = UITextField()
     private let descriptionTextField = UITextField()
     private let timelineLabel = UILabel()
+    
     private let doseMenuButton = DropDownMenuButton()
     private let doseMenu = UITableView()
     private let durationMenuButton = DropDownMenuButton()
     private let durationMenu = UITableView()
     private let frequencyMenuButton = DropDownMenuButton()
     private let frequencyMenu = UITableView()
+    
+    private let doseButton = UIButton()
+    private let durationButton = UIButton()
+    private let frequencyButton = UIButton()
     
     private let doneButton = UIButton()
     
@@ -72,10 +77,13 @@ final class AddDrugViewController: UIViewController {
                           timelineLabel,
                           doneButton,
                           doseMenuButton,
+                          doseButton,
                           doseMenu,
                           durationMenuButton,
+                          durationButton,
                           durationMenu,
                           frequencyMenuButton,
+                          frequencyButton,
                           frequencyMenu])
         typeLabel.snp.makeConstraints({ make in
             make.leading.equalTo(16)
@@ -116,17 +124,29 @@ final class AddDrugViewController: UIViewController {
             make.trailing.equalTo(-16)
             make.top.equalTo(timelineLabel.snp.bottom).inset(-16)
         })
+        doseButton.snp.makeConstraints({ make in
+            make.trailing.equalTo(doseMenuButton.snp.trailing).inset(16)
+            make.centerY.equalTo(doseMenuButton.snp.centerY)
+        })
         durationMenuButton.snp.makeConstraints({ make in
             make.height.equalTo(48)
             make.leading.equalTo(16)
             make.trailing.equalTo(-16)
             make.top.equalTo(doseMenuButton.snp.bottom).inset(-8)
         })
+        durationButton.snp.makeConstraints({ make in
+            make.trailing.equalTo(durationMenuButton.snp.trailing).inset(16)
+            make.centerY.equalTo(durationMenuButton.snp.centerY)
+        })
         frequencyMenuButton.snp.makeConstraints({ make in
             make.height.equalTo(48)
             make.leading.equalTo(16)
             make.trailing.equalTo(-16)
             make.top.equalTo(durationMenuButton.snp.bottom).inset(-8)
+        })
+        frequencyButton.snp.makeConstraints({ make in
+            make.trailing.equalTo(frequencyMenuButton.snp.trailing).inset(16)
+            make.centerY.equalTo(frequencyMenuButton.snp.centerY)
         })
         doseMenu.snp.makeConstraints({ make in
             make.width.equalTo(100)
@@ -192,10 +212,46 @@ final class AddDrugViewController: UIViewController {
         
         frequencyMenuButton.layer.cornerRadius = 10
         frequencyMenuButton.setup(name: Constants.Texts.dropdownFrequencySub, buttonName: Constants.Texts.buttonDefaultchooseSub)
+        
+        [doseButton, durationButton, frequencyButton].forEach({
+            $0.setTitle("Choose", for: .normal)
+            $0.setTitleColor(Constants.Colors.grayAccent, for: .normal)
+            $0.titleLabel?.font = Constants.Fonts.nunitoRegularSubtitle
+            $0.titleLabel?.textAlignment = .right
+        })
+        doseButton.addTarget(self, action: #selector(doseButtonAction), for: .touchUpInside)
+        durationButton.addTarget(self, action: #selector(durationButtonAction), for: .touchUpInside)
+        frequencyButton.addTarget(self, action: #selector(frequencyButtonAction), for: .touchUpInside)
+    }
+    
+    @objc private func doseButtonAction() {
+        doseMenu.isHidden.toggle()
+    }
+    
+    @objc private func durationButtonAction() {
+        durationMenu.isHidden.toggle()
+    }
+    
+    @objc private func frequencyButtonAction() {
+        frequencyMenu.isHidden.toggle()
     }
     
     @objc private func doneButtonAction() {
-        
+        guard let duration = Int(durationButton.title(for: .normal)?.first?.description ?? "") else { return }
+        guard let frequency = FrequencyType(rawValue: frequencyButton.title(for: .normal) ?? "") else { return }
+        guard let dose = Int(doseButton.title(for: .normal)?.first?.description ?? "") else { return }
+        let drugType = DrugType.allCases[viewModel?.selectedIndex ?? 0]
+        let drug = DrugInfo(id: "",
+                            name: nameTextField.text ?? "",
+                            descriptionDrug: descriptionTextField.text ?? "",
+                            timeInterval: Date(),
+                            duration: duration,
+                            frequency: frequency,
+                            drugType: drugType,
+                            dose: dose,
+                            startDate: Date())
+        viewModel?.createDrug(drug)
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -253,7 +309,6 @@ extension AddDrugViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableView {
         case doseMenu:
-            print(viewModel?.numberOfDoseRows)
             return viewModel?.numberOfDoseRows ?? 0
         case durationMenu:
             return viewModel?.numberOfDurationRows ?? 0
@@ -269,7 +324,6 @@ extension AddDrugViewController: UITableViewDataSource {
 
         switch tableView {
         case doseMenu:
-            print(1)
             cell.textLabel?.text = viewModel?.getDose(at: indexPath.row)
         case durationMenu:
             cell.textLabel?.text = viewModel?.getDuration(at: indexPath.row)
@@ -288,15 +342,15 @@ extension AddDrugViewController: UITableViewDelegate {
         switch tableView {
         case doseMenu:
             let buttonName = viewModel?.getDose(at: indexPath.row) ?? String()
-            doseMenuButton.changeButtonName(buttonName)
+            doseButton.setTitle(buttonName, for: .normal)
             doseMenu.isHidden.toggle()
         case durationMenu:
             let buttonName = viewModel?.getDuration(at: indexPath.row) ?? String()
-            durationMenuButton.changeButtonName(buttonName)
+            durationButton.setTitle(buttonName, for: .normal)
             durationMenu.isHidden.toggle()
         case frequencyMenu:
             let buttonName = viewModel?.getFrequency(at: indexPath.row) ?? String()
-            frequencyMenuButton.changeButtonName(buttonName)
+            frequencyButton.setTitle(buttonName, for: .normal)
             frequencyMenu.isHidden.toggle()
         default:
             return
