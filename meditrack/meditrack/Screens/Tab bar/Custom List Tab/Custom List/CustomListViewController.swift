@@ -83,7 +83,7 @@ final class CustomListViewController: UIViewController {
         tableView.snp.makeConstraints({ make in
             make.leading.trailing.equalToSuperview().inset(16)
             make.bottom.equalTo(-16)
-            make.top.equalTo(subnameLabel.snp.bottom).inset(-16)
+            make.top.equalTo(subnameLabel.snp.bottom)
         })
         
         nameLabel.text = Constants.Texts.labelRemidersMain
@@ -113,11 +113,12 @@ final class CustomListViewController: UIViewController {
 // MARK: - TableView
 extension CustomListViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        guard let number = viewModel?.numberOfSections else {return 0}
+        return number
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let number = viewModel?.numberOfRows else {return 0}
+        guard let number = viewModel?.numberOfRowsInSection(in: section) else {return 0}
         return number
     }
     
@@ -125,21 +126,26 @@ extension CustomListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarTableViewCell", for: indexPath) as? CalendarTableViewCell
         cell?.selectionStyle = .none
         
-        viewModel?.getItem(afterRowAt: indexPath, completion: { id, name, drugType in
-            let filteredList = self.viewModel?.getCompletedList().filter({ $0.key == id }).first?.value ?? (false, String())
+        viewModel?.getItem(afterRowAt: indexPath, completion: { drug in
+            let filteredList = self.viewModel?.getCompletedList().filter({ $0.key == drug.id }).first?.value ?? (false, String())
             var isCompleted: Bool
             (isCompleted, _) = filteredList
-            cell?.setup(name: name, drug: drugType, isCompleted: isCompleted)
+            cell?.setup(name: drug.name, drug: drug.drugType, dose: drug.dose, isCompleted: isCompleted)
         })
         return cell ?? UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let title = viewModel?.getSectionTitle(for: section)
+        return title
     }
 }
 
 extension CustomListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var objectId = String()
-        viewModel?.getItem(afterRowAt: indexPath, completion: { id, name, type in
-            objectId = id
+        viewModel?.getItem(afterRowAt: indexPath, completion: { drug in
+            objectId = drug.id
         })
         var reason: Bool
         var id: String

@@ -11,6 +11,8 @@ extension Constants {
         
         static let labelMedicationSub = "Medication"
         
+        static let labelTimepickerSub = "start"
+        
         static let titleMedicationMain = "New Medication"
         
         static let buttonDoneMain = "Done"
@@ -33,6 +35,10 @@ extension Constants {
         
         static let dropdownFrequencySub = "Frequency"
         
+        static let timepickerTimeintervalSub = "Time interval"
+        
         static let buttonDefaultchooseSub = "Choose"
+        
+        static let systemDoseSub = "dose"
     }
 }

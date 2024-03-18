@@ -58,12 +58,23 @@ final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
             let endDate = Calendar.current.date(byAdding: .weekOfYear,
                                                 value: drug.duration,
                                                 to: startDate) ?? Date()
+            var byAdding: Calendar.Component = .day
+            switch drug.frequency {
+            case .daily:
+                byAdding = .day
+            case .weekly:
+                byAdding = .weekOfMonth
+            case .monthly:
+                byAdding = .month
+            case .annually:
+                byAdding = .year
+            }
             while startDate <= endDate {
-                startDate =  Calendar.current.date(byAdding: .day,
+                startDate =  Calendar.current.date(byAdding: byAdding,
                                                    value: 1,
                                                    to: startDate) ?? Date()
                 let objects = storage.fetch(by: DrugCompletementRealm.self)
-                let date = Calendar.current.date(byAdding: .day,
+                let date = Calendar.current.date(byAdding: byAdding,
                                                  value: 1,
                                                  to: startDate)?.standartize() ?? Date()
                 let object = DrugCompletementRealm(id: drug.id, isCompleted: false, date: date)
@@ -72,7 +83,6 @@ final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
                 if !reason { try? storage.saveOrUpdateAllObjects(objects: [object]) }
             }
         }
-        
     }
     
     func clearData() {

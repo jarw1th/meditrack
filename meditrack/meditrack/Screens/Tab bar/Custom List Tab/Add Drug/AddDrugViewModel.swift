@@ -11,6 +11,8 @@ protocol AddDrugViewModelProtocol {
     
     func getFrequency(at row: Int) -> String
     
+    func convertDuration(_ duration: String) -> Int
+    
     var numberOfItems: Int { get }
     
     var numberOfDoseRows: Int { get }
@@ -20,6 +22,8 @@ protocol AddDrugViewModelProtocol {
     var numberOfFrequencyRows: Int { get }
     
     var selectedIndex: Int? { get set }
+    
+    var timeValue: Date? { get set }
 }
 
 final class AddDrugViewModel: AddDrugViewModelProtocol {
@@ -54,6 +58,23 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
         let frequency = model.frequency[row]
         return frequency
     }
+    
+    func convertDuration(_ duration: String) -> Int {
+        let postfix = duration.split(separator: " ").suffix(1).joined()
+        let duration = Int(duration.split(separator: " ").prefix(1).joined()) ?? 0
+        switch postfix {
+        case Constants.Texts.menuDuration1Sub:
+            return duration
+        case Constants.Texts.menuDuration2Sub:
+            return duration * 4
+        case Constants.Texts.menuDuration2Sub:
+            return duration * 52
+        default:
+            return 0
+        }
+    }
+    
+    var timeValue: Date? = Date()
     
     var numberOfItems: Int {
         return DrugType.allCases.count

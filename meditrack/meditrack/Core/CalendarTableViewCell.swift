@@ -4,7 +4,7 @@ import SnapKit
 class CalendarTableViewCell: UITableViewCell {
     private let stackView = UIStackView()
     private let drugName = UILabel()
-    private let drugType = UILabel()
+    private let doseNumber = UILabel()
     private let drugImage = UIImageView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -18,9 +18,9 @@ class CalendarTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        [drugName, drugType].forEach({ $0.text = nil })
-        [drugName, drugType].forEach({ $0.attributedText = nil })
-        [drugName, drugType].forEach({ $0.layer.opacity = 1.0 })
+        [drugName, doseNumber].forEach({ $0.text = nil })
+        [drugName, doseNumber].forEach({ $0.attributedText = nil })
+        [drugName, doseNumber].forEach({ $0.layer.opacity = 1.0 })
     }
     
     override var reuseIdentifier: String? {
@@ -33,13 +33,13 @@ class CalendarTableViewCell: UITableViewCell {
             make.top.bottom.equalToSuperview().inset(4)
             make.leading.trailing.equalToSuperview()
         })
-        stackView.addSubviews([drugName, drugType])
+        stackView.addSubviews([drugName, doseNumber])
         drugName.snp.makeConstraints({ make in
             make.top.equalTo(12)
             make.leading.equalTo(24)
             make.trailing.equalTo(drugImage.snp.leading).inset(-16)
         })
-        drugType.snp.makeConstraints({ make in
+        doseNumber.snp.makeConstraints({ make in
             make.top.equalTo(drugName.snp.bottom)
             make.bottom.equalTo(-12)
             make.leading.equalTo(24)
@@ -60,31 +60,31 @@ class CalendarTableViewCell: UITableViewCell {
     }
     
     // MARK: - Setup
-    func setup(name: String, drug: DrugType, isCompleted: Bool) {
+    func setup(name: String, drug: DrugType, dose: Int, isCompleted: Bool) {
         drugName.font = Constants.Fonts.nunitoRegularTitle
-        drugType.font = Constants.Fonts.nunitoRegularSubtitle
-        [drugName, drugType].forEach({ $0.textColor = Constants.Colors.grayAccent })
+        doseNumber.font = Constants.Fonts.nunitoRegularSubtitle
+        [drugName, doseNumber].forEach({ $0.textColor = Constants.Colors.grayAccent })
         
         if isCompleted {
             var attributedString = NSAttributedString(string: name,
                                                       attributes: [.strikethroughStyle: NSUnderlineStyle.single.rawValue])
             drugName.attributedText = attributedString
             
-            attributedString = NSAttributedString(string: drug.rawValue,
+            attributedString = NSAttributedString(string: "\(Constants.Texts.systemDoseSub) \(dose) · \(drug)",
                                                   attributes: [.strikethroughStyle: NSUnderlineStyle.single.rawValue])
-            drugType.attributedText = attributedString
+            doseNumber.attributedText = attributedString
             
-            [drugName, drugType].forEach({ $0.layer.opacity = 0.5 })
+            [drugName, doseNumber].forEach({ $0.layer.opacity = 0.5 })
         } else {
             var attributedString = NSAttributedString(string: name,
                                                       attributes: [.strikethroughStyle: nil])
             drugName.attributedText = attributedString
             
-            attributedString = NSAttributedString(string: drug.rawValue,
+            attributedString = NSAttributedString(string: "\(Constants.Texts.systemDoseSub) \(dose) · \(drug)",
                                                   attributes: [.strikethroughStyle: nil])
-            drugType.attributedText = attributedString
+            doseNumber.attributedText = attributedString
             
-            [drugName, drugType].forEach({ $0.layer.opacity = 1.0 })
+            [drugName, doseNumber].forEach({ $0.layer.opacity = 1.0 })
             
         }
         
