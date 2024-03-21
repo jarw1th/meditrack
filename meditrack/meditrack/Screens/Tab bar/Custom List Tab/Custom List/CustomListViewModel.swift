@@ -21,6 +21,8 @@ protocol CustomListViewModelProtocol {
     
     var todayIndex: Int { get }
     
+    var todayDate: String { get }
+    
     var selectedIndex: Int { get set }
     
     func setCompletement(
@@ -92,6 +94,14 @@ final class CustomListViewModel: CustomListViewModelProtocol {
         let comps = Calendar.current.dateComponents([.year, .month, .day], from: Date())
         let date = Calendar.current.date(from: comps) ?? Date()
         return datesModel.dates.firstIndex(of: date) ?? 0
+    }
+    
+    var todayDate: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM dd"
+        let date = datesModel.dates[selectedIndex]
+        let selectedDateText = formatter.string(from: date)
+        return selectedDateText
     }
     
     var selectedIndex: Int = 0

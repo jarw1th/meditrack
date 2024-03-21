@@ -9,6 +9,8 @@ final class CustomListViewController: UIViewController {
         }
     }
     
+    private let addButton = UIButton()
+    private let selectedDate = UILabel()
     private let nameLabel = UILabel()
     private lazy var dateCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -18,9 +20,10 @@ final class CustomListViewController: UIViewController {
         collection.showsHorizontalScrollIndicator = false
         return collection
     }()
-    private let tableView = UITableView()
     private let backgroundView = UIView()
-    private let subnameLabel = UILabel()
+    private let timeTitleLabel = UILabel()
+    private let medicationTitleLabel = UILabel()
+    private let tableView = UITableView()
     
     // MARK: - Body
     override func viewDidLoad() {
@@ -51,24 +54,40 @@ final class CustomListViewController: UIViewController {
     // MARK: - Functions
     private func setupUI() {
         view.backgroundColor = Constants.Colors.grayBackground
-        title = nil
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pushAddDrug))
-        navigationController?.navigationBar.tintColor = Constants.Colors.grayAccent
+        
+        navigationController?.isNavigationBarHidden = true
         
         tableView.separatorStyle = .none
         
-        view.addSubviews([nameLabel, dateCollectionView, backgroundView, subnameLabel, tableView])
+        view.addSubviews([addButton,
+                          selectedDate,
+                          nameLabel,
+                          dateCollectionView,
+                          backgroundView,
+                          timeTitleLabel,
+                          medicationTitleLabel,
+                          tableView])
+        addButton.snp.makeConstraints({ make in
+            make.width.height.equalTo(40)
+            make.trailing.equalTo(-24)
+            make.top.equalTo(view.snp.top).inset(72)
+        })
+        selectedDate.snp.makeConstraints({ make in
+            make.leading.equalTo(24)
+            make.trailing.equalTo(-24)
+            make.top.equalTo(view.snp.top).inset(112)
+        })
         nameLabel.snp.makeConstraints({ make in
-            make.leading.equalTo(16)
-            make.trailing.equalTo(-16)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(48)
+            make.leading.equalTo(24)
+            make.trailing.equalTo(-24)
+            make.top.equalTo(selectedDate.snp.bottom)
         })
         dateCollectionView.snp.makeConstraints({ make in
             make.height.equalTo(100)
-            make.leading.equalTo(16)
-            make.trailing.equalTo(-16)
+            make.leading.equalTo(24)
+            make.trailing.equalTo(-24)
             make.top.equalTo(nameLabel.snp.bottom)
         })
         backgroundView.snp.makeConstraints({ make in
@@ -76,29 +95,49 @@ final class CustomListViewController: UIViewController {
             make.bottom.equalTo(64)
             make.top.equalTo(dateCollectionView.snp.bottom).inset(-12)
         })
-        subnameLabel.snp.makeConstraints({ make in
-            make.leading.trailing.equalToSuperview().inset(24)
-            make.top.equalTo(backgroundView.snp.top).inset(16)
+        timeTitleLabel.snp.makeConstraints({ make in
+            make.leading.equalTo(24)
+            make.top.equalTo(backgroundView.snp.top).inset(40)
+        })
+        medicationTitleLabel.snp.makeConstraints({ make in
+            make.leading.equalTo(timeTitleLabel.snp.trailing).inset(-37)
+            make.top.equalTo(backgroundView.snp.top).inset(40)
         })
         tableView.snp.makeConstraints({ make in
             make.leading.trailing.equalToSuperview().inset(16)
             make.bottom.equalTo(-16)
-            make.top.equalTo(subnameLabel.snp.bottom)
+            make.top.equalTo(timeTitleLabel.snp.bottom)
         })
         
-        nameLabel.text = Constants.Texts.labelRemidersMain
-        nameLabel.font = Constants.Fonts.nunitoMediumHeader1
-        nameLabel.textColor = Constants.Colors.grayAccent
+        addButton.setImage(Constants.Images.plusIcon, for: .normal)
+        addButton.tintColor = addButton.isSelected ? Constants.Colors.white : Constants.Colors.grayPrimary
+        addButton.backgroundColor = addButton.isSelected ? Constants.Colors.grayBackground : Constants.Colors.graySecondaryLight
+        addButton.contentVerticalAlignment = .fill
+        addButton.contentHorizontalAlignment = .fill
+        addButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        addButton.layer.cornerRadius = 12
+        addButton.addTarget(self, action: #selector(pushAddDrug), for: .touchUpInside)
+        
+        selectedDate.font = Constants.Fonts.nunitoRegular24
+        selectedDate.textColor = Constants.Colors.graySecondary
+        selectedDate.text = viewModel?.todayDate
+        
+        nameLabel.text = Constants.Texts.labelTodayRemidersMain
+        nameLabel.font = Constants.Fonts.nunitoBold32
+        nameLabel.textColor = Constants.Colors.grayPrimary
         
         dateCollectionView.backgroundColor = Constants.Colors.grayBackground
         
-        subnameLabel.text = Constants.Texts.labelMedicationSub
-        subnameLabel.font = Constants.Fonts.nunitoRegularTitle
-        subnameLabel.textColor = Constants.Colors.grayAccent
-        subnameLabel.layer.opacity = 0.8
+        timeTitleLabel.text = Constants.Texts.labelTimeMain
+        timeTitleLabel.font = Constants.Fonts.nunitoRegular16
+        timeTitleLabel.textColor = Constants.Colors.graySecondary
+        
+        medicationTitleLabel.text = Constants.Texts.labelMedicationMain
+        medicationTitleLabel.font = Constants.Fonts.nunitoRegular16
+        medicationTitleLabel.textColor = Constants.Colors.graySecondary
         
         backgroundView.backgroundColor = .white
-        backgroundView.layer.cornerRadius = 30
+        backgroundView.layer.cornerRadius = 48
     }
     
     private func setUI() {
@@ -183,7 +222,8 @@ extension CustomListViewController: UICollectionViewDataSource {
 
         viewModel?.getDate(afterRowAt: indexPath, completion: { date in
             let isSelected = self.viewModel?.selectedIndex == indexPath.row
-            cell.setup(date: date, isSelected: isSelected)
+            let isToday = self.viewModel?.todayIndex == indexPath.row
+            cell.setup(date: date, isSelected: isSelected, isToday: isToday)
         })
 
         return cell
@@ -199,6 +239,11 @@ extension CustomListViewController: UICollectionViewDelegate {
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         let selectedIndex = IndexPath(row: viewModel?.selectedIndex ?? 0, section: 0)
         viewModel?.selectedIndex = indexPath.row
+        
+        let isToday = viewModel?.todayIndex == indexPath.row
+        selectedDate.text = viewModel?.todayDate
+        nameLabel.text = isToday ? Constants.Texts.labelTodayRemidersMain : Constants.Texts.labelRemidersMain
+        
         collectionView.reloadItems(at: [indexPath, selectedIndex])
         tableView.reloadData()
     }

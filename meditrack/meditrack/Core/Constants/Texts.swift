@@ -1,15 +1,21 @@
 // rule: (ui element)(name)(level of importancy)
 extension Constants {
     enum Texts {
+        // Custom list
         static let labelRemidersMain = "Reminders"
         
+        static let labelTodayRemidersMain = "Today reminders"
+        
+        static let labelTimeMain = "Time"
+        
+        static let labelMedicationMain = "Medication"
+        
+        // Add Drug
         static let labelTypeMain = "Type"
         
         static let labelInformationMain = "General information"
         
         static let labelTimelineMain = "Timeline & others"
-        
-        static let labelMedicationSub = "Medication"
         
         static let labelTimepickerSub = "start"
         

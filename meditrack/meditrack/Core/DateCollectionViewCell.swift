@@ -2,9 +2,9 @@ import UIKit
 import SnapKit
 
 class DateCollectionViewCell: UICollectionViewCell {
-    private let stackView = UIStackView()
     private let weekDayLabel = UILabel()
     private let dateLabel = UILabel()
+    private let selectedBackground = UIView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,34 +25,40 @@ class DateCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubviews([stackView])
-        stackView.snp.makeConstraints({ make in
-            make.top.bottom.equalToSuperview().inset(4)
-            make.leading.trailing.equalToSuperview()
+        contentView.addSubviews([weekDayLabel, selectedBackground, dateLabel])
+        weekDayLabel.snp.makeConstraints({ make in
+            make.top.centerX.equalToSuperview()
         })
-        stackView.addArrangedSubviews([weekDayLabel, dateLabel])
+        selectedBackground.snp.makeConstraints({ make in
+            make.width.height.equalTo(32)
+            make.top.equalTo(weekDayLabel.snp.bottom).inset(-8)
+            make.centerX.bottom.equalToSuperview()
+        })
+        dateLabel.snp.makeConstraints({ make in
+            make.centerX.equalTo(selectedBackground.snp.centerX)
+            make.centerY.equalTo(selectedBackground.snp.centerY)
+        })
         
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.spacing = 16
-        
-        layer.cornerRadius = 10
+        selectedBackground.isHidden = true
+        selectedBackground.backgroundColor = Constants.Colors.greenAccent
+        selectedBackground.layer.cornerRadius = 8
     }
     
     // MARK: - Setup
-    func setup(date: Date, isSelected: Bool) {
+    func setup(date: Date, isSelected: Bool, isToday: Bool) {
         let formatter = DateFormatter()
         
-        self.backgroundColor = isSelected ? Constants.Colors.grayAccent : Constants.Colors.grayBackground
+        selectedBackground.backgroundColor = isToday && !isSelected ? Constants.Colors.graySecondary : Constants.Colors.greenAccent
+        selectedBackground.isHidden = !isSelected && !isToday
         
         formatter.dateFormat = "dd"
         dateLabel.text = formatter.string(from: date)
-        dateLabel.font = Constants.Fonts.nunitoRegularSubtitle
-        dateLabel.textColor = isSelected ? Constants.Colors.grayBackground : Constants.Colors.grayAccent
+        dateLabel.font = Constants.Fonts.nunitoSemiBold16
+        dateLabel.textColor = isSelected || isToday ? Constants.Colors.white : Constants.Colors.grayPrimary
 
         formatter.dateFormat = "EEE"
-        weekDayLabel.text = formatter.string(from: date).uppercased()
-        weekDayLabel.font = Constants.Fonts.nunitoRegularSubtitle
-        weekDayLabel.textColor =  isSelected ? Constants.Colors.grayBackground : Constants.Colors.grayAccent
+        weekDayLabel.text = formatter.string(from: date).capitalized
+        weekDayLabel.font = Constants.Fonts.nunitoMedium16
+        weekDayLabel.textColor = Constants.Colors.graySecondary
     }
 }

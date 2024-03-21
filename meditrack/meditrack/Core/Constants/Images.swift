@@ -3,7 +3,7 @@ import UIKit
 // rule: (name)(number if needed)
 extension Constants {
     enum Images {
-        
+        static let plusIcon = UIImage(named: "PlusIcon")
         
     }
 }
