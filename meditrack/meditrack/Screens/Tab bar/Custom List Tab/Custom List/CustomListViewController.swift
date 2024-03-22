@@ -49,6 +49,50 @@ final class CustomListViewController: UIViewController {
                                         animated: false)
         })
         
+        tableView.performBatchUpdates({
+            tableView.reloadData()
+        }, completion: { _ in
+            for section in 0...self.tableView.numberOfSections - 1 {
+                guard let cellView = self.tableView.cellForRow(at: IndexPath(row: 0, section: section)) else { break }
+                
+                let rows = self.tableView.numberOfRows(inSection: section)
+                var height: CGFloat = 0
+                for row in 1...rows {
+                    height += cellView.frame.height * CGFloat(row)
+                }
+                
+                
+                let title = UILabel()
+                let rectBar = UIImageView()
+                
+                self.view.addSubviews([title, rectBar])
+                title.snp.makeConstraints({ make in
+                    make.leading.equalTo(24)
+                    make.top.equalTo(cellView.snp.top).inset(8)
+                })
+                rectBar.snp.makeConstraints({ make in
+                    make.width.equalTo(2)
+                    make.height.equalTo(height)
+                    make.top.equalTo(cellView.snp.top).inset(8)
+                    make.trailing.equalTo(cellView.snp.leading).inset(-10)
+                })
+                
+                let string = self.viewModel?.getSectionTitle(for: section).replacingOccurrences(of: " ", with: "\n") ?? String()
+                let attributedString = NSMutableAttributedString(string: string)
+                let timeAttributes = [NSAttributedString.Key.font: Constants.Fonts.nunitoSemiBold20,
+                                      NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary] as! [NSAttributedString.Key: Any]
+                let postfixAttributes = [NSAttributedString.Key.font: Constants.Fonts.nunitoSemiBold16,
+                                         NSAttributedString.Key.foregroundColor: Constants.Colors.graySecondary]  as! [NSAttributedString.Key: Any]
+                if let commaIndex = string.firstIndex(of: "\n") {
+                    attributedString.addAttributes(timeAttributes, range: NSRange(string.startIndex ..< commaIndex, in: string))
+                    attributedString.addAttributes(postfixAttributes, range: NSRange(commaIndex ..< string.endIndex, in: string))
+                }
+                title.attributedText = attributedString
+                title.numberOfLines = 2
+                
+                rectBar.image = Constants.Images.rect
+            }
+        })
     }
     
     // MARK: - Functions
@@ -104,8 +148,9 @@ final class CustomListViewController: UIViewController {
             make.top.equalTo(backgroundView.snp.top).inset(40)
         })
         tableView.snp.makeConstraints({ make in
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.bottom.equalTo(-16)
+            make.width.equalTo(280)
+            make.trailing.equalTo(-24)
+            make.bottom.equalTo(-24)
             make.top.equalTo(timeTitleLabel.snp.bottom)
         })
         
@@ -138,6 +183,8 @@ final class CustomListViewController: UIViewController {
         
         backgroundView.backgroundColor = .white
         backgroundView.layer.cornerRadius = 48
+        
+        tableView.bounces = false
     }
     
     private func setUI() {
@@ -174,9 +221,13 @@ extension CustomListViewController: UITableViewDataSource {
         return cell ?? UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let title = viewModel?.getSectionTitle(for: section)
-        return title
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let number = (section == 0) ? 0 : 8
+        return CGFloat(number)
     }
 }
 

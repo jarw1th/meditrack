@@ -13,6 +13,10 @@ extension Constants {
         
         static let nunitoRegular16 = UIFont(name: "Nunito-Regular", size: 16)
         
+        static let nunitoMedium12 = UIFont(name: "Nunito-Medium", size: 12)
+        
+        static let nunitoSemiBold20 = UIFont(name: "Nunito-SemiBold", size: 20)
+        
         // MARK: -
         static let nunitoMediumHeader1 = UIFont(name: "Nunito-Medium", size: 36)
         

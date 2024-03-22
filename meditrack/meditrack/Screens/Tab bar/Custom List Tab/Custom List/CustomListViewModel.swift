@@ -74,7 +74,8 @@ final class CustomListViewModel: CustomListViewModelProtocol {
     
     func getSectionTitle(for section: Int) -> String {
         let section = sectionModel.sections[section]
-        return timeIntervalConverter(for: section)
+        let converted = timeConverter(for: section)
+        return converted
     }
     
     var numberOfSections: Int {
@@ -201,14 +202,10 @@ final class CustomListViewModel: CustomListViewModelProtocol {
         return resultList
     }
     
-    private func timeIntervalConverter(for start: Date) -> String {
+    private func timeConverter(for date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
-        let startString = dateFormatter.string(from: start)
-        let endDate = Calendar.current.date(byAdding: .hour, value: 1, to: start) ?? Date()
-        let endString = dateFormatter.string(from: endDate)
-        
-        let resultString = "\(startString) - \(endString)"
+        let resultString = dateFormatter.string(from: date)
         return resultString
     }
 }

@@ -4,11 +4,12 @@ import SnapKit
 class CalendarTableViewCell: UITableViewCell {
     private let stackView = UIStackView()
     private let drugName = UILabel()
-    private let doseNumber = UILabel()
+    private let drugDose = UILabel()
     private let drugImage = UIImageView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         setupUI()
     }
     
@@ -18,9 +19,11 @@ class CalendarTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        [drugName, doseNumber].forEach({ $0.text = nil })
-        [drugName, doseNumber].forEach({ $0.attributedText = nil })
-        [drugName, doseNumber].forEach({ $0.layer.opacity = 1.0 })
+        
+        [drugName, drugDose].forEach({ $0.text = nil })
+        [drugName, drugDose].forEach({ $0.attributedText = nil })
+        [drugName, drugDose].forEach({ $0.layer.opacity = 1.0 })
+        drugImage.image = nil
     }
     
     override var reuseIdentifier: String? {
@@ -30,40 +33,33 @@ class CalendarTableViewCell: UITableViewCell {
     private func setupUI() {
         contentView.addSubviews([stackView, drugImage])
         stackView.snp.makeConstraints({ make in
-            make.top.bottom.equalToSuperview().inset(4)
-            make.leading.trailing.equalToSuperview()
-        })
-        stackView.addSubviews([drugName, doseNumber])
-        drugName.snp.makeConstraints({ make in
-            make.top.equalTo(12)
-            make.leading.equalTo(24)
-            make.trailing.equalTo(drugImage.snp.leading).inset(-16)
-        })
-        doseNumber.snp.makeConstraints({ make in
-            make.top.equalTo(drugName.snp.bottom)
-            make.bottom.equalTo(-12)
-            make.leading.equalTo(24)
-            make.trailing.equalTo(drugImage.snp.leading).inset(-16)
+            make.top.bottom.equalToSuperview().inset(15)
+            make.leading.equalTo(20)
+            make.trailing.equalTo(drugImage.snp.leading).inset(-32)
         })
         drugImage.snp.makeConstraints({ make in
-            make.width.height.equalTo(60)
+            make.width.height.equalTo(32)
             make.centerY.equalTo(stackView)
-            make.trailing.equalTo(-16)
+            make.trailing.equalTo(-20)
         })
         
+        stackView.addArrangedSubviews([drugName, drugDose])
+        
         stackView.axis = .vertical
+        stackView.spacing = 4
         
         self.backgroundColor = Constants.Colors.grayBackground
-        layer.cornerRadius = 20
-        layer.borderColor = CGColor(red: 255, green: 255, blue: 255, alpha: 1)
-        layer.borderWidth = 5
+        layer.cornerRadius = 16
+        layer.borderWidth = 8
+        layer.borderColor = Constants.Colors.white.cgColor
     }
     
     // MARK: - Setup
     func setup(name: String, drug: DrugType, dose: Int, isCompleted: Bool) {
-        drugName.font = Constants.Fonts.nunitoRegularTitle
-        doseNumber.font = Constants.Fonts.nunitoRegularSubtitle
-        [drugName, doseNumber].forEach({ $0.textColor = Constants.Colors.grayAccent })
+        drugName.font = Constants.Fonts.nunitoSemiBold16
+        drugDose.font = Constants.Fonts.nunitoMedium12
+        drugName.textColor = Constants.Colors.grayPrimary
+        drugDose.textColor = Constants.Colors.graySecondary
         
         if isCompleted {
             var attributedString = NSAttributedString(string: name,
@@ -72,9 +68,9 @@ class CalendarTableViewCell: UITableViewCell {
             
             attributedString = NSAttributedString(string: "\(Constants.Texts.systemDoseSub) \(dose) · \(drug)",
                                                   attributes: [.strikethroughStyle: NSUnderlineStyle.single.rawValue])
-            doseNumber.attributedText = attributedString
+            drugDose.attributedText = attributedString
             
-            [drugName, doseNumber].forEach({ $0.layer.opacity = 0.5 })
+            [drugName, drugDose].forEach({ $0.layer.opacity = 0.5 })
         } else {
             var attributedString = NSAttributedString(string: name,
                                                       attributes: [.strikethroughStyle: nil])
@@ -82,9 +78,9 @@ class CalendarTableViewCell: UITableViewCell {
             
             attributedString = NSAttributedString(string: "\(Constants.Texts.systemDoseSub) \(dose) · \(drug)",
                                                   attributes: [.strikethroughStyle: nil])
-            doseNumber.attributedText = attributedString
+            drugDose.attributedText = attributedString
             
-            [drugName, doseNumber].forEach({ $0.layer.opacity = 1.0 })
+            [drugName, drugDose].forEach({ $0.layer.opacity = 1.0 })
             
         }
         
