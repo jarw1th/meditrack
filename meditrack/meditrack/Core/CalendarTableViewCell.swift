@@ -33,14 +33,14 @@ class CalendarTableViewCell: UITableViewCell {
     private func setupUI() {
         contentView.addSubviews([stackView, drugImage])
         stackView.snp.makeConstraints({ make in
-            make.top.bottom.equalToSuperview().inset(15)
-            make.leading.equalTo(20)
+            make.top.bottom.equalToSuperview().inset(23)
+            make.leading.equalTo(28)
             make.trailing.equalTo(drugImage.snp.leading).inset(-32)
         })
         drugImage.snp.makeConstraints({ make in
             make.width.height.equalTo(32)
             make.centerY.equalTo(stackView)
-            make.trailing.equalTo(-20)
+            make.trailing.equalTo(-28)
         })
         
         stackView.addArrangedSubviews([drugName, drugDose])
@@ -49,7 +49,7 @@ class CalendarTableViewCell: UITableViewCell {
         stackView.spacing = 4
         
         self.backgroundColor = Constants.Colors.grayBackground
-        layer.cornerRadius = 16
+        layer.cornerRadius = 20
         layer.borderWidth = 8
         layer.borderColor = Constants.Colors.white.cgColor
     }

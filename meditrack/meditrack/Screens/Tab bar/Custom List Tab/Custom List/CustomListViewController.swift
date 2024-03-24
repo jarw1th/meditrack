@@ -21,10 +21,9 @@ final class CustomListViewController: UIViewController {
         return collection
     }()
     private let backgroundView = UIView()
-    private let timeTitleLabel = UILabel()
     private let medicationTitleLabel = UILabel()
     private let tableView = UITableView()
-    
+ 
     // MARK: - Body
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,67 +31,7 @@ final class CustomListViewController: UIViewController {
         viewModel = CustomListViewModel()
         
         setupUI()
-        
-        dateCollectionView.register(DateCollectionViewCell.self, forCellWithReuseIdentifier: "DateCollectionViewCell")
-        dateCollectionView.dataSource = self
-        dateCollectionView.delegate = self
-        
-        tableView.register(CalendarTableViewCell.self, forCellReuseIdentifier: "CalendarTableViewCell")
-        tableView.dataSource = self
-        tableView.delegate = self
-        
-        dateCollectionView.performBatchUpdates({
-            dateCollectionView.reloadData()
-        }, completion: { _ in
-            self.dateCollectionView.scrollToItem(at: IndexPath(row: self.viewModel?.todayIndex ?? 0, section: 0),
-                                        at: .centeredHorizontally,
-                                        animated: false)
-        })
-        
-        tableView.performBatchUpdates({
-            tableView.reloadData()
-        }, completion: { _ in
-            for section in 0...self.tableView.numberOfSections - 1 {
-                guard let cellView = self.tableView.cellForRow(at: IndexPath(row: 0, section: section)) else { break }
-                
-                let rows = self.tableView.numberOfRows(inSection: section)
-                var height: CGFloat = 0
-                for row in 1...rows {
-                    height += cellView.frame.height * CGFloat(row)
-                }
-                
-                
-                let title = UILabel()
-                let rectBar = UIImageView()
-                
-                self.view.addSubviews([title, rectBar])
-                title.snp.makeConstraints({ make in
-                    make.leading.equalTo(24)
-                    make.top.equalTo(cellView.snp.top).inset(8)
-                })
-                rectBar.snp.makeConstraints({ make in
-                    make.width.equalTo(2)
-                    make.height.equalTo(height)
-                    make.top.equalTo(cellView.snp.top).inset(8)
-                    make.trailing.equalTo(cellView.snp.leading).inset(-10)
-                })
-                
-                let string = self.viewModel?.getSectionTitle(for: section).replacingOccurrences(of: " ", with: "\n") ?? String()
-                let attributedString = NSMutableAttributedString(string: string)
-                let timeAttributes = [NSAttributedString.Key.font: Constants.Fonts.nunitoSemiBold20,
-                                      NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary] as! [NSAttributedString.Key: Any]
-                let postfixAttributes = [NSAttributedString.Key.font: Constants.Fonts.nunitoSemiBold16,
-                                         NSAttributedString.Key.foregroundColor: Constants.Colors.graySecondary]  as! [NSAttributedString.Key: Any]
-                if let commaIndex = string.firstIndex(of: "\n") {
-                    attributedString.addAttributes(timeAttributes, range: NSRange(string.startIndex ..< commaIndex, in: string))
-                    attributedString.addAttributes(postfixAttributes, range: NSRange(commaIndex ..< string.endIndex, in: string))
-                }
-                title.attributedText = attributedString
-                title.numberOfLines = 2
-                
-                rectBar.image = Constants.Images.rect
-            }
-        })
+        setCollectionAndTable()
     }
     
     // MARK: - Functions
@@ -100,17 +39,13 @@ final class CustomListViewController: UIViewController {
         view.backgroundColor = Constants.Colors.grayBackground
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        
         navigationController?.isNavigationBarHidden = true
-        
-        tableView.separatorStyle = .none
         
         view.addSubviews([addButton,
                           selectedDate,
                           nameLabel,
                           dateCollectionView,
                           backgroundView,
-                          timeTitleLabel,
                           medicationTitleLabel,
                           tableView])
         addButton.snp.makeConstraints({ make in
@@ -139,19 +74,15 @@ final class CustomListViewController: UIViewController {
             make.bottom.equalTo(64)
             make.top.equalTo(dateCollectionView.snp.bottom).inset(-12)
         })
-        timeTitleLabel.snp.makeConstraints({ make in
+        medicationTitleLabel.snp.makeConstraints({ make in
             make.leading.equalTo(24)
             make.top.equalTo(backgroundView.snp.top).inset(40)
         })
-        medicationTitleLabel.snp.makeConstraints({ make in
-            make.leading.equalTo(timeTitleLabel.snp.trailing).inset(-37)
-            make.top.equalTo(backgroundView.snp.top).inset(40)
-        })
         tableView.snp.makeConstraints({ make in
-            make.width.equalTo(280)
-            make.trailing.equalTo(-24)
+            make.width.equalTo(361)
+            make.trailing.equalTo(-16)
             make.bottom.equalTo(-24)
-            make.top.equalTo(timeTitleLabel.snp.bottom)
+            make.top.equalTo(medicationTitleLabel.snp.bottom)
         })
         
         addButton.setImage(Constants.Images.plusIcon, for: .normal)
@@ -173,18 +104,32 @@ final class CustomListViewController: UIViewController {
         
         dateCollectionView.backgroundColor = Constants.Colors.grayBackground
         
-        timeTitleLabel.text = Constants.Texts.labelTimeMain
-        timeTitleLabel.font = Constants.Fonts.nunitoRegular16
-        timeTitleLabel.textColor = Constants.Colors.graySecondary
-        
         medicationTitleLabel.text = Constants.Texts.labelMedicationMain
         medicationTitleLabel.font = Constants.Fonts.nunitoRegular16
         medicationTitleLabel.textColor = Constants.Colors.graySecondary
         
         backgroundView.backgroundColor = .white
         backgroundView.layer.cornerRadius = 48
+    }
+    
+    private func setCollectionAndTable() {
+        dateCollectionView.register(DateCollectionViewCell.self, forCellWithReuseIdentifier: "DateCollectionViewCell")
+        dateCollectionView.dataSource = self
+        dateCollectionView.delegate = self
         
-        tableView.bounces = false
+        tableView.register(CalendarTableViewCell.self, forCellReuseIdentifier: "CalendarTableViewCell")
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        tableView.separatorStyle = .none
+        
+        dateCollectionView.performBatchUpdates({
+            dateCollectionView.reloadData()
+        }, completion: { _ in
+            self.dateCollectionView.scrollToItem(at: IndexPath(row: self.viewModel?.todayIndex ?? 0, section: 0),
+                                        at: .centeredHorizontally,
+                                        animated: false)
+        })
     }
     
     private func setUI() {
@@ -204,7 +149,7 @@ extension CustomListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let number = viewModel?.numberOfRowsInSection(in: section) else {return 0}
+        guard let number = viewModel?.numberOfRows(in: section) else {return 0}
         return number
     }
     
@@ -212,30 +157,44 @@ extension CustomListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarTableViewCell", for: indexPath) as? CalendarTableViewCell
         cell?.selectionStyle = .none
         
-        viewModel?.getItem(afterRowAt: indexPath, completion: { drug in
-            let filteredList = self.viewModel?.getCompletedList().filter({ $0.key == drug.id }).first?.value ?? (false, String())
-            var isCompleted: Bool
-            (isCompleted, _) = filteredList
-            cell?.setup(name: drug.name, drug: drug.drugType, dose: drug.dose, isCompleted: isCompleted)
+        viewModel?.getItemSetup(afterRowAt: indexPath, completion: { name, type, dose, isCompleted in
+            cell?.setup(name: name, drug: type, dose: dose, isCompleted: isCompleted)
         })
+        
         return cell ?? UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return UIView()
+        let contentView = UIView()
+        let title = UILabel()
+        
+        contentView.addSubview(title)
+        title.snp.makeConstraints({ make in
+            make.leading.equalTo(16)
+            make.top.equalToSuperview()
+            make.trailing.equalTo(contentView.snp.leading).inset(128)
+        })
+        
+        contentView.backgroundColor = Constants.Colors.white
+        
+        let string = viewModel?.getSectionTitle(for: section) ?? String()
+        title.text = string
+        title.font = Constants.Fonts.nunitoSemiBold16
+        title.textColor = Constants.Colors.graySecondary
+        
+        return contentView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let number = (section == 0) ? 0 : 8
-        return CGFloat(number)
+        return 20
     }
 }
 
 extension CustomListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var objectId = String()
-        viewModel?.getItem(afterRowAt: indexPath, completion: { drug in
-            objectId = drug.id
+        viewModel?.getItemId(afterRowAt: indexPath, completion: { id in
+            objectId = id
         })
         var reason: Bool
         var id: String

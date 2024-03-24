@@ -31,7 +31,7 @@
                                 </constraints>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MediTrack" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1uv-mb-eG0">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MediTrack" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gfk-aW-MQi">
                                 <rect key="frame" x="111" y="502" width="171" height="50"/>
                                 <fontDescription key="fontDescription" name="Nunito-Bold" family="Nunito" pointSize="36"/>
                                 <color key="textColor" name="AccentColor"/>
@@ -42,8 +42,8 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="w4W-3Y-qYF" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="2ws-bH-Qry"/>
-                            <constraint firstItem="1uv-mb-eG0" firstAttribute="top" secondItem="w4W-3Y-qYF" secondAttribute="bottom" constant="16" id="IZ7-3r-7mA"/>
-                            <constraint firstItem="1uv-mb-eG0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="d91-R4-WXz"/>
+                            <constraint firstItem="Gfk-aW-MQi" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Q80-JT-8RE"/>
+                            <constraint firstItem="Gfk-aW-MQi" firstAttribute="top" secondItem="w4W-3Y-qYF" secondAttribute="bottom" constant="16" id="j2O-jh-lLY"/>
                             <constraint firstItem="w4W-3Y-qYF" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-40" id="srK-p1-sI9"/>
                         </constraints>
                     </view>
@@ -56,7 +56,7 @@
     <resources>
         <image name="Logo" width="649" height="649"/>
         <namedColor name="AccentColor">
-            <color red="0.34509803921568627" green="0.50588235294117645" blue="0.3411764705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.3449999988079071" green="0.50599998235702515" blue="0.34099999070167542" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

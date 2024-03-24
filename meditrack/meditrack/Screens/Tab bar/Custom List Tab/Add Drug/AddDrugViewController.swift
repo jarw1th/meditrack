@@ -9,6 +9,8 @@ final class AddDrugViewController: UIViewController {
         }
     }
     
+    private let navigationBar = CustomNavigationBar()
+    
     private let scrollView = UIScrollView()
     
     private let typeLabel = UILabel()
@@ -41,22 +43,7 @@ final class AddDrugViewController: UIViewController {
         viewModel = AddDrugViewModel()
         
         setupUI()
-        
-        typeCollectionView.register(TypeCollectionViewCell.self, forCellWithReuseIdentifier: "TypeCollectionViewCell")
-        typeCollectionView.dataSource = self
-        typeCollectionView.delegate = self
-        
-        [doseMenu, durationMenu, frequencyMenu].forEach({
-            $0.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
-            $0.delegate = self
-            $0.dataSource = self
-            $0.isHidden.toggle()
-            $0.layer.cornerRadius = 8
-            $0.layer.borderWidth = 2
-            $0.layer.borderColor = Constants.Colors.grayBackground?.cgColor
-            $0.tintColor = Constants.Colors.grayAccent
-            $0.separatorColor = Constants.Colors.grayAccent
-        })
+        setCollectionAndTable()
     }
     
     // MARK: - Functions
@@ -64,18 +51,8 @@ final class AddDrugViewController: UIViewController {
         view.backgroundColor = .white
         title = Constants.Texts.titleMedicationMain
         
-        navigationController?.navigationBar.tintColor = Constants.Colors.grayAccent
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Constants.Colors.grayAccent!,
-                                                                   .font: Constants.Fonts.nunitoRegularSubtitle!]
-        navigationItem.rightBarButtonItems = [UIBarButtonItem(title: Constants.Texts.buttonDoneMain,
-                                                              style: .plain,
-                                                              target: self,
-                                                              action: #selector(doneButtonAction))]
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([.foregroundColor: Constants.Colors.grayAccent!,
-                                                                   .font: Constants.Fonts.nunitoRegularSubtitle!],
-                                                                  for: .normal)
-        
-        view.addSubviews([typeLabel,
+        view.addSubviews([navigationBar,
+                          typeLabel,
                           typeCollectionView,
                           informationLabel,
                           nameTextField,
@@ -88,16 +65,19 @@ final class AddDrugViewController: UIViewController {
                           frequencyMenuButton,
                           frequencyMenu,
                           intervalMenuButton])
+        navigationBar.snp.makeConstraints({ make in
+            make.leading.trailing.top.equalToSuperview()
+        })
         typeLabel.snp.makeConstraints({ make in
-            make.leading.equalTo(16)
-            make.trailing.equalTo(-16)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(16)
+            make.leading.equalTo(24)
+            make.trailing.equalTo(-24)
+            make.top.equalTo(navigationBar.snp.bottom).inset(-8)
         })
         typeCollectionView.snp.makeConstraints({ make in
             make.height.equalTo(120)
-            make.leading.equalTo(16)
-            make.trailing.equalTo(-16)
-            make.top.equalTo(typeLabel.snp.bottom).inset(-16)
+            make.leading.equalTo(24)
+            make.trailing.equalTo(-24)
+            make.top.equalTo(typeLabel.snp.bottom)
         })
         informationLabel.snp.makeConstraints({ make in
             make.leading.equalTo(16)
@@ -164,9 +144,14 @@ final class AddDrugViewController: UIViewController {
             make.bottom.equalTo(frequencyMenuButton.snp.top)
         })
         
+        navigationBar.setDelegate(self)
+        navigationBar.setTitle(Constants.Texts.titleMedicationMain)
+        navigationBar.setImage(.left, image: Constants.Images.backIcon!)
+        navigationBar.setImage(.right, image: Constants.Images.qrIcon!)
+        
         typeLabel.text = Constants.Texts.labelTypeMain
-        typeLabel.font = Constants.Fonts.nunitoRegularTitle
-        typeLabel.textColor = Constants.Colors.grayAccent
+        typeLabel.font = Constants.Fonts.nunitoBold20
+        typeLabel.textColor = Constants.Colors.grayPrimary
         
         informationLabel.text = Constants.Texts.labelInformationMain
         informationLabel.font = Constants.Fonts.nunitoRegularTitle
@@ -209,6 +194,28 @@ final class AddDrugViewController: UIViewController {
         intervalMenuButton.layer.cornerRadius = 10
         intervalMenuButton.setup(name: Constants.Texts.timepickerTimeintervalSub,
                                  view: self)
+    }
+    
+    private func setCollectionAndTable() {
+        typeCollectionView.register(TypeCollectionViewCell.self, forCellWithReuseIdentifier: "TypeCollectionViewCell")
+        typeCollectionView.dataSource = self
+        typeCollectionView.delegate = self
+        
+        [doseMenu, durationMenu, frequencyMenu].forEach({
+            $0.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
+            $0.delegate = self
+            $0.dataSource = self
+            $0.isHidden.toggle()
+            $0.layer.cornerRadius = 8
+            $0.layer.borderWidth = 2
+            $0.layer.borderColor = Constants.Colors.grayBackground?.cgColor
+            $0.tintColor = Constants.Colors.grayAccent
+            $0.separatorColor = Constants.Colors.grayAccent
+        })
+    }
+    
+    private func backButtonAction() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc private func doneButtonAction() {
@@ -282,11 +289,11 @@ extension AddDrugViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 120, height: 120)
+        return CGSize(width: 88, height: 88)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 4
+        return 8
     }
 }
 
@@ -368,5 +375,17 @@ extension AddDrugViewController: ButtonTapDelegate {
 extension AddDrugViewController: PickerEditedDelegate {
     func tap(_ value: Date) {
         viewModel?.timeValue = value
+    }
+}
+
+// MARK: - CustomNavigationBarDelegate
+extension AddDrugViewController: CustomNavigationBarDelegate {
+    func tapped(_ button: ButtonType) {
+        switch button {
+        case .left:
+            backButtonAction()
+        case .right:
+            break
+        }
     }
 }

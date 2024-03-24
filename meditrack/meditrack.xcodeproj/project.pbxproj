@@ -14,6 +14,7 @@
 		215797DE2BA0BE6E000B190A /* DropDownMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215797DD2BA0BE6E000B190A /* DropDownMenuButton.swift */; };
 		2157985F2BA83DF4000B190A /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2157985E2BA83DF4000B190A /* SectionModel.swift */; };
 		215798612BA85291000B190A /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215798602BA85291000B190A /* TimePicker.swift */; };
+		21BCC6E32BB0973F00506B4A /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BCC6E22BB0973F00506B4A /* CustomNavigationBar.swift */; };
 		21F438382B9B897E004408EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438372B9B897E004408EF /* AppDelegate.swift */; };
 		21F4383A2B9B897E004408EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438392B9B897E004408EF /* SceneDelegate.swift */; };
 		21F438412B9B8980004408EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21F438402B9B8980004408EF /* Assets.xcassets */; };
@@ -56,6 +57,7 @@
 		215797DD2BA0BE6E000B190A /* DropDownMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownMenuButton.swift; sourceTree = "<group>"; };
 		2157985E2BA83DF4000B190A /* SectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionModel.swift; sourceTree = "<group>"; };
 		215798602BA85291000B190A /* TimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePicker.swift; sourceTree = "<group>"; };
+		21BCC6E22BB0973F00506B4A /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		21F438342B9B897E004408EF /* meditrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = meditrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21F438372B9B897E004408EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21F438392B9B897E004408EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 			children = (
 				215797DD2BA0BE6E000B190A /* DropDownMenuButton.swift */,
 				215798602BA85291000B190A /* TimePicker.swift */,
+				21BCC6E22BB0973F00506B4A /* CustomNavigationBar.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21F438932B9D867A004408EF /* Fonts.swift in Sources */,
+				21BCC6E32BB0973F00506B4A /* CustomNavigationBar.swift in Sources */,
 				21F438952B9D9FAE004408EF /* Colors.swift in Sources */,
 				21F438742B9C21D9004408EF /* CustomListViewModel.swift in Sources */,
 				21F438762B9C21E3004408EF /* CustomListViewController.swift in Sources */,

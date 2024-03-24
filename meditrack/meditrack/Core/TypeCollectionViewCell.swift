@@ -28,35 +28,31 @@ class TypeCollectionViewCell: UICollectionViewCell {
     private func setupUI() {
         contentView.addSubview(stackView)
         stackView.snp.makeConstraints({ make in
-            make.top.bottom.leading.trailing.equalToSuperview().inset(4)
+            make.top.bottom.leading.trailing.equalToSuperview().inset(12)
         })
         stackView.addSubviews([typeImage, typeLabel])
         typeImage.snp.makeConstraints({ make in
-            make.top.equalTo(8)
             make.centerX.equalToSuperview()
-            make.width.height.equalTo(60)
+            make.width.height.equalTo(40)
         })
         typeLabel.snp.makeConstraints({ make in
-            make.bottom.equalTo(-8)
+            make.top.equalTo(typeImage.snp.bottom).inset(-8)
             make.centerX.equalToSuperview()
         })
         
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = 8
         
-        layer.borderWidth = 4
-        layer.cornerRadius = 10
+        layer.cornerRadius = 12
     }
     
     // MARK: - Setup
     func setup(type: DrugType, isSelected: Bool) {
-        self.backgroundColor = isSelected ? .white : Constants.Colors.grayBackground
-        self.layer.borderColor = isSelected ? Constants.Colors.grayAccent?.cgColor : CGColor(red: 255, green: 255, blue: 255, alpha: 1)
+        self.backgroundColor = isSelected ? Constants.Colors.greenAccent : Constants.Colors.grayBackground
         
         typeLabel.text = type.rawValue
-        typeLabel.font = Constants.Fonts.nunitoRegularSubtitle
-        typeLabel.textColor = Constants.Colors.grayAccent
+        typeLabel.font = Constants.Fonts.nunitoRegular12
+        typeLabel.textColor = isSelected ? Constants.Colors.white : Constants.Colors.graySecondary
         typeLabel.textAlignment = .center
 
         let image = UIImage(data: GetImages().byType(type))

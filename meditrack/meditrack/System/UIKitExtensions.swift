@@ -31,6 +31,13 @@ extension Date {
         let comps = Calendar.current.dateComponents([.year, .month, .day], from: self)
         return Calendar.current.date(from: comps) ?? Date()
     }
+    
+    func convertToTime() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        let resultString = dateFormatter.string(from: self)
+        return resultString
+    }
 }
 
 extension UITextField {

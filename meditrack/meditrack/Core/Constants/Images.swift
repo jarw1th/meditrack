@@ -5,7 +5,9 @@ extension Constants {
     enum Images {
         static let plusIcon = UIImage(named: "PlusIcon")
         
-        static let rect = UIImage(named: "Rect")
+        static let backIcon = UIImage(named: "BackArrow")
+        
+        static let qrIcon = UIImage(named: "QRReader")
     }
 }
 
