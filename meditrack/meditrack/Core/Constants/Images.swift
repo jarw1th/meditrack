@@ -8,18 +8,27 @@ extension Constants {
         static let backIcon = UIImage(named: "BackArrow")
         
         static let qrIcon = UIImage(named: "QRReader")
+        
+        static let capsuleIcon = UIImage(named: "CapsuleIcon")
+        
+        static let tabletIcon = UIImage(named: "TabletIcon")
+        
+        static let dropIcon = UIImage(named: "DropIcon")
     }
 }
 
 class GetImages {
     func byType(_ drugType: DrugType) -> Data {
         let image = UIImage(named: "Capsule")?.pngData() ?? Data()
-        return image
         switch drugType {
         case .capsule:
-            return Data()
+            return Constants.Images.capsuleIcon!.pngData() ?? image
+        case .tablet:
+            return Constants.Images.tabletIcon!.pngData() ?? image
+        case .drops:
+            return Constants.Images.dropIcon!.pngData() ?? image
         default:
-            return Data()
+            return image
         }
     }
 }

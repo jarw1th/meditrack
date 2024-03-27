@@ -34,16 +34,15 @@ final class DropDownMenuButton: UIView {
         })
         
         backgroundView.backgroundColor = Constants.Colors.grayBackground
-        backgroundView.layer.cornerRadius = 10
+        backgroundView.layer.cornerRadius = 12
         
-        nameLabel.textColor = Constants.Colors.grayAccent
-        nameLabel.font = Constants.Fonts.nunitoRegularSubtitle
-        nameLabel.layer.opacity = 0.6
+        nameLabel.textColor = Constants.Colors.grayPrimary
+        nameLabel.font = Constants.Fonts.nunitoRegular12
         nameLabel.textAlignment = .left
         
         button.addTarget(self, action: #selector(tapped), for: .touchUpInside)
-        button.setTitleColor(Constants.Colors.grayAccent, for: .normal)
-        button.titleLabel?.font = Constants.Fonts.nunitoRegularSubtitle
+        button.setTitleColor(Constants.Colors.greenAccent, for: .normal)
+        button.titleLabel?.font = Constants.Fonts.nunitoRegular12
         button.titleLabel?.textAlignment = .right
     }
     

@@ -22,12 +22,5 @@ extension Constants {
         static let nunitoRegular12 = UIFont(name: "Nunito-Regular", size: 12)
         
         static let nunitoBold20 = UIFont(name: "Nunito-Bold", size: 20)
-        
-        // MARK: -
-        static let nunitoMediumHeader1 = UIFont(name: "Nunito-Medium", size: 36)
-        
-        static let nunitoRegularTitle = UIFont(name: "Nunito-Regular", size: 24)
-        
-        static let nunitoRegularSubtitle = UIFont(name: "Nunito-Regular", size: 16)
     }
 }

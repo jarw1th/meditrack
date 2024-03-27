@@ -25,15 +25,14 @@ final class AddDrugViewController: UIViewController {
     private let informationLabel = UILabel()
     private let nameTextField = UITextField()
     private let descriptionTextField = UITextField()
-    private let timelineLabel = UILabel()
-    
     private let doseMenuButton = DropDownMenuButton()
     private let doseMenu = UITableView()
-    private let durationMenuButton = DropDownMenuButton()
-    private let durationMenu = UITableView()
-    private let frequencyMenuButton = DropDownMenuButton()
-    private let frequencyMenu = UITableView()
-    private let intervalMenuButton = TimePicker()
+    
+    private let timelineLabel = UILabel()
+    private let intervalButton = UIButton()
+    private let intervalPicker = TimePicker()
+    private let intervalScrollView = UIScrollView()
+    private let intervalStackView = UIStackView()
     
     
     // MARK: - Body
@@ -51,27 +50,35 @@ final class AddDrugViewController: UIViewController {
         view.backgroundColor = .white
         title = Constants.Texts.titleMedicationMain
         
-        view.addSubviews([navigationBar,
-                          typeLabel,
-                          typeCollectionView,
-                          informationLabel,
-                          nameTextField,
-                          descriptionTextField,
-                          timelineLabel,
-                          doseMenuButton,
-                          doseMenu,
-                          durationMenuButton,
-                          durationMenu,
-                          frequencyMenuButton,
-                          frequencyMenu,
-                          intervalMenuButton])
+        view.addSubviews([navigationBar, scrollView, intervalPicker])
+        scrollView.addSubviews([typeLabel,
+                                typeCollectionView,
+                                informationLabel,
+                                nameTextField,
+                                descriptionTextField,
+                                doseMenuButton,
+                                doseMenu])
+        scrollView.addSubviews([timelineLabel,
+                                intervalButton,
+                                intervalScrollView])
+        intervalScrollView.addSubview(intervalStackView)
+        
         navigationBar.snp.makeConstraints({ make in
             make.leading.trailing.top.equalToSuperview()
         })
+        scrollView.snp.makeConstraints({ make in
+            make.top.equalTo(navigationBar.snp.bottom).inset(-8)
+            make.leading.trailing.bottom.equalToSuperview()
+        })
+        intervalPicker.snp.makeConstraints({ make in
+            make.leading.trailing.top.bottom.equalToSuperview()
+        })
+        
         typeLabel.snp.makeConstraints({ make in
+            make.width.equalTo(self.view.frame.size.width - 48)
             make.leading.equalTo(24)
             make.trailing.equalTo(-24)
-            make.top.equalTo(navigationBar.snp.bottom).inset(-8)
+            make.top.equalToSuperview()
         })
         typeCollectionView.snp.makeConstraints({ make in
             make.height.equalTo(120)
@@ -80,50 +87,27 @@ final class AddDrugViewController: UIViewController {
             make.top.equalTo(typeLabel.snp.bottom)
         })
         informationLabel.snp.makeConstraints({ make in
-            make.leading.equalTo(16)
-            make.trailing.equalTo(-16)
-            make.top.equalTo(typeCollectionView.snp.bottom).inset(-24)
+            make.leading.equalTo(24)
+            make.trailing.equalTo(-24)
+            make.top.equalTo(typeCollectionView.snp.bottom).inset(-8)
         })
         nameTextField.snp.makeConstraints({ make in
             make.height.equalTo(48)
-            make.leading.equalTo(16)
-            make.trailing.equalTo(-16)
+            make.leading.equalTo(24)
+            make.trailing.equalTo(-24)
             make.top.equalTo(informationLabel.snp.bottom).inset(-16)
         })
         descriptionTextField.snp.makeConstraints({ make in
             make.height.equalTo(48)
-            make.leading.equalTo(16)
-            make.trailing.equalTo(-16)
-            make.top.equalTo(nameTextField.snp.bottom).inset(-8)
-        })
-        timelineLabel.snp.makeConstraints({ make in
-            make.leading.equalTo(16)
-            make.trailing.equalTo(-16)
-            make.top.equalTo(descriptionTextField.snp.bottom).inset(-24)
+            make.leading.equalTo(24)
+            make.trailing.equalTo(-24)
+            make.top.equalTo(nameTextField.snp.bottom).inset(-16)
         })
         doseMenuButton.snp.makeConstraints({ make in
             make.height.equalTo(48)
-            make.leading.equalTo(16)
-            make.trailing.equalTo(-16)
-            make.top.equalTo(timelineLabel.snp.bottom).inset(-16)
-        })
-        durationMenuButton.snp.makeConstraints({ make in
-            make.height.equalTo(48)
-            make.leading.equalTo(16)
-            make.trailing.equalTo(-16)
-            make.top.equalTo(doseMenuButton.snp.bottom).inset(-8)
-        })
-        frequencyMenuButton.snp.makeConstraints({ make in
-            make.height.equalTo(48)
-            make.leading.equalTo(16)
-            make.trailing.equalTo(-16)
-            make.top.equalTo(durationMenuButton.snp.bottom).inset(-8)
-        })
-        intervalMenuButton.snp.makeConstraints({ make in
-            make.height.equalTo(48)
-            make.leading.equalTo(16)
-            make.trailing.equalTo(-16)
-            make.top.equalTo(frequencyMenuButton.snp.bottom).inset(-8)
+            make.leading.equalTo(24)
+            make.trailing.equalTo(-24)
+            make.top.equalTo(descriptionTextField.snp.bottom).inset(-16)
         })
         doseMenu.snp.makeConstraints({ make in
             make.width.equalTo(100)
@@ -131,17 +115,25 @@ final class AddDrugViewController: UIViewController {
             make.trailing.equalTo(doseMenuButton.snp.trailing)
             make.bottom.equalTo(doseMenuButton.snp.top)
         })
-        durationMenu.snp.makeConstraints({ make in
-            make.width.equalTo(100)
-            make.height.equalTo(200)
-            make.trailing.equalTo(durationMenuButton.snp.trailing)
-            make.bottom.equalTo(durationMenuButton.snp.top)
+        
+        timelineLabel.snp.makeConstraints({ make in
+            make.leading.equalTo(24)
+            make.trailing.equalTo(-24)
+            make.top.equalTo(doseMenuButton.snp.bottom).inset(-24)
         })
-        frequencyMenu.snp.makeConstraints({ make in
-            make.width.equalTo(100)
-            make.height.equalTo(200)
-            make.trailing.equalTo(frequencyMenuButton.snp.trailing)
-            make.bottom.equalTo(frequencyMenuButton.snp.top)
+        intervalButton.snp.makeConstraints({ make in
+            make.height.width.equalTo(36)
+            make.leading.equalTo(24)
+            make.top.equalTo(timelineLabel.snp.bottom).inset(-16)
+        })
+        intervalScrollView.snp.makeConstraints({ make in
+            make.height.equalTo(36)
+            make.top.equalTo(timelineLabel.snp.bottom).inset(-16)
+            make.leading.equalTo(intervalButton.snp.trailing).inset(-16)
+            make.trailing.equalTo(-24)
+        })
+        intervalStackView.snp.makeConstraints({ make in
+            make.top.bottom.leading.trailing.equalToSuperview()
         })
         
         navigationBar.setDelegate(self)
@@ -149,51 +141,63 @@ final class AddDrugViewController: UIViewController {
         navigationBar.setImage(.left, image: Constants.Images.backIcon!)
         navigationBar.setImage(.right, image: Constants.Images.qrIcon!)
         
+        scrollView.bounces = false
+        scrollView.isScrollEnabled = true
+        scrollView.contentSize = self.view.frame.size
+        
+        intervalPicker.setup(name: Constants.Texts.timepickerTimeintervalSub,
+                             view: self)
+        intervalPicker.isHidden = true
+        
+        
         typeLabel.text = Constants.Texts.labelTypeMain
         typeLabel.font = Constants.Fonts.nunitoBold20
         typeLabel.textColor = Constants.Colors.grayPrimary
         
         informationLabel.text = Constants.Texts.labelInformationMain
-        informationLabel.font = Constants.Fonts.nunitoRegularTitle
-        informationLabel.textColor = Constants.Colors.grayAccent
+        informationLabel.font = Constants.Fonts.nunitoBold20
+        informationLabel.textColor = Constants.Colors.grayPrimary
         
-        nameTextField.placeholder = Constants.Texts.textfieldNameSub
-        nameTextField.textColor = Constants.Colors.grayAccent
+        nameTextField.attributedPlaceholder = NSAttributedString(string: Constants.Texts.textfieldNameSub,
+                                                                 attributes: [NSAttributedString.Key.font: Constants.Fonts.nunitoRegular12!,
+                                                                              NSAttributedString.Key.foregroundColor: Constants.Colors.graySecondary!])
+        nameTextField.textColor = Constants.Colors.grayPrimary
+        nameTextField.font = Constants.Fonts.nunitoRegular12
         nameTextField.backgroundColor = Constants.Colors.grayBackground
-        nameTextField.layer.cornerRadius = 10
+        nameTextField.layer.cornerRadius = 12
         nameTextField.setHorizontalPaddings(left: 16, right: 16)
         
-        descriptionTextField.placeholder = Constants.Texts.textfieldDescriptionSub
-        descriptionTextField.textColor = Constants.Colors.grayAccent
+        descriptionTextField.attributedPlaceholder = NSAttributedString(string: Constants.Texts.textfieldDescriptionSub,
+                                                                        attributes: [NSAttributedString.Key.font: Constants.Fonts.nunitoRegular12!,
+                                                                                     NSAttributedString.Key.foregroundColor: Constants.Colors.graySecondary!])
+        descriptionTextField.textColor = Constants.Colors.grayPrimary
+        descriptionTextField.font = Constants.Fonts.nunitoRegular12
         descriptionTextField.backgroundColor = Constants.Colors.grayBackground
-        descriptionTextField.layer.cornerRadius = 10
+        descriptionTextField.layer.cornerRadius = 12
         descriptionTextField.setHorizontalPaddings(left: 16, right: 16)
         
-        timelineLabel.text = Constants.Texts.labelTimelineMain
-        timelineLabel.font = Constants.Fonts.nunitoRegularTitle
-        timelineLabel.textColor = Constants.Colors.grayAccent
-        
         doseMenuButton.layer.cornerRadius = 10
-        doseMenuButton.setup(name: Constants.Texts.dropdownDoseSub, 
+        doseMenuButton.setup(name: Constants.Texts.dropdownDoseSub,
                              buttonName: Constants.Texts.buttonDefaultchooseSub,
                              view: self,
                              type: .dose)
         
-        durationMenuButton.layer.cornerRadius = 10
-        durationMenuButton.setup(name: Constants.Texts.dropdownDurationSub, 
-                                 buttonName: Constants.Texts.buttonDefaultchooseSub,
-                                 view: self,
-                                 type: .duration)
+        timelineLabel.text = Constants.Texts.labelTimelineMain
+        timelineLabel.font = Constants.Fonts.nunitoBold20
+        timelineLabel.textColor = Constants.Colors.grayPrimary
         
-        frequencyMenuButton.layer.cornerRadius = 10
-        frequencyMenuButton.setup(name: Constants.Texts.dropdownFrequencySub, 
-                                  buttonName: Constants.Texts.buttonDefaultchooseSub,
-                                  view: self,
-                                  type: .frequency)
+        intervalButton.setImage(Constants.Images.plusIcon?.withRenderingMode(.alwaysOriginal).withTintColor(Constants.Colors.white),
+                                for: .normal)
+        intervalButton.addTarget(self, action: #selector(intervalButtonAction), for: .touchUpInside)
+        intervalButton.backgroundColor = Constants.Colors.greenAccent
+        intervalButton.layer.cornerRadius = 8
         
-        intervalMenuButton.layer.cornerRadius = 10
-        intervalMenuButton.setup(name: Constants.Texts.timepickerTimeintervalSub,
-                                 view: self)
+        intervalScrollView.bounces = false
+        intervalScrollView.isScrollEnabled = true
+        intervalScrollView.showsHorizontalScrollIndicator = false
+        intervalStackView.axis = .horizontal
+        intervalStackView.spacing = 16
+        intervalStackView.contentMode = .center
     }
     
     private func setCollectionAndTable() {
@@ -201,7 +205,7 @@ final class AddDrugViewController: UIViewController {
         typeCollectionView.dataSource = self
         typeCollectionView.delegate = self
         
-        [doseMenu, durationMenu, frequencyMenu].forEach({
+        [doseMenu].forEach({
             $0.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
             $0.delegate = self
             $0.dataSource = self
@@ -209,8 +213,8 @@ final class AddDrugViewController: UIViewController {
             $0.layer.cornerRadius = 8
             $0.layer.borderWidth = 2
             $0.layer.borderColor = Constants.Colors.grayBackground?.cgColor
-            $0.tintColor = Constants.Colors.grayAccent
-            $0.separatorColor = Constants.Colors.grayAccent
+            $0.tintColor = Constants.Colors.grayPrimary
+            $0.separatorColor = Constants.Colors.grayPrimary
         })
     }
     
@@ -219,36 +223,23 @@ final class AddDrugViewController: UIViewController {
     }
     
     @objc private func doneButtonAction() {
-        guard let duration = viewModel?.convertDuration(durationMenuButton.getButtonName()) else { return }
-        guard let frequency = FrequencyType(rawValue: frequencyMenuButton.getButtonName()) else { return }
         guard let dose = Int(doseMenuButton.getButtonName().first?.description ?? "0") else { return }
         let drugType = DrugType.allCases[viewModel?.selectedIndex ?? 0]
-        if dose <= 1 {
-            let drug = DrugInfo(id: "",
-                               name: nameTextField.text ?? "",
-                               descriptionDrug: descriptionTextField.text ?? "",
-                               timeInterval: viewModel?.timeValue ?? Date(),
-                               duration: duration,
-                               frequency: frequency,
-                               drugType: drugType,
-                               dose: dose,
-                               startDate: Date())
-            viewModel?.createDrug(drug)
-        } else {
-            for element in 1...dose {
-                let drug = DrugInfo(id: "",
-                                   name: nameTextField.text ?? "",
-                                   descriptionDrug: descriptionTextField.text ?? "",
-                                   timeInterval: viewModel?.timeValue ?? Date(),
-                                   duration: duration,
-                                   frequency: frequency,
-                                   drugType: drugType,
-                                   dose: element,
-                                   startDate: Date())
-                viewModel?.createDrug(drug)
-            }
-        }
+        let drug = DrugInfo(id: "",
+                           name: nameTextField.text ?? "",
+                           descriptionDrug: descriptionTextField.text ?? "",
+                           timeInterval: viewModel?.timeValue ?? Date(),
+                           duration: 0,
+                            frequency: .daily,
+                           drugType: drugType,
+                           dose: dose,
+                           startDate: Date())
+        viewModel?.createDrug(drug)
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func intervalButtonAction() {
+        intervalPicker.appear()
     }
 }
 
@@ -307,10 +298,6 @@ extension AddDrugViewController: UITableViewDataSource {
         switch tableView {
         case doseMenu:
             return viewModel?.numberOfDoseRows ?? 0
-        case durationMenu:
-            return viewModel?.numberOfDurationRows ?? 0
-        case frequencyMenu:
-            return viewModel?.numberOfFrequencyRows ?? 0
         default:
             return 0
         }
@@ -322,10 +309,6 @@ extension AddDrugViewController: UITableViewDataSource {
         switch tableView {
         case doseMenu:
             cell.textLabel?.text = viewModel?.getDose(at: indexPath.row)
-        case durationMenu:
-            cell.textLabel?.text = viewModel?.getDuration(at: indexPath.row)
-        case frequencyMenu:
-            cell.textLabel?.text = viewModel?.getFrequency(at: indexPath.row)
         default:
             cell.textLabel?.text = String()
         }
@@ -341,14 +324,6 @@ extension AddDrugViewController: UITableViewDelegate {
             let buttonName = viewModel?.getDose(at: indexPath.row) ?? String()
             doseMenuButton.changeButtonName(buttonName)
             doseMenu.isHidden.toggle()
-        case durationMenu:
-            let buttonName = viewModel?.getDuration(at: indexPath.row) ?? String()
-            durationMenuButton.changeButtonName(buttonName)
-            durationMenu.isHidden.toggle()
-        case frequencyMenu:
-            let buttonName = viewModel?.getFrequency(at: indexPath.row) ?? String()
-            frequencyMenuButton.changeButtonName(buttonName)
-            frequencyMenu.isHidden.toggle()
         default:
             return
         }
@@ -361,20 +336,44 @@ extension AddDrugViewController: ButtonTapDelegate {
         switch type {
         case .dose:
             doseMenu.isHidden.toggle()
-        case .duration:
-            durationMenu.isHidden.toggle()
-        case .frequency:
-            frequencyMenu.isHidden.toggle()
-        case .none:
+        default:
             break
         }
     }
 }
 
 // MARK: - PickerEditedDelegate
+extension AddDrugViewController {
+    @objc private func deleteInterval(sender: UIButton) {
+        sender.removeFromSuperview()
+    }
+    
+    private func createInterval(_ title: String) {
+        let button = UIButton()
+        let attributedString = NSAttributedString(string: title,
+                                                  attributes: [
+                                                    NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary!,
+                                                    NSAttributedString.Key.font: Constants.Fonts.nunitoRegular12!
+                                                  ])
+        button.setAttributedTitle(attributedString, for: .normal)
+        button.addTarget(self, action: #selector(deleteInterval), for: .touchUpInside)
+        button.backgroundColor = Constants.Colors.grayBackground
+        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
+        button.layer.cornerRadius = 8
+        intervalStackView.addArrangedSubview(button)
+    }
+}
+
 extension AddDrugViewController: PickerEditedDelegate {
-    func tap(_ value: Date) {
+    func backTapped() {
+        intervalPicker.disappear()
+    }
+    
+    func doneTapped(_ value: Date) {
         viewModel?.timeValue = value
+        intervalPicker.disappear()
+        let title = value.convertToTime()
+        createInterval(title)
     }
 }
 

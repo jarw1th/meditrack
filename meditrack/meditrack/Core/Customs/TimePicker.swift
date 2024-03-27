@@ -2,57 +2,88 @@ import UIKit
 import SnapKit
 
 protocol PickerEditedDelegate {
-    func tap(_ value: Date)
+    func backTapped()
+    
+    func doneTapped(_ value: Date)
 }
 
 final class TimePicker: UIView {
     private var tapDelegate: PickerEditedDelegate?
     
-    private let backgroundView = UIView()
+    private let mainBackground = UIView()
+    private let subBackground = UIView()
+    private let backButton = UIButton()
+    private let doneButton = UIButton()
     private let nameLabel = UILabel()
-    private let startLabel = UILabel()
     private let picker = UIDatePicker()
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
-        self.addSubviews([backgroundView, nameLabel, startLabel, picker])
-        backgroundView.snp.makeConstraints({ make in
-            make.top.bottom.leading.trailing.equalToSuperview()
+        self.addSubviews([mainBackground, subBackground])
+        mainBackground.snp.makeConstraints({ make in
+            make.leading.trailing.top.bottom.equalToSuperview()
+        })
+        subBackground.snp.makeConstraints({ make in
+            make.height.equalTo(300)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(self.snp.bottom).inset(-300)
+        })
+        subBackground.addSubviews([backButton, nameLabel, doneButton, picker])
+        backButton.snp.makeConstraints({ make in
+            make.top.equalTo(24)
+            make.leading.equalTo(24)
         })
         nameLabel.snp.makeConstraints({ make in
-            make.leading.equalTo(16)
-            make.centerY.equalToSuperview()
+            make.width.equalTo(200)
+            make.top.equalTo(24)
+            make.centerX.equalToSuperview()
         })
-        startLabel.snp.makeConstraints({ make in
-            make.trailing.equalTo(picker.snp.leading).inset(-16)
-            make.centerY.equalToSuperview()
+        doneButton.snp.makeConstraints({ make in
+            make.top.equalTo(24)
+            make.trailing.equalTo(-24)
         })
         picker.snp.makeConstraints({ make in
-            make.trailing.equalTo(-8)
-            make.centerY.equalToSuperview()
+            make.top.equalTo(nameLabel.snp.bottom).inset(-24)
+            make.centerX.equalToSuperview()
         })
         
-        backgroundView.backgroundColor = Constants.Colors.grayBackground
-        backgroundView.layer.cornerRadius = 10
+        mainBackground.backgroundColor = Constants.Colors.black
+        mainBackground.layer.opacity = 0
         
-        nameLabel.textColor = Constants.Colors.grayAccent
-        nameLabel.font = Constants.Fonts.nunitoRegularSubtitle
-        nameLabel.layer.opacity = 0.6
-        nameLabel.textAlignment = .left
+        subBackground.backgroundColor = Constants.Colors.white
+        subBackground.layer.cornerRadius = 12
         
-        startLabel.text = Constants.Texts.labelTimepickerSub
-        startLabel.textColor = Constants.Colors.grayAccent
-        startLabel.font = Constants.Fonts.nunitoRegularSubtitle
-        startLabel.layer.opacity = 0.6
-        startLabel.textAlignment = .right
+        let backAttributedString = NSAttributedString(string: Constants.Texts.buttonBackMain,
+                                                      attributes: [
+                                                        NSAttributedString.Key.foregroundColor: Constants.Colors.greenAccent!,
+                                                        NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16!
+                                                      ])
+        backButton.setAttributedTitle(backAttributedString, for: .normal)
+        backButton.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
+        
+        nameLabel.textColor = Constants.Colors.grayPrimary
+        nameLabel.font = Constants.Fonts.nunitoBold20
+        nameLabel.textAlignment = .center
+        
+        let doneAttributedString = NSAttributedString(string: Constants.Texts.buttonDoneMain,
+                                                      attributes: [
+                                                        NSAttributedString.Key.foregroundColor: Constants.Colors.greenAccent!,
+                                                        NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16!
+                                                      ])
+        doneButton.setAttributedTitle(doneAttributedString, for: .normal)
+        doneButton.addTarget(self, action: #selector(doneButtonAction), for: .touchUpInside)
         
         picker.datePickerMode = .time
-        picker.addTarget(self, action: #selector(tapped), for: .valueChanged)
+        picker.preferredDatePickerStyle = .wheels
     }
     
-    @objc private func tapped() {
-        tapDelegate?.tap(picker.date)
+    @objc private func backButtonAction() {
+        tapDelegate?.backTapped()
+    }
+    
+    @objc private func doneButtonAction() {
+        tapDelegate?.doneTapped(picker.date)
     }
     
     required init?(coder: NSCoder) {
@@ -62,5 +93,31 @@ final class TimePicker: UIView {
     func setup(name: String, view: PickerEditedDelegate) {
         tapDelegate = view
         nameLabel.text = name
+    }
+    
+    func appear() {
+        subBackground.snp.remakeConstraints({ make in
+            make.height.equalTo(300)
+            make.leading.trailing.bottom.equalToSuperview()
+        })
+        self.isHidden.toggle()
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            self?.mainBackground.layer.opacity = 0.4
+            self?.layoutIfNeeded()
+        })
+    }
+    
+    func disappear() {
+        subBackground.snp.remakeConstraints({ make in
+            make.height.equalTo(300)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(self.snp.bottom).inset(-300)
+        })
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            self?.mainBackground.layer.opacity = 0
+            self?.layoutIfNeeded()
+        }, completion: { _ in
+            self.isHidden = true
+        })
     }
 }

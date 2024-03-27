@@ -15,13 +15,15 @@ extension Constants {
         
         static let labelInformationMain = "General information"
         
-        static let labelTimelineMain = "Timeline & others"
+        static let labelTimelineMain = "Timeline & schedule"
         
         static let labelTimepickerSub = "start"
         
         static let titleMedicationMain = "New Medication"
         
         static let buttonDoneMain = "Done"
+        
+        static let buttonBackMain = "Back"
         
         static let textfieldNameSub = "Name"
         

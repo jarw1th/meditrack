@@ -33,7 +33,7 @@ class TypeCollectionViewCell: UICollectionViewCell {
         stackView.addSubviews([typeImage, typeLabel])
         typeImage.snp.makeConstraints({ make in
             make.centerX.equalToSuperview()
-            make.width.height.equalTo(40)
+            make.width.height.lessThanOrEqualTo(40)
         })
         typeLabel.snp.makeConstraints({ make in
             make.top.equalTo(typeImage.snp.bottom).inset(-8)
@@ -48,7 +48,8 @@ class TypeCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Setup
     func setup(type: DrugType, isSelected: Bool) {
-        self.backgroundColor = isSelected ? Constants.Colors.greenAccent : Constants.Colors.grayBackground
+        let color = GetColors().byType(type)
+        self.backgroundColor = isSelected ? color : Constants.Colors.grayBackground
         
         typeLabel.text = type.rawValue
         typeLabel.font = Constants.Fonts.nunitoRegular12
@@ -56,6 +57,9 @@ class TypeCollectionViewCell: UICollectionViewCell {
         typeLabel.textAlignment = .center
 
         let image = UIImage(data: GetImages().byType(type))
-        typeImage.image = image
+        let normalImage = image?.withRenderingMode(.alwaysOriginal).withTintColor(color)
+        let selectedImage = image?.withRenderingMode(.alwaysOriginal).withTintColor(Constants.Colors.white)
+        typeImage.image = isSelected ? selectedImage : normalImage
+        typeImage.contentMode = .scaleAspectFit
     }
 }
