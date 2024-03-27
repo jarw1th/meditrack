@@ -45,8 +45,22 @@ extension Constants {
         
         static let timepickerTimeintervalSub = "Time interval"
         
+        static let pickerNotificationsSub = "Notifications"
+        
         static let buttonDefaultchooseSub = "Choose"
         
         static let systemDoseSub = "dose"
+        
+        static let labelFoodMain = "Compatibility with food"
+        
+        static let systemNomatterMain = "No matter"
+        
+        static let systemBeforemealMain = "Before meal"
+        
+        static let systemDuringmealMain = "During meal"
+        
+        static let systemAftermealMain = "After meal"
+        
+        static let enumNotificationsminutsSub = "min"
     }
 }

@@ -4,6 +4,7 @@ struct PickerModel {
     var doses: [String] = []
     var duration: [String] = []
     var frequency: [String] = []
+    var notifications: [String] = []
     
     init() {
         // Doses
@@ -26,6 +27,11 @@ struct PickerModel {
         // Frequency
         for element in FrequencyType.allCases {
             self.frequency.append(element.rawValue)
+        }
+        
+        // Notifications
+        for element in NotificationMinutesType.allCases {
+            self.notifications.append(element.getString())
         }
     }
 }

@@ -15,6 +15,10 @@
 		2157985F2BA83DF4000B190A /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2157985E2BA83DF4000B190A /* SectionModel.swift */; };
 		215798612BA85291000B190A /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215798602BA85291000B190A /* TimePicker.swift */; };
 		21BCC6E32BB0973F00506B4A /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BCC6E22BB0973F00506B4A /* CustomNavigationBar.swift */; };
+		21BCC6E52BB4A1C700506B4A /* ButtonField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BCC6E42BB4A1C700506B4A /* ButtonField.swift */; };
+		21BCC6EA2BB4ABA300506B4A /* FoodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BCC6E92BB4ABA300506B4A /* FoodCollectionViewCell.swift */; };
+		21BCC6EC2BB4AC3F00506B4A /* FoodType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BCC6EB2BB4AC3F00506B4A /* FoodType.swift */; };
+		21BCC6EE2BB4B3D500506B4A /* NotificationMinutesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BCC6ED2BB4B3D500506B4A /* NotificationMinutesType.swift */; };
 		21F438382B9B897E004408EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438372B9B897E004408EF /* AppDelegate.swift */; };
 		21F4383A2B9B897E004408EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438392B9B897E004408EF /* SceneDelegate.swift */; };
 		21F438412B9B8980004408EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21F438402B9B8980004408EF /* Assets.xcassets */; };
@@ -58,6 +62,10 @@
 		2157985E2BA83DF4000B190A /* SectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionModel.swift; sourceTree = "<group>"; };
 		215798602BA85291000B190A /* TimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePicker.swift; sourceTree = "<group>"; };
 		21BCC6E22BB0973F00506B4A /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
+		21BCC6E42BB4A1C700506B4A /* ButtonField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonField.swift; sourceTree = "<group>"; };
+		21BCC6E92BB4ABA300506B4A /* FoodCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCollectionViewCell.swift; sourceTree = "<group>"; };
+		21BCC6EB2BB4AC3F00506B4A /* FoodType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodType.swift; sourceTree = "<group>"; };
+		21BCC6ED2BB4B3D500506B4A /* NotificationMinutesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationMinutesType.swift; sourceTree = "<group>"; };
 		21F438342B9B897E004408EF /* meditrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = meditrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21F438372B9B897E004408EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21F438392B9B897E004408EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -116,6 +124,33 @@
 				215797D52B9F9233000B190A /* AddDrugViewController.swift */,
 			);
 			path = "Add Drug";
+			sourceTree = "<group>";
+		};
+		21BCC6E62BB4AB7900506B4A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				21BCC6E82BB4AB8700506B4A /* Collection */,
+				21BCC6E72BB4AB8000506B4A /* Table */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		21BCC6E72BB4AB8000506B4A /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				21F438AF2B9DDF9D004408EF /* CalendarTableViewCell.swift */,
+			);
+			path = Table;
+			sourceTree = "<group>";
+		};
+		21BCC6E82BB4AB8700506B4A /* Collection */ = {
+			isa = PBXGroup;
+			children = (
+				21F438A92B9DAA46004408EF /* DateCollectionViewCell.swift */,
+				215797D92BA044C6000B190A /* TypeCollectionViewCell.swift */,
+				21BCC6E92BB4ABA300506B4A /* FoodCollectionViewCell.swift */,
+			);
+			path = Collection;
 			sourceTree = "<group>";
 		};
 		21F4382B2B9B897E004408EF = {
@@ -227,6 +262,8 @@
 			children = (
 				21F4387C2B9C4843004408EF /* DrugType.swift */,
 				21F438812B9C4A94004408EF /* FrequencyType.swift */,
+				21BCC6EB2BB4AC3F00506B4A /* FoodType.swift */,
+				21BCC6ED2BB4B3D500506B4A /* NotificationMinutesType.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -237,9 +274,7 @@
 				21F438962B9DA2B5004408EF /* Customs */,
 				21F4388D2B9D8408004408EF /* Constants */,
 				21F4384B2B9B8C04004408EF /* Fonts */,
-				21F438A92B9DAA46004408EF /* DateCollectionViewCell.swift */,
-				215797D92BA044C6000B190A /* TypeCollectionViewCell.swift */,
-				21F438AF2B9DDF9D004408EF /* CalendarTableViewCell.swift */,
+				21BCC6E62BB4AB7900506B4A /* Cells */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -262,6 +297,7 @@
 				215797DD2BA0BE6E000B190A /* DropDownMenuButton.swift */,
 				215798602BA85291000B190A /* TimePicker.swift */,
 				21BCC6E22BB0973F00506B4A /* CustomNavigationBar.swift */,
+				21BCC6E42BB4A1C700506B4A /* ButtonField.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -430,6 +466,7 @@
 				21F438742B9C21D9004408EF /* CustomListViewModel.swift in Sources */,
 				21F438762B9C21E3004408EF /* CustomListViewController.swift in Sources */,
 				215797DC2BA0B925000B190A /* PickerAddModel.swift in Sources */,
+				21BCC6EE2BB4B3D500506B4A /* NotificationMinutesType.swift in Sources */,
 				215797D82B9F949E000B190A /* AddDrugViewModel.swift in Sources */,
 				21F438B62B9EC25E004408EF /* DrugCompletementRepository.swift in Sources */,
 				21F438382B9B897E004408EF /* AppDelegate.swift in Sources */,
@@ -443,11 +480,14 @@
 				21F4387D2B9C4843004408EF /* DrugType.swift in Sources */,
 				215798612BA85291000B190A /* TimePicker.swift in Sources */,
 				21F438B22B9E056C004408EF /* Images.swift in Sources */,
+				21BCC6EC2BB4AC3F00506B4A /* FoodType.swift in Sources */,
 				215797D62B9F9233000B190A /* AddDrugViewController.swift in Sources */,
+				21BCC6E52BB4A1C700506B4A /* ButtonField.swift in Sources */,
 				21F438842B9C4C1A004408EF /* DrugInfo.swift in Sources */,
 				21F4388B2B9D8323004408EF /* UIKitExtensions.swift in Sources */,
 				2157985F2BA83DF4000B190A /* SectionModel.swift in Sources */,
 				21F438792B9C4525004408EF /* DataService.swift in Sources */,
+				21BCC6EA2BB4ABA300506B4A /* FoodCollectionViewCell.swift in Sources */,
 				21F438AA2B9DAA46004408EF /* DateCollectionViewCell.swift in Sources */,
 				21F438912B9D8481004408EF /* Texts.swift in Sources */,
 				21F4388F2B9D845D004408EF /* Constants.swift in Sources */,

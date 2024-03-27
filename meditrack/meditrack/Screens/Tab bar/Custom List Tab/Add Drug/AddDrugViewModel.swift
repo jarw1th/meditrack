@@ -1,27 +1,29 @@
 import Foundation
 
 protocol AddDrugViewModelProtocol {
-    func getItem(afterRowAt indexPath: IndexPath) -> DrugType
+    func getType(at indexPath: IndexPath) -> DrugType
+    
+    func getFood(at indexPath: IndexPath) -> FoodType
     
     func createDrug(_ item: DrugInfo)
     
-    func getDose(at row: Int) -> String
+    func getDoses() -> [String]
     
-    func getDuration(at row: Int) -> String
+    func getDurations() -> [String]
     
-    func getFrequency(at row: Int) -> String
+    func getFrequency() -> [String]
+    
+    func getNotifications() -> [String]
     
     func convertDuration(_ duration: String) -> Int
     
-    var numberOfItems: Int { get }
+    var numberOfTypes: Int { get }
     
-    var numberOfDoseRows: Int { get }
+    var numberOfFood: Int { get }
     
-    var numberOfDurationRows: Int { get }
+    var selectedType: Int? { get set }
     
-    var numberOfFrequencyRows: Int { get }
-    
-    var selectedIndex: Int? { get set }
+    var selectedFood: Int? { get set }
     
     var timeValue: Date? { get set }
 }
@@ -36,27 +38,36 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
         self.drugInfoRepository = drugInfoRepository
     }
     
-    func getItem(afterRowAt indexPath: IndexPath) -> DrugType {
+    func getType(at indexPath: IndexPath) -> DrugType {
         return DrugType.allCases[indexPath.row]
+    }
+    
+    func getFood(at indexPath: IndexPath) -> FoodType {
+        return FoodType.allCases[indexPath.row]
     }
     
     func createDrug(_ item: DrugInfo) {
         drugInfoRepository.saveDrugList([item])
     }
     
-    func getDose(at row: Int) -> String {
-        let dose = model.doses[row]
-        return dose
+    func getDoses() -> [String] {
+        let doses = model.doses
+        return doses
     }
     
-    func getDuration(at row: Int) -> String {
-        let duration = model.duration[row]
-        return duration
+    func getDurations() -> [String] {
+        let durations = model.duration
+        return durations
     }
     
-    func getFrequency(at row: Int) -> String {
-        let frequency = model.frequency[row]
+    func getFrequency() -> [String] {
+        let frequency = model.frequency
         return frequency
+    }
+    
+    func getNotifications() -> [String] {
+        let notifications = model.notifications
+        return notifications
     }
     
     func convertDuration(_ duration: String) -> Int {
@@ -76,24 +87,15 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
     
     var timeValue: Date? = Date()
     
-    var numberOfItems: Int {
+    var numberOfTypes: Int {
         return DrugType.allCases.count
     }
     
-    var numberOfDoseRows: Int {
-        let doses = model.doses
-        return doses.count
+    var numberOfFood: Int {
+        return FoodType.allCases.count
     }
     
-    var numberOfDurationRows: Int {
-        let duration = model.duration
-        return duration.count
-    }
+    var selectedType: Int? = nil
     
-    var numberOfFrequencyRows: Int {
-        let frequency = model.frequency
-        return frequency.count
-    }
-    
-    var selectedIndex: Int? = nil
+    var selectedFood: Int? = nil
 }
