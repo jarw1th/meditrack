@@ -8,13 +8,8 @@ protocol CustomListViewModelProtocol {
     
     func getItemSetup(
         afterRowAt indexPath: IndexPath,
-        completion: @escaping (String, DrugType, Int, Bool) -> Void
+        completion: @escaping (String, DrugType, Int, FoodType, Bool) -> Void
     ) // getting name, drugtype, dose, iscompleted of item
-    
-    func deleteItem(
-        afterRowAt indexPath: IndexPath,
-        completion: @escaping () -> Void
-    ) // deleting item
     
     func getSectionTitle(
         for section: Int
@@ -74,19 +69,13 @@ final class CustomListViewModel: CustomListViewModelProtocol {
         completion(list.id)
     }
     
-    func getItemSetup(afterRowAt indexPath: IndexPath, completion: @escaping (String, DrugType, Int, Bool) -> Void
+    func getItemSetup(afterRowAt indexPath: IndexPath, completion: @escaping (String, DrugType, Int, FoodType, Bool) -> Void
     ) {
         let drug = getItems(for: date(), in: indexPath.section)[indexPath.row]
         let filteredList = getCompletedList().filter({ $0.key == drug.id }).first?.value ?? (false, String())
         var isCompleted: Bool
         (isCompleted, _) = filteredList
-        completion(drug.name, drug.drugType, drug.dose, isCompleted)
-    }
-    
-    func deleteItem(afterRowAt indexPath: IndexPath, completion: @escaping () -> Void) {
-        let item = getDrugInfoList()[indexPath.row]
-        drugInfoRepository.deleteDrugList([item])
-        completion()
+        completion(drug.name, drug.drugType, drug.dose, drug.foodType, isCompleted)
     }
     
     func getSectionTitle(for section: Int) -> String {
@@ -176,7 +165,7 @@ final class CustomListViewModel: CustomListViewModelProtocol {
             let difference = Calendar.current.dateComponents([.day], from: startDate, to: day).day ?? 1
             if (checkFrequency(for: difference,
                                frequency: el.frequency)) &&
-                (el.timeInterval == sectionModel.sections[section]) &&
+                (el.timeInterval.contains(sectionModel.sections[section])) &&
                 (day.isBetween(start: startDate, end: endDate)) {
                 list.append(el)
             }
@@ -192,15 +181,17 @@ final class CustomListViewModel: CustomListViewModelProtocol {
     // Time intervals for selected day
     private func getItemsInterval(for day: Date) -> [Date] {
         var list: Set<Date> = []
-        drugInfoRepository.getDrugList().forEach({ el in
-            let startDate = el.startDate
-            let endDate = Calendar.current.date(byAdding: .weekOfYear, value: el.duration, to: startDate) ?? Date()
-            let difference = Calendar.current.dateComponents([.day], from: startDate, to: day).day ?? 1
-            if (checkFrequency(for: difference, frequency: el.frequency)) &&
-                (day.isBetween(start: startDate, end: endDate)) {
-                list.insert(el.timeInterval)
+        drugInfoRepository.getDrugList().forEach { el in
+            el.timeInterval.forEach { timeInterval in
+                let startDate = el.startDate
+                let endDate = Calendar.current.date(byAdding: .weekOfYear, value: el.duration, to: startDate) ?? Date()
+                let difference = Calendar.current.dateComponents([.day], from: startDate, to: day).day ?? 1
+                if (checkFrequency(for: difference, frequency: el.frequency)) &&
+                    (day.isBetween(start: startDate, end: endDate)) {
+                    list.insert(timeInterval)
+                }
             }
-        })
+        }
         let resultList = Array(list.sorted())
         return resultList
     }

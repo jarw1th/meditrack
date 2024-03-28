@@ -66,7 +66,7 @@ final class AddDrugViewController: UIViewController {
         view.backgroundColor = .white
         title = Constants.Texts.titleMedicationMain
         
-        view.addSubviews([navigationBar, scrollView, intervalPicker, menuPicker, doneButton])
+        view.addSubviews([navigationBar, scrollView, doneButton, intervalPicker, menuPicker])
         scrollView.addSubviews([typeLabel,
                                 typeCollectionView,
                                 informationLabel,
@@ -113,15 +113,15 @@ final class AddDrugViewController: UIViewController {
             make.top.equalToSuperview()
         })
         typeCollectionView.snp.makeConstraints({ make in
-            make.height.equalTo(120)
+            make.height.equalTo(88)
             make.leading.equalTo(24)
             make.trailing.equalTo(-24)
-            make.top.equalTo(typeLabel.snp.bottom)
+            make.top.equalTo(typeLabel.snp.bottom).inset(-16)
         })
         informationLabel.snp.makeConstraints({ make in
             make.leading.equalTo(24)
             make.trailing.equalTo(-24)
-            make.top.equalTo(typeCollectionView.snp.bottom).inset(-8)
+            make.top.equalTo(typeCollectionView.snp.bottom).inset(-24)
         })
         nameTextField.snp.makeConstraints({ make in
             make.height.equalTo(48)
@@ -195,6 +195,7 @@ final class AddDrugViewController: UIViewController {
             make.height.width.equalTo(36)
             make.leading.equalTo(24)
             make.top.equalTo(notificationsLabel.snp.bottom).inset(-16)
+            make.bottom.equalTo(-120)
         })
         notificationsScrollView.snp.makeConstraints({ make in
             make.height.equalTo(36)
@@ -213,7 +214,7 @@ final class AddDrugViewController: UIViewController {
         
         scrollView.bounces = false
         scrollView.isScrollEnabled = true
-        scrollView.showsVerticalScrollIndicator = true
+        scrollView.showsVerticalScrollIndicator = false
         
         intervalPicker.setup(name: Constants.Texts.timepickerTimeintervalSub,
                              view: self)
@@ -226,6 +227,7 @@ final class AddDrugViewController: UIViewController {
                                                          attributes: [NSAttributedString.Key.font: Constants.Fonts.nunitoBold20!,
                                                                       NSAttributedString.Key.foregroundColor: Constants.Colors.white]),
                                       for: .normal)
+        doneButton.addTarget(self, action: #selector(doneButtonAction), for: .touchUpInside)
         doneButton.backgroundColor = Constants.Colors.greenAccent
         doneButton.layer.cornerRadius = 16
         
@@ -298,9 +300,13 @@ final class AddDrugViewController: UIViewController {
         foodLabel.textColor = Constants.Colors.grayPrimary
         
         
+        notificationsLabel.text = Constants.Texts.labelNotificationsMain
+        notificationsLabel.font = Constants.Fonts.nunitoBold20
+        notificationsLabel.textColor = Constants.Colors.grayPrimary
+        
         notificationsButton.setImage(Constants.Images.plusIcon?.withRenderingMode(.alwaysOriginal).withTintColor(Constants.Colors.white),
                                      for: .normal)
-        notificationsButton.addTarget(self, action: #selector(intervalButtonAction), for: .touchUpInside)
+        notificationsButton.addTarget(self, action: #selector(notificationsButtonAction), for: .touchUpInside)
         notificationsButton.backgroundColor = Constants.Colors.greenAccent
         notificationsButton.layer.cornerRadius = 8
         
@@ -322,24 +328,49 @@ final class AddDrugViewController: UIViewController {
         foodCollectionView.delegate = self
     }
     
-    private func backButtonAction() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
     @objc private func doneButtonAction() {
-        guard let dose = Int(doseField.getButtonName().first?.description ?? "0") else { return }
-        let drugType = DrugType.allCases[viewModel?.selectedType ?? 0]
-        let drug = DrugInfo(id: "",
-                            name: nameTextField.text ?? "",
-                            descriptionDrug: descriptionTextField.text ?? "",
-                            timeInterval: viewModel?.timeValue ?? Date(),
-                            duration: 0,
-                            frequency: .daily,
+        let name = nameTextField.text
+        let description = descriptionTextField.text
+        let checker = viewModel?.checkOptional(name: name, description: description) ?? false
+        guard checker else {
+            showAlert()
+            return
+        }
+        let timeInterval = viewModel?.timeInterval
+        let duration = viewModel?.duration
+        let frequency = viewModel?.frequency
+        let drugType = viewModel?.drugType
+        let foodType = viewModel?.foodType
+        let notifications = viewModel?.notifications
+        let dose = viewModel?.dose
+        let drug = DrugInfo(id: nil,
+                            name: name,
+                            descriptionDrug: description,
+                            timeInterval: timeInterval,
+                            duration: duration,
+                            frequency: frequency,
                             drugType: drugType,
+                            foodType: foodType,
+                            notifications: notifications,
                             dose: dose,
                             startDate: Date())
         viewModel?.createDrug(drug)
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    private func showAlert() {
+        let titleAttributedString = NSAttributedString(string: Constants.Texts.alertTitleMain,
+                                                  attributes: [NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16!,
+                                                               NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary!])
+        let alert = UIAlertController(title: titleAttributedString.string,
+                                      message: "",
+                                      preferredStyle: .alert)
+        alert.setValue(titleAttributedString, forKey: "attributedTitle")
+        let action = UIAlertAction(title: Constants.Texts.alertOkSub,
+                                   style: .default)
+        alert.addAction(action)
+        
+        present(alert, animated: true)
     }
     
     @objc private func intervalButtonAction() {
@@ -456,10 +487,12 @@ extension AddDrugViewController: ButtonFieldDelegate {
 // MARK: - PickerEditedDelegate
 extension AddDrugViewController {
     @objc private func deleteInterval(sender: UIButton) {
+        let title = sender.title(for: .normal) ?? ""
+        viewModel?.deleteInterval(title)
         sender.removeFromSuperview()
     }
     
-    private func createInterval(_ title: String) {
+    private func createInterval(_ title: String, value: Date) {
         let button = UIButton()
         let attributedString = NSAttributedString(string: title,
                                                   attributes: [
@@ -481,16 +514,18 @@ extension AddDrugViewController: PickerEditedDelegate {
     }
     
     func doneTapped(_ value: Date) {
-        viewModel?.timeValue = value
+        viewModel?.timeInterval?.append(value)
         intervalPicker.disappear()
         let title = value.convertToTime()
-        createInterval(title)
+        createInterval(title, value: value)
     }
 }
 
 // MARK: - ButtonTapDelegate
 extension AddDrugViewController {
     @objc private func deleteNotification(sender: UIButton) {
+        let title = sender.title(for: .normal) ?? ""
+        viewModel?.deleteNotification(title)
         sender.removeFromSuperview()
     }
     
@@ -502,11 +537,11 @@ extension AddDrugViewController {
                                                     NSAttributedString.Key.font: Constants.Fonts.nunitoRegular12!
                                                   ])
         button.setAttributedTitle(attributedString, for: .normal)
-        button.addTarget(self, action: #selector(deleteInterval), for: .touchUpInside)
+        button.addTarget(self, action: #selector(deleteNotification), for: .touchUpInside)
         button.backgroundColor = Constants.Colors.grayBackground
         button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
         button.layer.cornerRadius = 8
-        intervalStackView.addArrangedSubview(button)
+        notificationsStackView.addArrangedSubview(button)
     }
 }
 
@@ -518,15 +553,19 @@ extension AddDrugViewController: DropDownMenuDelegate {
     func doneButtonTapped(_ value: String, type: FieldType) {
         switch type {
         case .dose:
+            viewModel?.dose = value.getDose()
             doseField.changeButtonName(value)
             menuPicker.disappear()
         case .duration:
+            viewModel?.duration = value.convertDuration()
             durationField.changeButtonName(value)
             menuPicker.disappear()
         case .frequency:
+            viewModel?.frequency = FrequencyType(rawValue: value)
             frequencyField.changeButtonName(value)
             menuPicker.disappear()
         case .none:
+            viewModel?.notifications?.append(value.getNotificationMinutesType())
             createNotification(value)
             menuPicker.disappear()
         }
@@ -534,6 +573,12 @@ extension AddDrugViewController: DropDownMenuDelegate {
 }
 
 // MARK: - CustomNavigationBarDelegate
+extension AddDrugViewController {
+    private func backButtonAction() {
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
 extension AddDrugViewController: CustomNavigationBarDelegate {
     func tapped(_ button: ButtonType) {
         switch button {

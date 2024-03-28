@@ -25,7 +25,7 @@ class GetImages {
             return Constants.Images.capsuleIcon!.pngData() ?? image
         case .tablet:
             return Constants.Images.tabletIcon!.pngData() ?? image
-        case .drops:
+        case .drop:
             return Constants.Images.dropIcon!.pngData() ?? image
         default:
             return image

@@ -43,7 +43,7 @@ class GetColors {
             return Constants.Colors.capsuleColor!
         case .tablet:
             return Constants.Colors.tabletColor!
-        case .drops:
+        case .drop:
             return Constants.Colors.dropColor!
         case .powder:
             return Constants.Colors.powderColor!

@@ -157,8 +157,8 @@ extension CustomListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarTableViewCell", for: indexPath) as? CalendarTableViewCell
         cell?.selectionStyle = .none
         
-        viewModel?.getItemSetup(afterRowAt: indexPath, completion: { name, type, dose, isCompleted in
-            cell?.setup(name: name, drug: type, dose: dose, isCompleted: isCompleted)
+        viewModel?.getItemSetup(afterRowAt: indexPath, completion: { name, type, dose, foodType, isCompleted in
+            cell?.setup(name: name, drug: type, dose: dose, food: foodType, isCompleted: isCompleted)
         })
         
         return cell ?? UITableViewCell()
@@ -209,14 +209,6 @@ extension CustomListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            viewModel?.deleteItem(afterRowAt: indexPath, completion: { [weak self] in
-                self?.tableView.reloadData()
-            })
-        }
     }
 }
 

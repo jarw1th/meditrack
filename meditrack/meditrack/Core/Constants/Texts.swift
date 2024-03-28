@@ -47,9 +47,9 @@ extension Constants {
         
         static let pickerNotificationsSub = "Notifications"
         
-        static let buttonDefaultchooseSub = "Choose"
+        static let labelNotificationsMain = "Notifications"
         
-        static let systemDoseSub = "dose"
+        static let buttonDefaultchooseSub = "Choose"
         
         static let labelFoodMain = "Compatibility with food"
         
@@ -62,5 +62,9 @@ extension Constants {
         static let systemAftermealMain = "After meal"
         
         static let enumNotificationsminutsSub = "min"
+        
+        static let alertOkSub = "Ok"
+        
+        static let alertTitleMain = "Please, check again medication form"
     }
 }

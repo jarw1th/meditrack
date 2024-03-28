@@ -55,3 +55,40 @@ extension UITextField {
         self.rightViewMode = .always
     }
 }
+
+extension Array {
+    func convertToTime() -> [String] {
+        guard let array = self as? Array<Date> else { return [] }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        let resultString = array.map { dateFormatter.string(from: $0) }
+        return resultString
+    }
+}
+
+extension String {
+    func getNotificationMinutesType() -> NotificationMinutesType {
+        let string = "m\(self.components(separatedBy: " ").first ?? "")"
+        return NotificationMinutesType(rawValue: string) ?? .m5
+    }
+    
+    func convertDuration() -> Int {
+        let postfix = self.components(separatedBy: " ").last
+        let number = Int(self.components(separatedBy: " ").first ?? "") ?? 0
+        switch postfix {
+        case "week":
+            return number
+        case "month":
+            return number * 4
+        case "year":
+            return number * 52
+        default:
+            return number
+        }
+    }
+    
+    func getDose() -> Int {
+        let number = Int(self.components(separatedBy: "/").first ?? "") ?? 0
+        return number
+    }
+}
