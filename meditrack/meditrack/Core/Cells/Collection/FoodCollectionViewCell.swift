@@ -35,7 +35,7 @@ class FoodCollectionViewCell: UICollectionViewCell {
     func setup(type: FoodType, isSelected: Bool) {
         self.backgroundColor = isSelected ? Constants.Colors.greenAccent : Constants.Colors.grayBackground
         
-        typeLabel.text = type.getString().capitalized
+        typeLabel.text = type.getString().capitalized.replacingOccurrences(of: " ", with: "\n")
         typeLabel.font = Constants.Fonts.nunitoRegular12
         typeLabel.textColor = isSelected ? Constants.Colors.white : Constants.Colors.graySecondary
         typeLabel.textAlignment = .center

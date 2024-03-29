@@ -76,6 +76,7 @@ final class TimePicker: UIView {
         
         picker.datePickerMode = .time
         picker.preferredDatePickerStyle = .wheels
+        picker.setValue(Constants.Colors.grayPrimary, forKey: "textColor")
     }
     
     @objc private func backButtonAction() {

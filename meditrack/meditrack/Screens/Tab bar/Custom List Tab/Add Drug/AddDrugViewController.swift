@@ -20,6 +20,7 @@ final class AddDrugViewController: UIViewController {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collection.showsHorizontalScrollIndicator = false
+        collection.backgroundColor = Constants.Colors.white
         return collection
     }()
     private let informationLabel = UILabel()
@@ -43,6 +44,7 @@ final class AddDrugViewController: UIViewController {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collection.showsHorizontalScrollIndicator = false
+        collection.backgroundColor = Constants.Colors.white
         return collection
     }()
     
@@ -59,6 +61,10 @@ final class AddDrugViewController: UIViewController {
         
         setupUI()
         setCollectionAndTable()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
     
     // MARK: - Functions

@@ -150,6 +150,7 @@ final class CustomListViewController: UIViewController {
         tableView.delegate = self
         
         tableView.separatorStyle = .none
+        tableView.backgroundColor = Constants.Colors.white
         
         dateCollectionView.performBatchUpdates({
             dateCollectionView.reloadData()

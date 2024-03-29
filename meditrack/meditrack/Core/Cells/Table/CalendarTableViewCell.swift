@@ -58,7 +58,7 @@ class CalendarTableViewCell: UITableViewCell {
         stackView.axis = .vertical
         stackView.spacing = 4
         
-        self.backgroundColor = nil
+        self.backgroundColor = Constants.Colors.white
         layer.cornerRadius = 20
         layer.borderWidth = 8
         layer.borderColor = Constants.Colors.white.cgColor

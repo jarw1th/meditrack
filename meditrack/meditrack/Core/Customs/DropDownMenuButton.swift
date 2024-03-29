@@ -78,6 +78,7 @@ final class DropDownMenu: UIView {
         
         picker.dataSource = self
         picker.delegate = self
+        picker.setValue(Constants.Colors.grayPrimary, forKey: "textColor")
     }
     
     @objc private func backButtonAction() {
