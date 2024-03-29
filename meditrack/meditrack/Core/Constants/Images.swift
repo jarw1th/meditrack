@@ -26,6 +26,8 @@ extension Constants {
         static let powderIcon = UIImage(named: "PowderIcon")
         
         static let nilIcon = UIImage(named: "NilIcon")
+        
+        static let downArrow = UIImage(named: "DownArrow")
     }
 }
 
@@ -49,6 +51,8 @@ class GetImages {
             return Constants.Images.otherIcon!.pngData() ?? image
         case .powder:
             return Constants.Images.powderIcon!.pngData() ?? image
+        default:
+            return image
         }
     }
 }

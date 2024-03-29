@@ -55,6 +55,8 @@ class GetColors {
             return Constants.Colors.injectionColor!
         case .other:
             return Constants.Colors.otherColor!
+        default:
+            return Constants.Colors.white
         }
     }
 }

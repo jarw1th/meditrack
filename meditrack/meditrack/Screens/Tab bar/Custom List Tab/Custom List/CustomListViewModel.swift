@@ -41,6 +41,8 @@ protocol CustomListViewModelProtocol {
     var todayDate: String { get }
     
     var selectedIndex: Int { get set }
+    
+    var filterValue: DrugType { get set }
 }
 
 final class CustomListViewModel: CustomListViewModelProtocol {
@@ -134,6 +136,8 @@ final class CustomListViewModel: CustomListViewModelProtocol {
     }
     
     var selectedIndex: Int = 0
+    
+    var filterValue: DrugType = .all
     
     // MARK: - Private Functions
     // All drugs

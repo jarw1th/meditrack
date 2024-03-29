@@ -19,6 +19,7 @@
 		21BCC6EA2BB4ABA300506B4A /* FoodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BCC6E92BB4ABA300506B4A /* FoodCollectionViewCell.swift */; };
 		21BCC6EC2BB4AC3F00506B4A /* FoodType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BCC6EB2BB4AC3F00506B4A /* FoodType.swift */; };
 		21BCC6EE2BB4B3D500506B4A /* NotificationMinutesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BCC6ED2BB4B3D500506B4A /* NotificationMinutesType.swift */; };
+		21BCC6F22BB73E6100506B4A /* FilterDropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BCC6F12BB73E6100506B4A /* FilterDropDown.swift */; };
 		21F438382B9B897E004408EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438372B9B897E004408EF /* AppDelegate.swift */; };
 		21F4383A2B9B897E004408EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438392B9B897E004408EF /* SceneDelegate.swift */; };
 		21F438412B9B8980004408EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21F438402B9B8980004408EF /* Assets.xcassets */; };
@@ -66,6 +67,7 @@
 		21BCC6E92BB4ABA300506B4A /* FoodCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCollectionViewCell.swift; sourceTree = "<group>"; };
 		21BCC6EB2BB4AC3F00506B4A /* FoodType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodType.swift; sourceTree = "<group>"; };
 		21BCC6ED2BB4B3D500506B4A /* NotificationMinutesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationMinutesType.swift; sourceTree = "<group>"; };
+		21BCC6F12BB73E6100506B4A /* FilterDropDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDropDown.swift; sourceTree = "<group>"; };
 		21F438342B9B897E004408EF /* meditrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = meditrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21F438372B9B897E004408EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21F438392B9B897E004408EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 		21F438962B9DA2B5004408EF /* Customs */ = {
 			isa = PBXGroup;
 			children = (
+				21BCC6F12BB73E6100506B4A /* FilterDropDown.swift */,
 				215797DD2BA0BE6E000B190A /* DropDownMenuButton.swift */,
 				215798602BA85291000B190A /* TimePicker.swift */,
 				21BCC6E22BB0973F00506B4A /* CustomNavigationBar.swift */,
@@ -474,6 +477,7 @@
 				215797DA2BA044C6000B190A /* TypeCollectionViewCell.swift in Sources */,
 				21F438AE2B9DC0D8004408EF /* DatesModel.swift in Sources */,
 				21F4387B2B9C468D004408EF /* DrugInfoRealm.swift in Sources */,
+				21BCC6F22BB73E6100506B4A /* FilterDropDown.swift in Sources */,
 				21F438882B9C4E74004408EF /* DrugInfoRepository.swift in Sources */,
 				21F4383A2B9B897E004408EF /* SceneDelegate.swift in Sources */,
 				21F438822B9C4A94004408EF /* FrequencyType.swift in Sources */,

@@ -66,5 +66,7 @@ extension Constants {
         static let alertOkSub = "Ok"
         
         static let alertTitleMain = "Please, check again medication form"
+        
+        static let titleAllSub = "all"
     }
 }

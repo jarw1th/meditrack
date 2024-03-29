@@ -10,6 +10,7 @@ final class CustomListViewController: UIViewController {
     }
     
     private let addButton = UIButton()
+    
     private let selectedDate = UILabel()
     private let nameLabel = UILabel()
     private lazy var dateCollectionView: UICollectionView = {
@@ -20,8 +21,11 @@ final class CustomListViewController: UIViewController {
         collection.showsHorizontalScrollIndicator = false
         return collection
     }()
+    
     private let backgroundView = UIView()
     private let medicationTitleLabel = UILabel()
+    private let filterButton = UIButton()
+    private let filterDropDown = FilterDropDown()
     private let tableView = UITableView()
  
     // MARK: - Body
@@ -41,18 +45,22 @@ final class CustomListViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         navigationController?.isNavigationBarHidden = true
         
-        view.addSubviews([addButton,
-                          selectedDate,
+        view.addSubview(addButton)
+        view.addSubviews([selectedDate,
                           nameLabel,
                           dateCollectionView,
-                          backgroundView,
-                          medicationTitleLabel,
-                          tableView])
+                          backgroundView])
+        backgroundView.addSubviews([medicationTitleLabel,
+                                    filterButton,
+                                    filterDropDown,
+                                    tableView])
+        
         addButton.snp.makeConstraints({ make in
             make.width.height.equalTo(40)
             make.trailing.equalTo(-24)
             make.top.equalTo(view.snp.top).inset(72)
         })
+        
         selectedDate.snp.makeConstraints({ make in
             make.leading.equalTo(24)
             make.trailing.equalTo(-24)
@@ -74,14 +82,19 @@ final class CustomListViewController: UIViewController {
             make.bottom.equalTo(64)
             make.top.equalTo(dateCollectionView.snp.bottom).inset(-12)
         })
+        
         medicationTitleLabel.snp.makeConstraints({ make in
             make.leading.equalTo(24)
-            make.top.equalTo(backgroundView.snp.top).inset(40)
+            make.top.equalTo(40)
+        })
+        filterButton.snp.makeConstraints({ make in
+            make.trailing.equalTo(-24)
+            make.top.equalTo(40)
         })
         tableView.snp.makeConstraints({ make in
             make.width.equalTo(361)
             make.trailing.equalTo(-16)
-            make.bottom.equalTo(-24)
+            make.bottom.equalTo(-64)
             make.top.equalTo(medicationTitleLabel.snp.bottom)
         })
         
@@ -94,6 +107,7 @@ final class CustomListViewController: UIViewController {
         addButton.layer.cornerRadius = 12
         addButton.addTarget(self, action: #selector(pushAddDrug), for: .touchUpInside)
         
+        
         selectedDate.font = Constants.Fonts.nunitoRegular24
         selectedDate.textColor = Constants.Colors.graySecondary
         selectedDate.text = viewModel?.todayDate
@@ -104,12 +118,26 @@ final class CustomListViewController: UIViewController {
         
         dateCollectionView.backgroundColor = Constants.Colors.grayBackground
         
+        backgroundView.backgroundColor = .white
+        backgroundView.layer.cornerRadius = 48
+        
         medicationTitleLabel.text = Constants.Texts.labelMedicationMain
         medicationTitleLabel.font = Constants.Fonts.nunitoRegular16
         medicationTitleLabel.textColor = Constants.Colors.graySecondary
         
-        backgroundView.backgroundColor = .white
-        backgroundView.layer.cornerRadius = 48
+        let attributedString = NSAttributedString(string: viewModel?.filterValue.rawValue ?? "",
+                                                  attributes: [
+                                                    NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary!,
+                                                    NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16!
+                                                  ])
+        filterButton.setAttributedTitle(attributedString, for: .normal)
+        let image = Constants.Images.downArrow?.withTintColor(Constants.Colors.grayPrimary!,
+                                                              renderingMode: .alwaysOriginal)
+        filterButton.setImage(image, for: .normal)
+        filterButton.semanticContentAttribute = .forceRightToLeft
+        filterButton.addTarget(self, action: #selector(showFilter), for: .touchUpInside)
+        
+        filterDropDown.setup(view: self)
     }
     
     private func setCollectionAndTable() {
@@ -262,5 +290,25 @@ extension CustomListViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+}
+
+// MARK: - FilterDropDownDelegate
+extension CustomListViewController {
+    @objc private func showFilter() {
+        filterDropDown.appear(filterArray: DrugType.allCases)
+    }
+}
+
+extension CustomListViewController: FilterDropDownDelegate {
+    func tapped(_ type: DrugType?) {
+        viewModel?.filterValue = type ?? .all
+        let attributedString = NSAttributedString(string: viewModel?.filterValue.rawValue ?? "",
+                                                  attributes: [
+                                                    NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary!,
+                                                    NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16!
+                                                  ])
+        filterButton.setAttributedTitle(attributedString, for: .normal)
+        filterDropDown.disappear()
     }
 }

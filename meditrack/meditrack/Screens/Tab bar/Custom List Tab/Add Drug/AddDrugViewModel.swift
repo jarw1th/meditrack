@@ -106,7 +106,7 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
     }
     
     var numberOfTypes: Int {
-        return DrugType.allCases.count
+        return DrugType.allCases.count - 1
     }
     
     var numberOfFood: Int {
