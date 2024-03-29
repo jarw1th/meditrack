@@ -33,7 +33,7 @@ class TypeCollectionViewCell: UICollectionViewCell {
         stackView.addSubviews([typeImage, typeLabel])
         typeImage.snp.makeConstraints({ make in
             make.centerX.equalToSuperview()
-            make.width.height.lessThanOrEqualTo(40)
+            make.width.height.lessThanOrEqualTo(36)
         })
         typeLabel.snp.makeConstraints({ make in
             make.top.equalTo(typeImage.snp.bottom).inset(-8)

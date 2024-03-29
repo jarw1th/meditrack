@@ -158,12 +158,10 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
         let reason3 = (frequency != nil)
         let reason4 = (selectedType != nil)
         let reason5 = (selectedFood != nil)
-        let reason6 = (notifications != [])
-        let reason7 = (dose != nil)
-        let reason8 = (name != nil) && (name?.trimmingCharacters(in: .whitespacesAndNewlines) != "")
-        let reason9 = (description != nil) && (description?.trimmingCharacters(in: .whitespacesAndNewlines) != "")
-        print(reason1, reason2, reason3, reason4, reason5, reason6, reason7, reason8, reason9)
-        let result = reason1 && reason2 && reason3 && reason4 && reason5 && reason6 && reason7 && reason8 && reason9
+        let reason6 = (dose != nil)
+        let reason7 = (name != nil) && (name?.trimmingCharacters(in: .whitespacesAndNewlines) != "")
+        let reason8 = (description != nil) && (description?.trimmingCharacters(in: .whitespacesAndNewlines) != "")
+        let result = reason1 && reason2 && reason3 && reason4 && reason5 && reason6 && reason7 && reason8
         return result
     }
 }

@@ -2,10 +2,12 @@ import UIKit
 import SnapKit
 
 class CalendarTableViewCell: UITableViewCell {
+    private let background = UIView()
     private let stackView = UIStackView()
     private let drugName = UILabel()
     private let drugInformation = UILabel()
     private let drugImage = UIImageView()
+    private let imageBackground = UIView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,16 +33,24 @@ class CalendarTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubviews([stackView, drugImage])
+        contentView.addSubview(background)
+        background.snp.makeConstraints({ make in
+            make.top.bottom.leading.trailing.equalToSuperview()
+        })
+        background.addSubviews([stackView, imageBackground, drugImage])
         stackView.snp.makeConstraints({ make in
             make.top.bottom.equalToSuperview().inset(23)
             make.leading.equalTo(28)
             make.trailing.equalTo(drugImage.snp.leading).inset(-32)
         })
-        drugImage.snp.makeConstraints({ make in
-            make.width.height.equalTo(32)
+        imageBackground.snp.makeConstraints({ make in
+            make.width.height.equalTo(40)
             make.centerY.equalTo(stackView)
             make.trailing.equalTo(-28)
+        })
+        drugImage.snp.makeConstraints({ make in
+            make.centerY.centerX.equalTo(imageBackground)
+            make.width.height.lessThanOrEqualTo(28)
         })
         
         stackView.addArrangedSubviews([drugName, drugInformation])
@@ -48,10 +58,12 @@ class CalendarTableViewCell: UITableViewCell {
         stackView.axis = .vertical
         stackView.spacing = 4
         
-        self.backgroundColor = Constants.Colors.grayBackground
+        self.backgroundColor = nil
         layer.cornerRadius = 20
         layer.borderWidth = 8
         layer.borderColor = Constants.Colors.white.cgColor
+        background.layer.cornerRadius = 20
+        background.backgroundColor = Constants.Colors.grayBackground
     }
     
     // MARK: - Setup
@@ -86,7 +98,12 @@ class CalendarTableViewCell: UITableViewCell {
         }
         
         let imageData = GetImages().byType(drug)
-        drugImage.image = UIImage(data: imageData)
-        drugImage.layer.cornerRadius = 10
+        let color = GetColors().byType(drug)
+        drugImage.image = UIImage(data: imageData)?
+            .withRenderingMode(.alwaysOriginal)
+            .withTintColor(Constants.Colors.white)
+        drugImage.contentMode = .scaleAspectFit
+        imageBackground.backgroundColor = color
+        imageBackground.layer.cornerRadius = 8
     }
 }

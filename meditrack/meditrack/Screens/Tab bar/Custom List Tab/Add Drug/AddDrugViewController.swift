@@ -462,7 +462,7 @@ extension AddDrugViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - ButtonTapDelegate
+// MARK: - ButtonFieldDelegate
 extension AddDrugViewController: ButtonFieldDelegate {
     func tapped(_ type: FieldType) {
         switch type {
@@ -487,7 +487,7 @@ extension AddDrugViewController: ButtonFieldDelegate {
 // MARK: - PickerEditedDelegate
 extension AddDrugViewController {
     @objc private func deleteInterval(sender: UIButton) {
-        let title = sender.title(for: .normal) ?? ""
+        let title = sender.attributedTitle(for: .normal)?.string ?? ""
         viewModel?.deleteInterval(title)
         sender.removeFromSuperview()
     }
@@ -524,7 +524,7 @@ extension AddDrugViewController: PickerEditedDelegate {
 // MARK: - ButtonTapDelegate
 extension AddDrugViewController {
     @objc private func deleteNotification(sender: UIButton) {
-        let title = sender.title(for: .normal) ?? ""
+        let title = sender.attributedTitle(for: .normal)?.string ?? ""
         viewModel?.deleteNotification(title)
         sender.removeFromSuperview()
     }
