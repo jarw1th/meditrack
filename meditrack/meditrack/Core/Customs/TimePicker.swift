@@ -26,7 +26,7 @@ final class TimePicker: UIViewController {
         view.frame = CGRect(x: 0,
                             y: 480,
                             width: view.bounds.width,
-                            height: 320)
+                            height: 600)
         view.layer.masksToBounds = true
     }
     

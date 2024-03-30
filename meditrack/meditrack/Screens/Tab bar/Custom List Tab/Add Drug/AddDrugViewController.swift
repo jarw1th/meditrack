@@ -61,10 +61,6 @@ final class AddDrugViewController: UIViewController {
         setCollectionAndTable()
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
-    
     // MARK: - Functions
     private func setupUI() {
         view.backgroundColor = .white
@@ -213,6 +209,9 @@ final class AddDrugViewController: UIViewController {
         scrollView.bounces = false
         scrollView.isScrollEnabled = true
         scrollView.showsVerticalScrollIndicator = false
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        gesture.cancelsTouchesInView = false
+        scrollView.addGestureRecognizer(gesture)
         
         doneButton.setAttributedTitle(NSAttributedString(string: Constants.Texts.buttonDoneMain,
                                                          attributes: [NSAttributedString.Key.font: Constants.Fonts.nunitoBold20!,
@@ -239,6 +238,7 @@ final class AddDrugViewController: UIViewController {
         nameTextField.backgroundColor = Constants.Colors.grayBackground
         nameTextField.layer.cornerRadius = 12
         nameTextField.setHorizontalPaddings(left: 16, right: 16)
+        nameTextField.delegate = self
         
         descriptionTextField.attributedPlaceholder = NSAttributedString(string: Constants.Texts.textfieldDescriptionSub,
                                                                         attributes: [NSAttributedString.Key.font: Constants.Fonts.nunitoRegular12!,
@@ -248,6 +248,7 @@ final class AddDrugViewController: UIViewController {
         descriptionTextField.backgroundColor = Constants.Colors.grayBackground
         descriptionTextField.layer.cornerRadius = 12
         descriptionTextField.setHorizontalPaddings(left: 16, right: 16)
+        descriptionTextField.delegate = self
         
         doseField.layer.cornerRadius = 12
         doseField.setup(name: Constants.Texts.dropdownDoseSub,
@@ -379,6 +380,10 @@ final class AddDrugViewController: UIViewController {
                              type: .none,
                              view: self),
                 animated: true)
+    }
+    
+    @objc private func hideKeyboard(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
     }
 }
 
@@ -569,6 +574,14 @@ extension AddDrugViewController: DropDownMenuDelegate {
             viewModel?.notifications?.append(value.getNotificationMinutesType())
             createNotification(value)
         }
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension AddDrugViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return false
     }
 }
 

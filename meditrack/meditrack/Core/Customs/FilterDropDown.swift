@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 
+// Delegate 
 protocol FilterDropDownDelegate {
     func tapped(_ type: DrugType?)
 }
