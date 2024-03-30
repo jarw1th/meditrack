@@ -7,31 +7,38 @@ protocol DropDownMenuDelegate {
     func doneButtonTapped(_ value: String, type: FieldType)
 }
 
-final class DropDownMenu: UIView {
+final class DropDownMenu: UIViewController {
     private var tapDelegate: DropDownMenuDelegate?
     private var elements: [String]?
     private var type: FieldType?
     
-    private let mainBackground = UIView()
-    private let subBackground = UIView()
     private let backButton = UIButton()
     private let doneButton = UIButton()
     private let nameLabel = UILabel()
     private let picker = UIPickerView()
     
-    override init(frame: CGRect) {
-        super.init(frame: .zero)
+    convenience init(name: String, elements: [String], type: FieldType, view: DropDownMenuDelegate) {
+        self.init()
+        nameLabel.text = name
+        self.elements = elements
+        self.type = type
+        tapDelegate = view
+        picker.reloadAllComponents()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        view.frame = CGRect(x: 0,
+                            y: 480,
+                            width: view.bounds.width,
+                            height: 320)
+        view.layer.masksToBounds = true
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        self.addSubviews([mainBackground, subBackground])
-        mainBackground.snp.makeConstraints({ make in
-            make.leading.trailing.top.bottom.equalToSuperview()
-        })
-        subBackground.snp.makeConstraints({ make in
-            make.height.equalTo(300)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(self.snp.bottom).inset(-300)
-        })
-        subBackground.addSubviews([backButton, nameLabel, doneButton, picker])
+        view.addSubviews([backButton, nameLabel, doneButton, picker])
         backButton.snp.makeConstraints({ make in
             make.top.equalTo(24)
             make.leading.equalTo(24)
@@ -50,11 +57,8 @@ final class DropDownMenu: UIView {
             make.centerX.equalToSuperview()
         })
         
-        mainBackground.backgroundColor = Constants.Colors.black
-        mainBackground.layer.opacity = 0
-        
-        subBackground.backgroundColor = Constants.Colors.white
-        subBackground.layer.cornerRadius = 12
+        view.backgroundColor = Constants.Colors.white
+        view.layer.cornerRadius = 12
         
         let backAttributedString = NSAttributedString(string: Constants.Texts.buttonBackMain,
                                                       attributes: [
@@ -82,54 +86,18 @@ final class DropDownMenu: UIView {
     }
     
     @objc private func backButtonAction() {
-        tapDelegate?.backButtonTapped()
+        dismiss(animated: true) {
+            self.tapDelegate?.backButtonTapped()
+        }
     }
     
     @objc private func doneButtonAction() {
-        let selectedRow = picker.selectedRow(inComponent: 0)
-        let title = pickerView(picker, titleForRow: selectedRow, forComponent: 0) ?? ""
-        tapDelegate?.doneButtonTapped(title,
-                                      type: type ?? .none)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setup(view: DropDownMenuDelegate) {
-        tapDelegate = view
-    }
-    
-    func appear(name: String, elements: [String], type: FieldType) {
-        nameLabel.text = name
-        self.elements = elements
-        self.type = type
-        picker.reloadAllComponents()
-        
-        
-        subBackground.snp.remakeConstraints({ make in
-            make.height.equalTo(300)
-            make.leading.trailing.bottom.equalToSuperview()
-        })
-        self.isHidden.toggle()
-        UIView.animate(withDuration: 0.5, animations: { [weak self] in
-            self?.mainBackground.layer.opacity = 0.4
-            self?.layoutIfNeeded()
-        })
-    }
-    
-    func disappear() {
-        subBackground.snp.remakeConstraints({ make in
-            make.height.equalTo(300)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(self.snp.bottom).inset(-300)
-        })
-        UIView.animate(withDuration: 0.5, animations: { [weak self] in
-            self?.mainBackground.layer.opacity = 0
-            self?.layoutIfNeeded()
-        }, completion: { _ in
-            self.isHidden = true
-        })
+        dismiss(animated: true) {
+            let selectedRow = self.picker.selectedRow(inComponent: 0)
+            let title = self.pickerView(self.picker, titleForRow: selectedRow, forComponent: 0) ?? ""
+            self.tapDelegate?.doneButtonTapped(title,
+                                               type: self.type ?? .none)
+        }
     }
 }
 

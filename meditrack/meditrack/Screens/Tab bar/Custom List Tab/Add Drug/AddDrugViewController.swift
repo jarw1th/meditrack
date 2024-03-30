@@ -27,11 +27,9 @@ final class AddDrugViewController: UIViewController {
     private let nameTextField = UITextField()
     private let descriptionTextField = UITextField()
     private let doseField = ButtonField()
-    private let menuPicker = DropDownMenu()
     
     private let timelineLabel = UILabel()
     private let intervalButton = UIButton()
-    private let intervalPicker = TimePicker()
     private let intervalScrollView = UIScrollView()
     private let intervalStackView = UIStackView()
     private let durationField = ButtonField()
@@ -72,7 +70,7 @@ final class AddDrugViewController: UIViewController {
         view.backgroundColor = .white
         title = Constants.Texts.titleMedicationMain
         
-        view.addSubviews([navigationBar, scrollView, doneButton, intervalPicker, menuPicker])
+        view.addSubviews([navigationBar, scrollView, doneButton])
         scrollView.addSubviews([typeLabel,
                                 typeCollectionView,
                                 informationLabel,
@@ -98,12 +96,6 @@ final class AddDrugViewController: UIViewController {
         scrollView.snp.makeConstraints({ make in
             make.top.equalTo(navigationBar.snp.bottom).inset(-8)
             make.leading.trailing.bottom.equalToSuperview()
-        })
-        intervalPicker.snp.makeConstraints({ make in
-            make.leading.trailing.top.bottom.equalToSuperview()
-        })
-        menuPicker.snp.makeConstraints({ make in
-            make.leading.trailing.top.bottom.equalToSuperview()
         })
         doneButton.snp.makeConstraints({ make in
             make.height.equalTo(64)
@@ -222,13 +214,6 @@ final class AddDrugViewController: UIViewController {
         scrollView.isScrollEnabled = true
         scrollView.showsVerticalScrollIndicator = false
         
-        intervalPicker.setup(name: Constants.Texts.timepickerTimeintervalSub,
-                             view: self)
-        intervalPicker.isHidden = true
-        
-        menuPicker.setup(view: self)
-        menuPicker.isHidden = true
-        
         doneButton.setAttributedTitle(NSAttributedString(string: Constants.Texts.buttonDoneMain,
                                                          attributes: [NSAttributedString.Key.font: Constants.Fonts.nunitoBold20!,
                                                                       NSAttributedString.Key.foregroundColor: Constants.Colors.white]),
@@ -342,7 +327,12 @@ final class AddDrugViewController: UIViewController {
             showAlert()
             return
         }
-        let timeInterval = viewModel?.timeInterval
+        let timeIntervalSet = viewModel?.timeInterval?.reduce(into: Set<Date>()) { (times, time) in
+            times.insert(time)
+        }
+        let timeInterval = timeIntervalSet?.reduce(into: Array<Date>()) { (times, time) in
+            times.append(time)
+        }
         let duration = viewModel?.duration
         let frequency = viewModel?.frequency
         let drugType = viewModel?.drugType
@@ -380,13 +370,15 @@ final class AddDrugViewController: UIViewController {
     }
     
     @objc private func intervalButtonAction() {
-        intervalPicker.appear()
+        present(TimePicker(name: Constants.Texts.timepickerTimeintervalSub, view: self), animated: true)
     }
     
     @objc private func notificationsButtonAction() {
-        menuPicker.appear(name: Constants.Texts.pickerNotificationsSub,
-                          elements: viewModel?.getNotifications() ?? [],
-                          type: .none)
+        present(DropDownMenu(name: Constants.Texts.pickerNotificationsSub,
+                             elements: viewModel?.getNotifications() ?? [],
+                             type: .none,
+                             view: self),
+                animated: true)
     }
 }
 
@@ -473,17 +465,23 @@ extension AddDrugViewController: ButtonFieldDelegate {
     func tapped(_ type: FieldType) {
         switch type {
         case .dose:
-            menuPicker.appear(name: Constants.Texts.dropdownDoseSub,
-                              elements: viewModel?.getDoses() ?? [],
-                              type: type)
+            present(DropDownMenu(name: Constants.Texts.dropdownDoseSub,
+                                 elements: viewModel?.getDoses() ?? [],
+                                 type: type,
+                                 view: self),
+                    animated: true)
         case .duration:
-            menuPicker.appear(name: Constants.Texts.dropdownDurationSub,
-                              elements: viewModel?.getDurations() ?? [],
-                              type: type)
+            present(DropDownMenu(name: Constants.Texts.dropdownDurationSub,
+                                 elements: viewModel?.getDurations() ?? [],
+                                 type: type,
+                                 view: self),
+                    animated: true)
         case .frequency:
-            menuPicker.appear(name: Constants.Texts.dropdownFrequencySub,
-                              elements: viewModel?.getFrequency() ?? [],
-                              type: type)
+            present(DropDownMenu(name: Constants.Texts.dropdownFrequencySub,
+                                 elements: viewModel?.getFrequency() ?? [],
+                                 type: type,
+                                 view: self),
+                    animated: true)
         case .none:
             break
         }
@@ -516,12 +514,12 @@ extension AddDrugViewController {
 
 extension AddDrugViewController: PickerEditedDelegate {
     func backTapped() {
-        intervalPicker.disappear()
+       
     }
     
     func doneTapped(_ value: Date) {
+        print(1)
         viewModel?.timeInterval?.append(value)
-        intervalPicker.disappear()
         let title = value.convertToTime()
         createInterval(title, value: value)
     }
@@ -553,7 +551,7 @@ extension AddDrugViewController {
 
 extension AddDrugViewController: DropDownMenuDelegate {
     func backButtonTapped() {
-        menuPicker.disappear()
+       
     }
     
     func doneButtonTapped(_ value: String, type: FieldType) {
@@ -561,19 +559,15 @@ extension AddDrugViewController: DropDownMenuDelegate {
         case .dose:
             viewModel?.dose = value.getDose()
             doseField.changeButtonName(value)
-            menuPicker.disappear()
         case .duration:
             viewModel?.duration = value.convertDuration()
             durationField.changeButtonName(value)
-            menuPicker.disappear()
         case .frequency:
             viewModel?.frequency = FrequencyType(rawValue: value)
             frequencyField.changeButtonName(value)
-            menuPicker.disappear()
         case .none:
             viewModel?.notifications?.append(value.getNotificationMinutesType())
             createNotification(value)
-            menuPicker.disappear()
         }
     }
 }
