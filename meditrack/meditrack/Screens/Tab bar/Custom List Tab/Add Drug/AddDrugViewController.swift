@@ -211,7 +211,11 @@ final class AddDrugViewController: UIViewController {
         scrollView.showsVerticalScrollIndicator = false
         let gesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         gesture.cancelsTouchesInView = false
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(backButtonAction))
+        swipeGesture.cancelsTouchesInView = false
+        swipeGesture.direction = .right
         scrollView.addGestureRecognizer(gesture)
+        scrollView.addGestureRecognizer(swipeGesture)
         
         doneButton.setAttributedTitle(NSAttributedString(string: Constants.Texts.buttonDoneMain,
                                                          attributes: [NSAttributedString.Key.font: Constants.Fonts.nunitoBold20,
@@ -587,7 +591,7 @@ extension AddDrugViewController: UITextFieldDelegate {
 
 // MARK: - CustomNavigationBarDelegate
 extension AddDrugViewController {
-    private func backButtonAction() {
+    @objc private func backButtonAction() {
         self.navigationController?.popViewController(animated: true)
     }
 }
