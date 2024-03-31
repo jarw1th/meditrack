@@ -45,8 +45,8 @@ final class FilterDropDown: UIView {
             let label = UILabel()
             let attributedString = NSAttributedString(string: type.rawValue,
                                                       attributes: [
-                                                        NSAttributedString.Key.foregroundColor: Constants.Colors.graySecondary!,
-                                                        NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16!
+                                                        NSAttributedString.Key.foregroundColor: Constants.Colors.graySecondary,
+                                                        NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16
                                                       ])
             label.attributedText = attributedString
             label.textAlignment = .right

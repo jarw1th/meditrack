@@ -62,8 +62,8 @@ final class DropDownMenu: UIViewController {
         
         let backAttributedString = NSAttributedString(string: Constants.Texts.buttonBackMain,
                                                       attributes: [
-                                                        NSAttributedString.Key.foregroundColor: Constants.Colors.greenAccent!,
-                                                        NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16!
+                                                        NSAttributedString.Key.foregroundColor: Constants.Colors.greenAccent,
+                                                        NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16
                                                       ])
         backButton.setAttributedTitle(backAttributedString, for: .normal)
         backButton.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
@@ -74,8 +74,8 @@ final class DropDownMenu: UIViewController {
         
         let doneAttributedString = NSAttributedString(string: Constants.Texts.buttonDoneMain,
                                                       attributes: [
-                                                        NSAttributedString.Key.foregroundColor: Constants.Colors.greenAccent!,
-                                                        NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16!
+                                                        NSAttributedString.Key.foregroundColor: Constants.Colors.greenAccent,
+                                                        NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16
                                                       ])
         doneButton.setAttributedTitle(doneAttributedString, for: .normal)
         doneButton.addTarget(self, action: #selector(doneButtonAction), for: .touchUpInside)

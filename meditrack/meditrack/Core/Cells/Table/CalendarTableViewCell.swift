@@ -63,11 +63,13 @@ class CalendarTableViewCell: UITableViewCell {
         layer.borderWidth = 8
         layer.borderColor = Constants.Colors.white.cgColor
         background.layer.cornerRadius = 20
-        background.backgroundColor = Constants.Colors.grayBackground
     }
     
     // MARK: - Setup
     func setup(name: String, drug: DrugType, dose: Int, food: FoodType, isCompleted: Bool) {
+        let backgroundColor = GetColors().byType(drug, style: .light)
+        background.backgroundColor = isCompleted ? Constants.Colors.grayBackground : backgroundColor
+        
         drugName.font = Constants.Fonts.nunitoSemiBold16
         drugInformation.font = Constants.Fonts.nunitoMedium12
         drugName.textColor = Constants.Colors.grayPrimary
@@ -98,12 +100,12 @@ class CalendarTableViewCell: UITableViewCell {
         }
         
         let imageData = GetImages().byType(drug)
-        let color = GetColors().byType(drug)
+        let color = GetColors().byType(drug, style: .normal)
         drugImage.image = UIImage(data: imageData)?
             .withRenderingMode(.alwaysOriginal)
             .withTintColor(Constants.Colors.white)
         drugImage.contentMode = .scaleAspectFit
-        imageBackground.backgroundColor = color
+        imageBackground.backgroundColor = isCompleted ? backgroundColor : color
         imageBackground.layer.cornerRadius = 8
     }
 }

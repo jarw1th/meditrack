@@ -92,7 +92,7 @@ final class CustomListViewController: UIViewController {
             make.top.equalTo(40)
         })
         tableView.snp.makeConstraints({ make in
-            make.width.equalTo(361)
+            make.leading.equalTo(16)
             make.trailing.equalTo(-16)
             make.bottom.equalTo(-64)
             make.top.equalTo(medicationTitleLabel.snp.bottom)
@@ -127,11 +127,11 @@ final class CustomListViewController: UIViewController {
         
         let attributedString = NSAttributedString(string: viewModel?.filterValue.rawValue ?? "",
                                                   attributes: [
-                                                    NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary!,
-                                                    NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16!
+                                                    NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary,
+                                                    NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16
                                                   ])
         filterButton.setAttributedTitle(attributedString, for: .normal)
-        let image = Constants.Images.downArrow?.withTintColor(Constants.Colors.grayPrimary!,
+        let image = Constants.Images.downArrow?.withTintColor(Constants.Colors.grayPrimary,
                                                               renderingMode: .alwaysOriginal)
         filterButton.setImage(image, for: .normal)
         filterButton.semanticContentAttribute = .forceRightToLeft
@@ -206,10 +206,8 @@ extension CustomListViewController: UITableViewDataSource {
         
         contentView.backgroundColor = Constants.Colors.white
         
-        let string = viewModel?.getSectionTitle(for: section) ?? String()
-        title.text = string
-        title.font = Constants.Fonts.nunitoSemiBold16
-        title.textColor = Constants.Colors.graySecondary
+        let attributedString = viewModel?.getSectionTitle(for: section)
+        title.attributedText = attributedString
         
         return contentView
     }
@@ -306,8 +304,8 @@ extension CustomListViewController: FilterDropDownDelegate {
         viewModel?.filterValue = type ?? .all
         let attributedString = NSAttributedString(string: viewModel?.filterValue.rawValue ?? "",
                                                   attributes: [
-                                                    NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary!,
-                                                    NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16!
+                                                    NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary,
+                                                    NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16
                                                   ])
         filterButton.setAttributedTitle(attributedString, for: .normal)
         filterDropDown.disappear()

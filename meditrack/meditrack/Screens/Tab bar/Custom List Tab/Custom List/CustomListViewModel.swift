@@ -13,7 +13,7 @@ protocol CustomListViewModelProtocol {
     
     func getSectionTitle(
         for section: Int
-    ) -> String // section title
+    ) -> NSMutableAttributedString // section title
     
     func numberOfRows(
         in section: Int
@@ -67,27 +67,43 @@ final class CustomListViewModel: CustomListViewModelProtocol {
     
     // MARK: - Functions
     func getItemId(afterRowAt indexPath: IndexPath, completion: @escaping (String) -> Void) {
-        let list = getItems(for: date(), in: indexPath.section)[indexPath.row]
+        let list = getItems(for: selectedDate, in: indexPath.section)[indexPath.row]
         completion(list.id)
     }
     
     func getItemSetup(afterRowAt indexPath: IndexPath, completion: @escaping (String, DrugType, Int, FoodType, Bool) -> Void
     ) {
-        let drug = getItems(for: date(), in: indexPath.section)[indexPath.row]
+        let drug = getItems(for: selectedDate, in: indexPath.section)[indexPath.row]
         let filteredList = getCompletedList().filter({ $0.key == drug.id }).first?.value ?? (false, String())
         var isCompleted: Bool
         (isCompleted, _) = filteredList
         completion(drug.name, drug.drugType, drug.dose, drug.foodType, isCompleted)
     }
     
-    func getSectionTitle(for section: Int) -> String {
+    func getSectionTitle(for section: Int) -> NSMutableAttributedString {
         let section = sectionModel.sections[section]
         let converted = section.convertToTime()
-        return converted
+        var attributedString = NSMutableAttributedString(string: converted)
+        let font = Constants.Fonts.nunitoSemiBold16
+        attributedString.addAttribute(NSAttributedString.Key.font,
+                                      value: font,
+                                      range: NSMakeRange(0, attributedString.length))
+        if section.isBetween(start: Date(timeIntervalSince1970: 0), end: Date()) {
+            let color = Constants.Colors.graySecondary
+            attributedString.addAttribute(NSAttributedString.Key.foregroundColor,
+                                          value: color,
+                                          range: NSMakeRange(0, attributedString.length))
+        } else {
+            let color = Constants.Colors.graySecondary
+            attributedString.addAttribute(NSAttributedString.Key.foregroundColor,
+                                          value: color,
+                                          range: NSMakeRange(0, attributedString.length))
+        }
+        return attributedString
     }
     
     func numberOfRows(in section: Int) -> Int {
-        return getItems(for: date(), in: section).count
+        return getItems(for: selectedDate, in: section).count
     }
     
     func getCompletedList() -> [String: (Bool, String)] {
@@ -113,7 +129,7 @@ final class CustomListViewModel: CustomListViewModelProtocol {
     
     // MARK: - Protocol Variables
     var numberOfSections: Int {
-        sectionModel.addSections(getItemsInterval(for: date()))
+        sectionModel.addSections(getItemsInterval(for: selectedDate))
         return sectionModel.sections.count
     }
     
@@ -178,7 +194,7 @@ final class CustomListViewModel: CustomListViewModelProtocol {
     }
     
     // Selected date
-    private func date() -> Date {
+    private var selectedDate: Date {
         return datesModel.dates[selectedIndex]
     }
     

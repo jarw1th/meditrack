@@ -214,7 +214,7 @@ final class AddDrugViewController: UIViewController {
         scrollView.addGestureRecognizer(gesture)
         
         doneButton.setAttributedTitle(NSAttributedString(string: Constants.Texts.buttonDoneMain,
-                                                         attributes: [NSAttributedString.Key.font: Constants.Fonts.nunitoBold20!,
+                                                         attributes: [NSAttributedString.Key.font: Constants.Fonts.nunitoBold20,
                                                                       NSAttributedString.Key.foregroundColor: Constants.Colors.white]),
                                       for: .normal)
         doneButton.addTarget(self, action: #selector(doneButtonAction), for: .touchUpInside)
@@ -231,8 +231,8 @@ final class AddDrugViewController: UIViewController {
         informationLabel.textColor = Constants.Colors.grayPrimary
         
         nameTextField.attributedPlaceholder = NSAttributedString(string: Constants.Texts.textfieldNameSub,
-                                                                 attributes: [NSAttributedString.Key.font: Constants.Fonts.nunitoRegular12!,
-                                                                              NSAttributedString.Key.foregroundColor: Constants.Colors.graySecondary!])
+                                                                 attributes: [NSAttributedString.Key.font: Constants.Fonts.nunitoRegular12,
+                                                                              NSAttributedString.Key.foregroundColor: Constants.Colors.graySecondary])
         nameTextField.textColor = Constants.Colors.grayPrimary
         nameTextField.font = Constants.Fonts.nunitoRegular12
         nameTextField.backgroundColor = Constants.Colors.grayBackground
@@ -241,8 +241,8 @@ final class AddDrugViewController: UIViewController {
         nameTextField.delegate = self
         
         descriptionTextField.attributedPlaceholder = NSAttributedString(string: Constants.Texts.textfieldDescriptionSub,
-                                                                        attributes: [NSAttributedString.Key.font: Constants.Fonts.nunitoRegular12!,
-                                                                                     NSAttributedString.Key.foregroundColor: Constants.Colors.graySecondary!])
+                                                                        attributes: [NSAttributedString.Key.font: Constants.Fonts.nunitoRegular12,
+                                                                                     NSAttributedString.Key.foregroundColor: Constants.Colors.graySecondary])
         descriptionTextField.textColor = Constants.Colors.grayPrimary
         descriptionTextField.font = Constants.Fonts.nunitoRegular12
         descriptionTextField.backgroundColor = Constants.Colors.grayBackground
@@ -357,8 +357,8 @@ final class AddDrugViewController: UIViewController {
     
     private func showAlert() {
         let titleAttributedString = NSAttributedString(string: Constants.Texts.alertTitleMain,
-                                                  attributes: [NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16!,
-                                                               NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary!])
+                                                  attributes: [NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16,
+                                                               NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary])
         let alert = UIAlertController(title: titleAttributedString.string,
                                       message: "",
                                       preferredStyle: .alert)
@@ -505,8 +505,8 @@ extension AddDrugViewController {
         let button = UIButton()
         let attributedString = NSAttributedString(string: title,
                                                   attributes: [
-                                                    NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary!,
-                                                    NSAttributedString.Key.font: Constants.Fonts.nunitoRegular12!
+                                                    NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary,
+                                                    NSAttributedString.Key.font: Constants.Fonts.nunitoRegular12
                                                   ])
         button.setAttributedTitle(attributedString, for: .normal)
         button.addTarget(self, action: #selector(deleteInterval), for: .touchUpInside)
@@ -542,8 +542,8 @@ extension AddDrugViewController {
         let button = UIButton()
         let attributedString = NSAttributedString(string: title,
                                                   attributes: [
-                                                    NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary!,
-                                                    NSAttributedString.Key.font: Constants.Fonts.nunitoRegular12!
+                                                    NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary,
+                                                    NSAttributedString.Key.font: Constants.Fonts.nunitoRegular12
                                                   ])
         button.setAttributedTitle(attributedString, for: .normal)
         button.addTarget(self, action: #selector(deleteNotification), for: .touchUpInside)

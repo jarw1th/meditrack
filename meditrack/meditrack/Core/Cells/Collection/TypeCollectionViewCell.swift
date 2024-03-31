@@ -48,7 +48,7 @@ class TypeCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Setup
     func setup(type: DrugType, isSelected: Bool) {
-        let color = GetColors().byType(type)
+        let color = GetColors().byType(type, style: .normal)
         self.backgroundColor = isSelected ? color : Constants.Colors.grayBackground
         
         typeLabel.text = type.rawValue
