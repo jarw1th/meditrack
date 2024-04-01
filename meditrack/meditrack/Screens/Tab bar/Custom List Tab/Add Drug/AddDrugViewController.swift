@@ -203,8 +203,8 @@ final class AddDrugViewController: UIViewController {
         
         navigationBar.setDelegate(self)
         navigationBar.setTitle(Constants.Texts.titleMedicationMain)
-        navigationBar.setImage(.left, image: Constants.Images.backIcon!)
-        navigationBar.setImage(.right, image: Constants.Images.qrIcon!)
+        navigationBar.setImage(.left, image: Constants.Images.backIcon)
+        navigationBar.setImage(.right, image: Constants.Images.qrIcon)
         
         scrollView.bounces = false
         scrollView.isScrollEnabled = true
@@ -265,7 +265,7 @@ final class AddDrugViewController: UIViewController {
         timelineLabel.font = Constants.Fonts.nunitoBold20
         timelineLabel.textColor = Constants.Colors.grayPrimary
         
-        intervalButton.setImage(Constants.Images.plusIcon?.withRenderingMode(.alwaysOriginal).withTintColor(Constants.Colors.white),
+        intervalButton.setImage(Constants.Images.plusIcon.withRenderingMode(.alwaysOriginal).withTintColor(Constants.Colors.white),
                                 for: .normal)
         intervalButton.addTarget(self, action: #selector(intervalButtonAction), for: .touchUpInside)
         intervalButton.backgroundColor = Constants.Colors.greenAccent
@@ -300,7 +300,7 @@ final class AddDrugViewController: UIViewController {
         notificationsLabel.font = Constants.Fonts.nunitoBold20
         notificationsLabel.textColor = Constants.Colors.grayPrimary
         
-        notificationsButton.setImage(Constants.Images.plusIcon?.withRenderingMode(.alwaysOriginal).withTintColor(Constants.Colors.white),
+        notificationsButton.setImage(Constants.Images.plusIcon.withRenderingMode(.alwaysOriginal).withTintColor(Constants.Colors.white),
                                      for: .normal)
         notificationsButton.addTarget(self, action: #selector(notificationsButtonAction), for: .touchUpInside)
         notificationsButton.backgroundColor = Constants.Colors.greenAccent

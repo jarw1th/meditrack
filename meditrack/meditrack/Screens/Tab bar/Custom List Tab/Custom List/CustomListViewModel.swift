@@ -41,8 +41,6 @@ protocol CustomListViewModelProtocol {
     var todayDate: String { get }
     
     var selectedIndex: Int { get set }
-    
-    var filterValue: DrugType { get set }
 }
 
 final class CustomListViewModel: CustomListViewModelProtocol {
@@ -83,18 +81,18 @@ final class CustomListViewModel: CustomListViewModelProtocol {
     func getSectionTitle(for section: Int) -> NSMutableAttributedString {
         let section = sectionModel.sections[section]
         let converted = section.convertToTime()
-        var attributedString = NSMutableAttributedString(string: converted)
-        let font = Constants.Fonts.nunitoSemiBold16
+        let attributedString = NSMutableAttributedString(string: converted)
+        let font = Constants.Fonts.nunitoRegular16
         attributedString.addAttribute(NSAttributedString.Key.font,
                                       value: font,
                                       range: NSMakeRange(0, attributedString.length))
         if section.isBetween(start: Date(timeIntervalSince1970: 0), end: Date()) {
-            let color = Constants.Colors.graySecondary
+            let color = Constants.Colors.white
             attributedString.addAttribute(NSAttributedString.Key.foregroundColor,
                                           value: color,
                                           range: NSMakeRange(0, attributedString.length))
         } else {
-            let color = Constants.Colors.graySecondary
+            let color = Constants.Colors.white
             attributedString.addAttribute(NSAttributedString.Key.foregroundColor,
                                           value: color,
                                           range: NSMakeRange(0, attributedString.length))
@@ -152,8 +150,6 @@ final class CustomListViewModel: CustomListViewModelProtocol {
     }
     
     var selectedIndex: Int = 0
-    
-    var filterValue: DrugType = .all
     
     // MARK: - Private Functions
     // All drugs

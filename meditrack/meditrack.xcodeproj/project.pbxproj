@@ -20,6 +20,7 @@
 		21BCC6EC2BB4AC3F00506B4A /* FoodType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BCC6EB2BB4AC3F00506B4A /* FoodType.swift */; };
 		21BCC6EE2BB4B3D500506B4A /* NotificationMinutesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BCC6ED2BB4B3D500506B4A /* NotificationMinutesType.swift */; };
 		21BCC6F22BB73E6100506B4A /* FilterDropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BCC6F12BB73E6100506B4A /* FilterDropDown.swift */; };
+		21BCC7132BB9757C00506B4A /* Nunito-Bold.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 21F438542B9B8C1C004408EF /* Nunito-Bold.ttf */; };
 		21F438382B9B897E004408EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438372B9B897E004408EF /* AppDelegate.swift */; };
 		21F4383A2B9B897E004408EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F438392B9B897E004408EF /* SceneDelegate.swift */; };
 		21F438412B9B8980004408EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21F438402B9B8980004408EF /* Assets.xcassets */; };
@@ -463,6 +464,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21BCC7132BB9757C00506B4A /* Nunito-Bold.ttf in Sources */,
 				21F438932B9D867A004408EF /* Fonts.swift in Sources */,
 				21BCC6E32BB0973F00506B4A /* CustomNavigationBar.swift in Sources */,
 				21F438952B9D9FAE004408EF /* Colors.swift in Sources */,

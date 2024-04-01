@@ -24,8 +24,7 @@ final class CustomListViewController: UIViewController {
     
     private let backgroundView = UIView()
     private let medicationTitleLabel = UILabel()
-    private let filterButton = UIButton()
-    private let filterDropDown = FilterDropDown()
+    private let allMedicationsButton = UIButton()
     private let tableView = UITableView()
  
     // MARK: - Body
@@ -51,8 +50,7 @@ final class CustomListViewController: UIViewController {
                           dateCollectionView,
                           backgroundView])
         backgroundView.addSubviews([medicationTitleLabel,
-                                    filterButton,
-                                    filterDropDown,
+                                    allMedicationsButton,
                                     tableView])
         
         addButton.snp.makeConstraints({ make in
@@ -87,7 +85,7 @@ final class CustomListViewController: UIViewController {
             make.leading.equalTo(24)
             make.top.equalTo(40)
         })
-        filterButton.snp.makeConstraints({ make in
+        allMedicationsButton.snp.makeConstraints({ make in
             make.trailing.equalTo(-24)
             make.top.equalTo(40)
         })
@@ -125,19 +123,16 @@ final class CustomListViewController: UIViewController {
         medicationTitleLabel.font = Constants.Fonts.nunitoRegular16
         medicationTitleLabel.textColor = Constants.Colors.graySecondary
         
-        let attributedString = NSAttributedString(string: viewModel?.filterValue.rawValue ?? "",
+        let attributedString = NSAttributedString(string: Constants.Texts.buttonAllmedicationsSub,
                                                   attributes: [
                                                     NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary,
                                                     NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16
                                                   ])
-        filterButton.setAttributedTitle(attributedString, for: .normal)
-        let image = Constants.Images.downArrow?.withTintColor(Constants.Colors.grayPrimary,
+        allMedicationsButton.setAttributedTitle(attributedString, for: .normal)
+        let image = Constants.Images.rightArrow.withTintColor(Constants.Colors.grayPrimary,
                                                               renderingMode: .alwaysOriginal)
-        filterButton.setImage(image, for: .normal)
-        filterButton.semanticContentAttribute = .forceRightToLeft
-        filterButton.addTarget(self, action: #selector(showFilter), for: .touchUpInside)
-        
-        filterDropDown.setup(view: self)
+        allMedicationsButton.setImage(image, for: .normal)
+        allMedicationsButton.semanticContentAttribute = .forceRightToLeft
     }
     
     private func setCollectionAndTable() {
@@ -195,25 +190,36 @@ extension CustomListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let contentView = UIView()
+        let background = UIView()
         let title = UILabel()
         
-        contentView.addSubview(title)
+        contentView.addSubview(background)
+        background.snp.makeConstraints({ make in
+            make.centerY.centerX.equalToSuperview()
+            make.height.equalTo(24)
+        })
+        
+        background.addSubview(title)
         title.snp.makeConstraints({ make in
             make.leading.equalTo(16)
-            make.top.equalToSuperview()
-            make.trailing.equalTo(contentView.snp.leading).inset(128)
+            make.trailing.equalTo(-16)
+            make.centerY.equalToSuperview()
         })
         
         contentView.backgroundColor = Constants.Colors.white
+        contentView.autoresizingMask = []
+        background.backgroundColor = Constants.Colors.graySecondary
+        background.layer.cornerRadius = 8
         
         let attributedString = viewModel?.getSectionTitle(for: section)
         title.attributedText = attributedString
+        title.textAlignment = .center
         
         return contentView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20
+        return 24
     }
 }
 
@@ -289,25 +295,5 @@ extension CustomListViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
-    }
-}
-
-// MARK: - FilterDropDownDelegate
-extension CustomListViewController {
-    @objc private func showFilter() {
-        filterDropDown.appear(filterArray: DrugType.allCases)
-    }
-}
-
-extension CustomListViewController: FilterDropDownDelegate {
-    func tapped(_ type: DrugType?) {
-        viewModel?.filterValue = type ?? .all
-        let attributedString = NSAttributedString(string: viewModel?.filterValue.rawValue ?? "",
-                                                  attributes: [
-                                                    NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary,
-                                                    NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16
-                                                  ])
-        filterButton.setAttributedTitle(attributedString, for: .normal)
-        filterDropDown.disappear()
     }
 }
