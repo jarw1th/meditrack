@@ -20,7 +20,8 @@ class DrugInfoRealm: Object {
         timeInterval.append(objectsIn: structure.timeInterval)
         let foodType = structure.foodType.rawValue
         let notifications = List<NotificationMinutesType.RawValue>()
-        notifications.append(objectsIn: structure.notifications.map({ $0.rawValue }))
+        let structureNotifications = structure.notifications.map { $0.rawValue }
+        notifications.append(objectsIn: structureNotifications)
         
         self.init()
         self.name = structure.name

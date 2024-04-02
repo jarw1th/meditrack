@@ -8,6 +8,8 @@ class TypeCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        setupConstraints()
         setupUI()
     }
     
@@ -17,29 +19,36 @@ class TypeCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        [typeLabel].forEach({ $0.text = nil })
-        [typeImage].forEach({ $0.image = nil })
+        
+        typeLabel.text = nil
+        typeImage.image = nil
     }
     
     override var reuseIdentifier: String? {
-        return "TypeCollectionViewCell"
+        return Constants.System.typeCollectionViewCell
+    }
+    
+    private func setupConstraints() {
+        contentView.addSubview(stackView)
+        
+        stackView.snp.makeConstraints { make in
+            make.top.bottom.leading.trailing.equalToSuperview().inset(12)
+        }
+        
+        stackView.addSubviews([typeImage,
+                               typeLabel])
+        
+        typeImage.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.height.lessThanOrEqualTo(36)
+        }
+        typeLabel.snp.makeConstraints { make in
+            make.top.equalTo(typeImage.snp.bottom).inset(-8)
+            make.centerX.equalToSuperview()
+        }
     }
     
     private func setupUI() {
-        contentView.addSubview(stackView)
-        stackView.snp.makeConstraints({ make in
-            make.top.bottom.leading.trailing.equalToSuperview().inset(12)
-        })
-        stackView.addSubviews([typeImage, typeLabel])
-        typeImage.snp.makeConstraints({ make in
-            make.centerX.equalToSuperview()
-            make.width.height.lessThanOrEqualTo(36)
-        })
-        typeLabel.snp.makeConstraints({ make in
-            make.top.equalTo(typeImage.snp.bottom).inset(-8)
-            make.centerX.equalToSuperview()
-        })
-        
         stackView.axis = .vertical
         stackView.alignment = .center
         
@@ -47,18 +56,24 @@ class TypeCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Setup
-    func setup(type: DrugType, isSelected: Bool) {
+    func setup(type: DrugType, 
+               isSelected: Bool) {
         let color = GetColors().byType(type, style: .normal)
-        self.backgroundColor = isSelected ? color : Constants.Colors.grayBackground
+        let grayBackground = Constants.Colors.grayBackground
+        let graySecondary = Constants.Colors.graySecondary
+        let white = Constants.Colors.white
+        
+        self.backgroundColor = isSelected ? color : grayBackground
         
         typeLabel.text = type.rawValue
         typeLabel.font = Constants.Fonts.nunitoRegular12
-        typeLabel.textColor = isSelected ? Constants.Colors.white : Constants.Colors.graySecondary
+        typeLabel.textColor = isSelected ? white : graySecondary
         typeLabel.textAlignment = .center
 
-        let image = UIImage(data: GetImages().byType(type))
-        let normalImage = image?.withRenderingMode(.alwaysOriginal).withTintColor(color)
-        let selectedImage = image?.withRenderingMode(.alwaysOriginal).withTintColor(Constants.Colors.white)
+        let imageData = GetImages().byType(type)
+        let image = UIImage(data: imageData)
+        let normalImage = image?.withTintColor(color, renderingMode: .alwaysOriginal)
+        let selectedImage = image?.withTintColor(white, renderingMode: .alwaysOriginal)
         typeImage.image = isSelected ? selectedImage : normalImage
         typeImage.contentMode = .scaleAspectFit
     }

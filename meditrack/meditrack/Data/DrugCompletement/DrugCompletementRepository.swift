@@ -4,9 +4,13 @@ import RealmSwift
 protocol DrugCompletementRepositoryProtocol {
     func getCompletementList(date: Date) -> [String: (Bool, String)]
     
-    func getCompletementInfo(by id: String, date: Date) -> Bool
+    func getCompletementInfo(by id: String, 
+                             date: Date) -> Bool
     
-    func setCompletementInfo(by id: String, objectId: String, date: Date, value: Bool)
+    func setCompletementInfo(by id: String, 
+                             objectId: String,
+                             date: Date,
+                             value: Bool)
     
     func checkCache(_ data: [DrugInfo])
     
@@ -22,34 +26,47 @@ final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
     
     func getCompletementList(date: Date) -> [String: (Bool, String)] {
         let data = storage.fetch(by: DrugCompletementRealm.self)
+        
         var sortedByIdData: [DrugCompletementRealm] = []
-        data.forEach({ el in
-            if el.date.standartize() == date.standartize() { sortedByIdData.append(el) }
-        })
+        data.forEach { el in
+            if el.date.standartize() == date.standartize() {
+                sortedByIdData.append(el)
+            }
+        }
+        
         var resultData: [String: (Bool, String)] = [:]
-        sortedByIdData.forEach({ el in
-            resultData.updateValue((el.isCompleted, el.objectId.stringValue), forKey: el.id)
-        })
+        sortedByIdData.forEach { el in
+            resultData.updateValue((el.isCompleted, el.objectId.stringValue), 
+                                   forKey: el.id)
+        }
+        
         return resultData
     }
     
-    func getCompletementInfo(by id: String, date: Date) -> Bool {
+    func getCompletementInfo(by id: String, 
+                             date: Date) -> Bool {
         let data = storage.fetch(by: DrugCompletementRealm.self)
+        
         var resultData: Bool = false
-        data.forEach({ el in
-            if (el.id == id && el.date.standartize() == date.standartize()) { resultData = el.isCompleted }
-        })
+        data.forEach { el in
+            if (el.id == id) && (el.date.standartize() == date.standartize()) {
+                resultData = el.isCompleted
+            }
+        }
+        
         return resultData
     }
     
-    func setCompletementInfo(by id: String, objectId: String, date: Date, value: Bool) {
+    func setCompletementInfo(by id: String, 
+                             objectId: String,
+                             date: Date,
+                             value: Bool) {
         let objectId = (try? ObjectId(string: objectId)) ?? ObjectId.generate()
         let object = DrugCompletementRealm(id: id,
                                            isCompleted: value,
                                            date: date.standartize(),
                                            objectId: objectId)
         try? storage.saveOrUpdateObject(object: object)
-        
     }
     
     func checkCache(_ data: [DrugInfo]) {
@@ -59,6 +76,7 @@ final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
                                                 value: drug.duration,
                                                 to: startDate) ?? Date()
             var byAdding: Calendar.Component = .day
+            
             switch drug.frequency {
             case .daily:
                 byAdding = .day
@@ -69,6 +87,7 @@ final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
             case .annually:
                 byAdding = .year
             }
+            
             while startDate <= endDate {
                 startDate =  Calendar.current.date(byAdding: byAdding,
                                                    value: 1,
@@ -89,11 +108,13 @@ final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
         try? storage.deleteAll()
     }
     
-    private func checkExistens(objects: [DrugCompletementRealm], object: DrugCompletementRealm) -> Bool {
+    private func checkExistens(objects: [DrugCompletementRealm], 
+                               object: DrugCompletementRealm) -> Bool {
         var resultBool = false
-        objects.forEach({ el in
+        objects.forEach { el in
             if (el.id == object.id && el.date == object.date) { resultBool = true }
-        })
+        }
+        
         return resultBool
     }
 }

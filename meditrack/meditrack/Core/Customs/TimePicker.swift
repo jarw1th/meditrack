@@ -15,14 +15,17 @@ final class TimePicker: UIViewController {
     private let nameLabel = UILabel()
     private let picker = UIDatePicker()
     
-    convenience init(name: String, view: PickerEditedDelegate) {
+    convenience init(name: String, 
+                     view: PickerEditedDelegate) {
         self.init()
+        
         nameLabel.text = name
         tapDelegate = view
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         view.frame = CGRect(x: 0,
                             y: 480,
                             width: view.bounds.width,
@@ -33,51 +36,69 @@ final class TimePicker: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubviews([backButton, nameLabel, doneButton, picker])
-        backButton.snp.makeConstraints({ make in
+        setupConstraints()
+        
+        
+    }
+    
+    private func setupConstraints() {
+        view.addSubviews([backButton, 
+                          nameLabel,
+                          doneButton,
+                          picker])
+        
+        backButton.snp.makeConstraints { make in
             make.top.equalTo(24)
             make.leading.equalTo(24)
-        })
-        nameLabel.snp.makeConstraints({ make in
+        }
+        nameLabel.snp.makeConstraints { make in
             make.width.equalTo(200)
             make.top.equalTo(24)
             make.centerX.equalToSuperview()
-        })
-        doneButton.snp.makeConstraints({ make in
+        }
+        doneButton.snp.makeConstraints { make in
             make.top.equalTo(24)
             make.trailing.equalTo(-24)
-        })
-        picker.snp.makeConstraints({ make in
+        }
+        picker.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.bottom).inset(-24)
             make.centerX.equalToSuperview()
-        })
-        
+        }
+    }
+    
+    private func setupUI() {
         view.backgroundColor = Constants.Colors.white
         view.layer.cornerRadius = 12
         
+        let buttonColor = Constants.Colors.greenAccent
+        let buttonFont = Constants.Fonts.nunitoRegular16
+        let attributes = [NSAttributedString.Key.foregroundColor: buttonColor,
+                          NSAttributedString.Key.font: buttonFont]
+        
         let backAttributedString = NSAttributedString(string: Constants.Texts.buttonBackMain,
-                                                      attributes: [
-                                                        NSAttributedString.Key.foregroundColor: Constants.Colors.greenAccent,
-                                                        NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16
-                                                      ])
-        backButton.setAttributedTitle(backAttributedString, for: .normal)
-        backButton.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
+                                                      attributes: attributes)
+        backButton.setAttributedTitle(backAttributedString, 
+                                      for: .normal)
+        backButton.addTarget(self, 
+                             action: #selector(backButtonAction),
+                             for: .touchUpInside)
         
         nameLabel.textColor = Constants.Colors.grayPrimary
         nameLabel.font = Constants.Fonts.nunitoBold20
         nameLabel.textAlignment = .center
         
         let doneAttributedString = NSAttributedString(string: Constants.Texts.buttonDoneMain,
-                                                      attributes: [
-                                                        NSAttributedString.Key.foregroundColor: Constants.Colors.greenAccent,
-                                                        NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16
-                                                      ])
-        doneButton.setAttributedTitle(doneAttributedString, for: .normal)
-        doneButton.addTarget(self, action: #selector(doneButtonAction), for: .touchUpInside)
+                                                      attributes: attributes)
+        doneButton.setAttributedTitle(doneAttributedString, 
+                                      for: .normal)
+        doneButton.addTarget(self, 
+                             action: #selector(doneButtonAction),
+                             for: .touchUpInside)
         
         picker.datePickerMode = .time
         picker.preferredDatePickerStyle = .wheels
-        picker.setValue(Constants.Colors.grayPrimary, forKey: "textColor")
+        picker.setValue(Constants.Colors.grayPrimary, 
+                        forKey: "textColor")
     }
     
     @objc private func backButtonAction() {

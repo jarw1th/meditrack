@@ -6,6 +6,8 @@ class FoodCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        setupConstraints()
         setupUI()
     }
     
@@ -15,29 +17,41 @@ class FoodCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        [typeLabel].forEach({ $0.text = nil })
+        
+        typeLabel.text = nil
     }
     
     override var reuseIdentifier: String? {
-        return "FoodCollectionViewCell"
+        return Constants.System.foodCollectionViewCell
+    }
+    
+    private func setupConstraints() {
+        contentView.addSubview(typeLabel)
+        
+        typeLabel.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+        }
     }
     
     private func setupUI() {
-        contentView.addSubview(typeLabel)
-        typeLabel.snp.makeConstraints({ make in
-            make.centerX.centerY.equalToSuperview()
-        })
-        
         layer.cornerRadius = 12
     }
     
     // MARK: - Setup
-    func setup(type: FoodType, isSelected: Bool) {
-        self.backgroundColor = isSelected ? Constants.Colors.greenAccent : Constants.Colors.grayBackground
+    func setup(type: FoodType, 
+               isSelected: Bool) {
+        let graySecondary = Constants.Colors.graySecondary
+        let grayBackground = Constants.Colors.grayBackground
+        let white = Constants.Colors.white
+        let green = Constants.Colors.greenAccent
         
-        typeLabel.text = type.getString().capitalized.replacingOccurrences(of: " ", with: "\n")
+        self.backgroundColor = isSelected ? green : grayBackground
+        
+        let typeString = type.getString().capitalized
+        
+        typeLabel.text = typeString.replacingOccurrences(of: " ", with: "\n")
         typeLabel.font = Constants.Fonts.nunitoRegular12
-        typeLabel.textColor = isSelected ? Constants.Colors.white : Constants.Colors.graySecondary
+        typeLabel.textColor = isSelected ? white : graySecondary
         typeLabel.textAlignment = .center
         typeLabel.numberOfLines = 2
     }

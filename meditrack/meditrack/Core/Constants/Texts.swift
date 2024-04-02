@@ -1,7 +1,7 @@
 // rule: (ui element)(name)(level of importancy)
 extension Constants {
     enum Texts {
-        // Custom list
+        // Labels
         static let labelRemidersMain = "Reminders"
         
         static let labelTodayRemidersMain = "Today reminders"
@@ -10,7 +10,6 @@ extension Constants {
         
         static let labelMedicationMain = "Medication"
         
-        // Add Drug
         static let labelTypeMain = "Type"
         
         static let labelInformationMain = "General information"
@@ -19,16 +18,35 @@ extension Constants {
         
         static let labelTimepickerSub = "start"
         
+        static let labelNotificationsMain = "Notifications"
+        
+        static let labelFoodMain = "Compatibility with food"
+        
+        // Titles
         static let titleMedicationMain = "New Medication"
         
+        static let titleAllSub = "all"
+        
+        // Buttons
         static let buttonDoneMain = "Done"
         
         static let buttonBackMain = "Back"
         
+        static let buttonDefaultchooseSub = "Choose"
+        
+        static let buttonAllmedicationsSub = "view all"
+        
+        // Textfield
         static let textfieldNameSub = "Name"
         
         static let textfieldDescriptionSub = "Description"
         
+        // Alerts
+        static let alertOkSub = "Ok"
+        
+        static let alertTitleMain = "Please, check again medication form"
+        
+        // Customs
         static let menuDoseSub = "/day"
         
         static let menuDuration1Sub = "week"
@@ -47,12 +65,9 @@ extension Constants {
         
         static let pickerNotificationsSub = "Notifications"
         
-        static let labelNotificationsMain = "Notifications"
+        static let enumNotificationsminutsSub = "min"
         
-        static let buttonDefaultchooseSub = "Choose"
-        
-        static let labelFoodMain = "Compatibility with food"
-        
+        // Enum strings
         static let systemNomatterMain = "No matter"
         
         static let systemBeforemealMain = "Before meal"
@@ -60,15 +75,5 @@ extension Constants {
         static let systemDuringmealMain = "During meal"
         
         static let systemAftermealMain = "After meal"
-        
-        static let enumNotificationsminutsSub = "min"
-        
-        static let alertOkSub = "Ok"
-        
-        static let alertTitleMain = "Please, check again medication form"
-        
-        static let titleAllSub = "all"
-        
-        static let buttonAllmedicationsSub = "view all"
     }
 }

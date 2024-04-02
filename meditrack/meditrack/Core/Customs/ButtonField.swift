@@ -20,19 +20,33 @@ final class ButtonField: UIView {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
-        self.addSubviews([backgroundView, nameLabel, button])
-        backgroundView.snp.makeConstraints({ make in
+        setupConstraints()
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupConstraints() {
+        self.addSubviews([backgroundView, 
+                          nameLabel,
+                          button])
+        
+        backgroundView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalToSuperview()
-        })
-        nameLabel.snp.makeConstraints({ make in
+        }
+        nameLabel.snp.makeConstraints { make in
             make.leading.equalTo(16)
             make.centerY.equalToSuperview()
-        })
-        button.snp.makeConstraints({ make in
+        }
+        button.snp.makeConstraints { make in
             make.trailing.equalTo(-16)
             make.centerY.equalToSuperview()
-        })
-        
+        }
+    }
+    
+    private func setupUI() {
         backgroundView.backgroundColor = Constants.Colors.grayBackground
         backgroundView.layer.cornerRadius = 10
         
@@ -40,8 +54,11 @@ final class ButtonField: UIView {
         nameLabel.font = Constants.Fonts.nunitoRegular12
         nameLabel.textAlignment = .left
         
-        button.addTarget(self, action: #selector(tapped), for: .touchUpInside)
-        button.setTitleColor(Constants.Colors.greenAccent, for: .normal)
+        button.addTarget(self, 
+                         action: #selector(tapped),
+                         for: .touchUpInside)
+        button.setTitleColor(Constants.Colors.greenAccent, 
+                             for: .normal)
         button.titleLabel?.font = Constants.Fonts.nunitoRegular12
         button.titleLabel?.textAlignment = .right
     }
@@ -50,22 +67,23 @@ final class ButtonField: UIView {
         tapDelegate?.tapped(menuType)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setup(name: String, buttonName: String, view: ButtonFieldDelegate, type: FieldType = .none) {
+    func setup(name: String, 
+               buttonName: String,
+               view: ButtonFieldDelegate,
+               type: FieldType = .none) {
         tapDelegate = view
         nameLabel.text = name
-        button.setTitle(buttonName, for: .normal)
+        button.setTitle(buttonName, 
+                        for: .normal)
         menuType = type
     }
     
     func changeButtonName(_ buttonName: String) {
-        button.setTitle(buttonName, for: .normal)
+        button.setTitle(buttonName, 
+                        for: .normal)
     }
     
     func getButtonName() -> String {
-        return button.title(for: .normal) ?? String()
+        return button.title(for: .normal) ?? ""
     }
 }

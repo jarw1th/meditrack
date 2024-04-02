@@ -4,18 +4,23 @@ protocol CustomNavigationBarDelegate {
     func tapped(_ button: ButtonType)
 }
 
+enum ButtonType {
+    case left, right
+}
+
 final class CustomNavigationBar: UIView {
     // MARK: - Variables
+    private var delegate: CustomNavigationBarDelegate?
+    
     private let background = UIView()
     private let titleLabel = UILabel()
     private var leftButton = UIButton()
     private var rightButton = UIButton()
     
-    private var delegate: CustomNavigationBarDelegate?
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        setupConstraints()
         setupUI()
     }
     
@@ -24,39 +29,48 @@ final class CustomNavigationBar: UIView {
     }
     
     // MARK: - Private Functions
-    private func setupUI() {
+    private func setupConstraints() {
         self.addSubview(background)
         background.snp.makeConstraints({ make in
             make.top.bottom.leading.trailing.equalToSuperview()
         })
         
-        background.addSubviews([leftButton, titleLabel, rightButton])
-        leftButton.snp.makeConstraints({ make in
+        background.addSubviews([leftButton, 
+                                titleLabel,
+                                rightButton])
+        
+        leftButton.snp.makeConstraints { make in
             make.width.height.equalTo(24)
             make.leading.equalTo(24)
             make.top.equalTo(80)
             make.bottom.equalTo(-16)
-        })
-        titleLabel.snp.makeConstraints({ make in
+        }
+        titleLabel.snp.makeConstraints { make in
             make.leading.equalTo(leftButton.snp.trailing).inset(-24)
             make.trailing.equalTo(rightButton.snp.leading).inset(-24)
             make.top.equalTo(80)
-        })
-        rightButton.snp.makeConstraints({ make in
+        }
+        rightButton.snp.makeConstraints { make in
             make.width.height.equalTo(24)
             make.trailing.equalTo(-24)
             make.top.equalTo(80)
             make.bottom.equalTo(-16)
-        })
-        
+        }
+    }
+    
+    private func setupUI() {
         background.backgroundColor = .white
         
         titleLabel.font = Constants.Fonts.nunitoMedium20
         titleLabel.textAlignment = .center
         titleLabel.textColor = Constants.Colors.grayPrimary
         
-        leftButton.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
-        rightButton.addTarget(self, action: #selector(rightButtonAction), for: .touchUpInside)
+        leftButton.addTarget(self, 
+                             action: #selector(leftButtonAction),
+                             for: .touchUpInside)
+        rightButton.addTarget(self, 
+                              action: #selector(rightButtonAction),
+                              for: .touchUpInside)
     }
     
     @objc private func leftButtonAction() {
@@ -73,17 +87,24 @@ final class CustomNavigationBar: UIView {
     }
     
     // MARK: - Buttons Functions
-    func setImage(_ button: ButtonType, image: UIImage, for state: UIControl.State) {
+    func setImage(_ button: ButtonType, 
+                  image: UIImage,
+                  for state: UIControl.State) {
         switch button {
         case .left:
-            leftButton.setImage(image, for: state)
+            leftButton.setImage(image, 
+                                for: state)
         case .right:
-            rightButton.setImage(image, for: state)
+            rightButton.setImage(image, 
+                                 for: state)
         }
     }
     
-    func setImage(_ button: ButtonType, image: UIImage) {
-        setImage(button, image: image, for: .normal)
+    func setImage(_ button: ButtonType, 
+                  image: UIImage) {
+        setImage(button, 
+                 image: image,
+                 for: .normal)
     }
     
     // MARK: - Title Functions
@@ -95,8 +116,4 @@ final class CustomNavigationBar: UIView {
     func setDelegate(_ view: CustomNavigationBarDelegate) {
         delegate = view
     }
-}
-
-enum ButtonType {
-    case left, right
 }

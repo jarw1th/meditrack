@@ -3,58 +3,62 @@ import UIKit
 // rule: (name)(number if needed)
 extension Constants {
     enum Images {
-        static let plusIcon = UIImage(named: "PlusIcon") ?? UIImage()
+        // Default value
+        private static let _none_ = UIImage()
         
-        static let backIcon = UIImage(named: "BackArrow") ?? UIImage()
+        // System icons
+        static let plusIcon = UIImage(named: "PlusIcon") ?? _none_
         
-        static let qrIcon = UIImage(named: "QRReader") ?? UIImage()
+        static let backIcon = UIImage(named: "BackArrow") ?? _none_
         
-        static let capsuleIcon = UIImage(named: "CapsuleIcon") ?? UIImage()
+        static let qrIcon = UIImage(named: "QRReader") ?? _none_
         
-        static let tabletIcon = UIImage(named: "TabletIcon") ?? UIImage()
+        static let nilIcon = UIImage(named: "NilIcon") ?? _none_
         
-        static let dropIcon = UIImage(named: "DropIcon") ?? UIImage()
+        static let downArrow = UIImage(named: "DownArrow") ?? _none_
         
-        static let inhaleIcon = UIImage(named: "InhaleIcon") ?? UIImage()
+        static let rightArrow = UIImage(named: "RightArrow") ?? _none_
         
-        static let injectionIcon = UIImage(named: "InjectionIcon") ?? UIImage()
+        // Drug icons
+        static let capsuleIcon = UIImage(named: "CapsuleIcon") ?? _none_
         
-        static let liquidIcon = UIImage(named: "LiquidIcon") ?? UIImage()
+        static let tabletIcon = UIImage(named: "TabletIcon") ?? _none_
         
-        static let otherIcon = UIImage(named: "OtherIcon") ?? UIImage()
+        static let dropIcon = UIImage(named: "DropIcon") ?? _none_
         
-        static let powderIcon = UIImage(named: "PowderIcon") ?? UIImage()
+        static let inhaleIcon = UIImage(named: "InhaleIcon") ?? _none_
         
-        static let nilIcon = UIImage(named: "NilIcon") ?? UIImage()
+        static let injectionIcon = UIImage(named: "InjectionIcon") ?? _none_
         
-        static let downArrow = UIImage(named: "DownArrow") ?? UIImage()
+        static let liquidIcon = UIImage(named: "LiquidIcon") ?? _none_
         
-        static let rightArrow = UIImage(named: "RightArrow") ?? UIImage()
+        static let otherIcon = UIImage(named: "OtherIcon") ?? _none_
+        
+        static let powderIcon = UIImage(named: "PowderIcon") ?? _none_
     }
 }
 
 class GetImages {
     func byType(_ drugType: DrugType) -> Data {
-        let image = Constants.Images.nilIcon.pngData() ?? Data()
+        let _none_ = Data()
+        
         switch drugType {
         case .capsule:
-            return Constants.Images.capsuleIcon.pngData() ?? image
+            return Constants.Images.capsuleIcon.pngData() ?? _none_
         case .tablet:
-            return Constants.Images.tabletIcon.pngData() ?? image
+            return Constants.Images.tabletIcon.pngData() ?? _none_
         case .drop:
-            return Constants.Images.dropIcon.pngData() ?? image
+            return Constants.Images.dropIcon.pngData() ?? _none_
         case .inhale:
-            return Constants.Images.inhaleIcon.pngData() ?? image
+            return Constants.Images.inhaleIcon.pngData() ?? _none_
         case .injection:
-            return Constants.Images.injectionIcon.pngData() ?? image
+            return Constants.Images.injectionIcon.pngData() ?? _none_
         case .liquid:
-            return Constants.Images.liquidIcon.pngData() ?? image
+            return Constants.Images.liquidIcon.pngData() ?? _none_
         case .other:
-            return Constants.Images.otherIcon.pngData() ?? image
+            return Constants.Images.otherIcon.pngData() ?? _none_
         case .powder:
-            return Constants.Images.powderIcon.pngData() ?? image
-        default:
-            return image
+            return Constants.Images.powderIcon.pngData() ?? _none_
         }
     }
 }

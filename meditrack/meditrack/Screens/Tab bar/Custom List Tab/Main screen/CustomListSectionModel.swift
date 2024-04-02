@@ -1,6 +1,6 @@
 import Foundation
 
-struct SectionModel {
+struct CustomListSectionModel {
     var sections: [Date] = []
     
     mutating func addSections(_ sections: [Date]) {

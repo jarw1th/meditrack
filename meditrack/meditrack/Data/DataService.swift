@@ -1,4 +1,3 @@
-import Foundation
 import RealmSwift
 
 final class DataService {
@@ -7,14 +6,19 @@ final class DataService {
     init(
         _ configuration: Realm.Configuration = Realm.Configuration()
     ) {
-//        print(Realm.Configuration.defaultConfiguration.fileURL!)
+        if let realmLocation = Realm.Configuration.defaultConfiguration.fileURL {
+            let string = "Realm location := \(realmLocation)"
+            print(string)
+        }
+        
         self.storage = try? Realm(configuration: configuration)
     }
     
     func saveOrUpdateObject(object: Object) throws {
         guard let storage else { return }
         try storage.write {
-            storage.add(object, update: .all)
+            storage.add(object, 
+                        update: .all)
         }
     }
     

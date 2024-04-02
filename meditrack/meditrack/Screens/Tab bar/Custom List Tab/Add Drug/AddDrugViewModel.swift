@@ -44,7 +44,8 @@ protocol AddDrugViewModelProtocol {
     
     func deleteNotification(_ notify: String)
     
-    func checkOptional(name: String?, description: String?) -> Bool
+    func checkOptional(name: String?, 
+                       description: String?) -> Bool
 }
 
 final class AddDrugViewModel: AddDrugViewModelProtocol {
@@ -52,7 +53,6 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
     private let drugInfoRepository: DrugInfoRepositoryProtocol
     
     private let model = PickerModel()
-    
     
     init(drugInfoRepository: DrugInfoRepositoryProtocol = DrugInfoRepository()) {
         self.drugInfoRepository = drugInfoRepository
@@ -93,6 +93,7 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
     func convertDuration(_ duration: String) -> Int {
         let postfix = duration.split(separator: " ").suffix(1).joined()
         let duration = Int(duration.split(separator: " ").prefix(1).joined()) ?? 0
+        
         switch postfix {
         case Constants.Texts.menuDuration1Sub:
             return duration
@@ -106,7 +107,7 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
     }
     
     var numberOfTypes: Int {
-        return DrugType.allCases.count - 1
+        return DrugType.allCases.count
     }
     
     var numberOfFood: Int {
@@ -123,12 +124,14 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
     var drugType: DrugType? {
         guard let selectedType = selectedType else { return nil }
         let type = DrugType.allCases[selectedType]
+        
         return type
     }
     
     var foodType: FoodType? {
         guard let selectedType = selectedFood else { return nil }
         let type = FoodType.allCases[selectedType]
+        
         return type
     }
     
@@ -152,7 +155,8 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
         self.timeInterval?.remove(at: index)
     }
     
-    func checkOptional(name: String?, description: String?) -> Bool {
+    func checkOptional(name: String?, 
+                       description: String?) -> Bool {
         let reason1 = (timeInterval != [])
         let reason2 = (duration != nil)
         let reason3 = (frequency != nil)
@@ -161,7 +165,9 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
         let reason6 = (dose != nil)
         let reason7 = (name != nil) && (name?.trimmingCharacters(in: .whitespacesAndNewlines) != "")
         let reason8 = (description != nil) && (description?.trimmingCharacters(in: .whitespacesAndNewlines) != "")
+        
         let result = reason1 && reason2 && reason3 && reason4 && reason5 && reason6 && reason7 && reason8
+        
         return result
     }
 }

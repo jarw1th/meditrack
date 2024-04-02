@@ -1,7 +1,7 @@
 import Foundation
 
 enum DrugType: String, CaseIterable {
-    case capsule, tablet, liquid, powder, drop, inhale, injection, other, all
+    case capsule, tablet, liquid, powder, drop, inhale, injection, other
 }
 
 extension DrugType {

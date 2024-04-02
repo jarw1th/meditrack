@@ -31,7 +31,9 @@ final class DrugInfoRepository: DrugInfoRepositoryProtocol {
     func deleteDrugList(_ data: [DrugInfo]) {
         var objcts: [DrugInfoRealm] = []
         for el in data {
-            guard let item = fetchDrugs().filter({ $0._id.stringValue == el.id }).first else {continue}
+            let items = fetchDrugs()
+            let filteredItems = items.filter { $0._id.stringValue == el.id }
+            guard let item = filteredItems.first else { continue }
             objcts.append(item)
         }
         try? storage.delete(objects: objcts)

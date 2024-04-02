@@ -49,6 +49,7 @@ struct DrugInfo {
         let timeInterval = Array(object.timeInterval)
         let foodType = FoodType(rawValue: object.foodType) ?? .noMatter
         let notifications = Array(object.notifications.map({ NotificationMinutesType(rawValue: $0) ?? .m5}))
+        
         self.init(id: id,
                   name: object.name,
                   descriptionDrug: object.descriptionDrug,

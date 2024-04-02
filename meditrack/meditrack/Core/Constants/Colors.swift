@@ -3,16 +3,22 @@ import UIKit
 // rule: (name)(number if needed)
 extension Constants {
     enum Colors {
-        static let greenAccent = UIColor(named: "AccentColor") ?? .white
+        // Default value
+        private static let _none_ = UIColor.white
         
-        static let grayPrimary = UIColor(named: "GrayPrimary") ?? .white
+        // Green
+        static let greenAccent = UIColor(named: "AccentColor") ?? _none_
         
-        static let graySecondary = UIColor(named: "GraySecondary") ?? .white
+        // Gray
+        static let grayPrimary = UIColor(named: "GrayPrimary") ?? _none_
         
-        static let graySecondaryLight = UIColor(named: "GraySecondaryLight") ?? .white
+        static let graySecondary = UIColor(named: "GraySecondary") ?? _none_
         
-        static let grayBackground = UIColor(named: "GrayBackground") ?? .white
+        static let graySecondaryLight = UIColor(named: "GraySecondaryLight") ?? _none_
         
+        static let grayBackground = UIColor(named: "GrayBackground") ?? _none_
+        
+        // Others
         static let white = UIColor.white
         
         static let black = UIColor.black
@@ -23,38 +29,38 @@ extension Constants {
         }
         
         // Normal Icons
-        static let capsuleColor = UIColor(named: "CapsuleColor") ?? .white
+        static let capsuleColor = UIColor(named: "CapsuleColor") ?? _none_
         
-        static let tabletColor = UIColor(named: "TabletColor") ?? .white
+        static let tabletColor = UIColor(named: "TabletColor") ?? _none_
         
-        static let dropColor = UIColor(named: "DropColor") ?? .white
+        static let dropColor = UIColor(named: "DropColor") ?? _none_
         
-        static let powderColor = UIColor(named: "PowderColor") ?? .white
+        static let powderColor = UIColor(named: "PowderColor") ?? _none_
         
-        static let liquidColor = UIColor(named: "LiquidColor") ?? .white
+        static let liquidColor = UIColor(named: "LiquidColor") ?? _none_
         
-        static let inhaleColor = UIColor(named: "InhaleColor") ?? .white
+        static let inhaleColor = UIColor(named: "InhaleColor") ?? _none_
         
-        static let injectionColor = UIColor(named: "InjectionColor") ?? .white
+        static let injectionColor = UIColor(named: "InjectionColor") ?? _none_
         
-        static let otherColor = UIColor(named: "OtherColor") ?? .white
+        static let otherColor = UIColor(named: "OtherColor") ?? _none_
         
         // Light Icons
-        static let capsuleLightColor = UIColor(named: "CapsuleLightColor") ?? .white
+        static let capsuleLightColor = UIColor(named: "CapsuleLightColor") ?? _none_
         
-        static let tabletLightColor = UIColor(named: "TabletLightColor") ?? .white
+        static let tabletLightColor = UIColor(named: "TabletLightColor") ?? _none_
         
-        static let dropLightColor = UIColor(named: "DropLightColor") ?? .white
+        static let dropLightColor = UIColor(named: "DropLightColor") ?? _none_
         
-        static let powderLightColor = UIColor(named: "PowderLightColor") ?? .white
+        static let powderLightColor = UIColor(named: "PowderLightColor") ?? _none_
         
-        static let liquidLightColor = UIColor(named: "LiquidLightColor") ?? .white
+        static let liquidLightColor = UIColor(named: "LiquidLightColor") ?? _none_
         
-        static let inhaleLightColor = UIColor(named: "InhaleLightColor") ?? .white
+        static let inhaleLightColor = UIColor(named: "InhaleLightColor") ?? _none_
         
-        static let injectionLightColor = UIColor(named: "InjectionLightColor") ?? .white
+        static let injectionLightColor = UIColor(named: "InjectionLightColor") ?? _none_
         
-        static let otherLightColor = UIColor(named: "OtherLightColor") ?? .white
+        static let otherLightColor = UIColor(named: "OtherLightColor") ?? _none_
     }
 }
 
@@ -86,8 +92,6 @@ class GetColors {
             return Constants.Colors.injectionColor
         case .other:
             return Constants.Colors.otherColor
-        default:
-            return Constants.Colors.white
         }
     }
     
@@ -109,8 +113,6 @@ class GetColors {
             return Constants.Colors.injectionLightColor
         case .other:
             return Constants.Colors.otherLightColor
-        default:
-            return Constants.Colors.white
         }
     }
 }

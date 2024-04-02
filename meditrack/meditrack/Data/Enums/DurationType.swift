@@ -1,10 +1,10 @@
 import Foundation
 
-enum NotificationMinutesType: String, CaseIterable {
-    case m5, m10, m15, m20, m30, m45, m60
+enum DurationType: String, CaseIterable {
+    case w1, w2, w3, m1, m2, m3, m4, m5, y1
 }
 
-extension NotificationMinutesType {
+extension DurationType {
     func getString() -> String {
         return "\(self.getNumberString()) \(Constants.Texts.enumNotificationsminutsSub)"
     }
