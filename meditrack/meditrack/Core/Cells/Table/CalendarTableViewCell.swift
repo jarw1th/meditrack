@@ -113,26 +113,27 @@ final class CalendarTableViewCell: UITableViewCell {
         let foodString = food.getString()
         let food = (food == .noMatter) ? "" : "(\(foodString))"
         
-        var attributedString: NSAttributedString = NSAttributedString()
+        var nameAttributedString: NSAttributedString = NSAttributedString()
+        var infoAttributedString: NSAttributedString = NSAttributedString()
         if isCompleted {
             let attributes = [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue]
             
-            attributedString = NSAttributedString(string: name,
+            nameAttributedString = NSAttributedString(string: name,
                                                   attributes: attributes)
             
-            attributedString = NSAttributedString(string: "\(drug.getString(dose)) \(food)",
+            infoAttributedString = NSAttributedString(string: "\(drug.getString(dose)) \(food)",
                                                   attributes: attributes)
         } else {
             let attributes = [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle()] as [NSAttributedString.Key : Any]
             
-            attributedString = NSAttributedString(string: name,
+            nameAttributedString = NSAttributedString(string: name,
                                                   attributes: attributes)
             
-            attributedString = NSAttributedString(string: "\(drug.getString(dose)) \(food)",
+            infoAttributedString = NSAttributedString(string: "\(drug.getString(dose)) \(food)",
                                                   attributes: attributes)
         }
-        drugName.attributedText = attributedString
-        drugInformation.attributedText = attributedString
+        drugName.attributedText = nameAttributedString
+        drugInformation.attributedText = infoAttributedString
         
         let imageData = GetImages().byType(drug)
         let image = UIImage(data: imageData)
