@@ -71,7 +71,7 @@ final class AllListViewController: UIViewController {
     
     private func setCollectionAndTable() {
         tableView.register(CalendarTableViewCell.self, 
-                           forCellReuseIdentifier: Constants.System.dateCollectionViewCell)
+                           forCellReuseIdentifier: Constants.System.calendarTableViewCell)
         tableView.dataSource = self
         tableView.delegate = self
         

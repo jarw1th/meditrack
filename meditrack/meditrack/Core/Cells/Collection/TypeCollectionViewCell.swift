@@ -25,7 +25,7 @@ class TypeCollectionViewCell: UICollectionViewCell {
     }
     
     override var reuseIdentifier: String? {
-        return Constants.System.typeCollectionViewCell
+        return "TypeCollectionViewCell"
     }
     
     private func setupConstraints() {

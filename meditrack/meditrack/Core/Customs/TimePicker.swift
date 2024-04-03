@@ -27,9 +27,9 @@ final class TimePicker: UIViewController {
         super.viewDidLayoutSubviews()
         
         view.frame = CGRect(x: 0,
-                            y: 480,
+                            y: view.bounds.height / 1.2,
                             width: view.bounds.width,
-                            height: 600)
+                            height: view.bounds.height / 1.4)
         view.layer.masksToBounds = true
     }
     
@@ -37,8 +37,7 @@ final class TimePicker: UIViewController {
         super.viewDidLoad()
         
         setupConstraints()
-        
-        
+        setupUI()
     }
     
     private func setupConstraints() {

@@ -211,7 +211,7 @@ extension CustomListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, 
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let identifier = Constants.System.typeCollectionViewCell
+        let identifier = Constants.System.calendarTableViewCell
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier,
                                                  for: indexPath) as? CalendarTableViewCell
         cell?.selectionStyle = .none
@@ -279,7 +279,7 @@ extension CustomListViewController: UITableViewDelegate {
         
         viewModel?.setCompletement(objectId: id,
                                    id: objectId,
-                                   value: reason)
+                                   value: !reason)
         
         tableView.reloadRows(at: [indexPath], 
                              with: .automatic)
