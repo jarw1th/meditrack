@@ -1,7 +1,10 @@
 import UIKit
 import SnapKit
 
-class CalendarTableViewCell: UITableViewCell {
+// MARK: - Class
+final class CalendarTableViewCell: UITableViewCell {
+    // MARK: Variables
+    // UI elements
     private let background = UIView()
     private let stackView = UIStackView()
     private let drugName = UILabel()
@@ -9,7 +12,9 @@ class CalendarTableViewCell: UITableViewCell {
     private let drugImage = UIImageView()
     private let imageBackground = UIView()
 
-    override init(style: UITableViewCell.CellStyle, 
+    // MARK: Body
+    // Initial
+    override init(style: UITableViewCell.CellStyle,
                   reuseIdentifier: String?) {
         super.init(style: style, 
                    reuseIdentifier: reuseIdentifier)
@@ -22,6 +27,7 @@ class CalendarTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // Prepare for reuse
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -35,10 +41,13 @@ class CalendarTableViewCell: UITableViewCell {
         drugImage.image = nil
     }
     
+    // Identifier
     override var reuseIdentifier: String? {
         return Constants.System.calendarTableViewCell
     }
     
+    // MARK: Private functions
+    // Setting up constraints
     private func setupConstraints() {
         contentView.addSubview(background)
         
@@ -69,6 +78,7 @@ class CalendarTableViewCell: UITableViewCell {
                                        drugInformation])
     }
     
+    // Setting up ui elements
     private func setupUI() {
         stackView.axis = .vertical
         stackView.spacing = 4
@@ -80,8 +90,9 @@ class CalendarTableViewCell: UITableViewCell {
         background.layer.cornerRadius = 20
     }
     
-    // MARK: - Setup
-    func setup(name: String, 
+    // MARK: Functions
+    // Setting up
+    func setup(name: String,
                drug: DrugType,
                dose: Int,
                food: FoodType,

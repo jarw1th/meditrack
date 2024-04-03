@@ -1,20 +1,24 @@
 import UIKit
 import SnapKit
 
+// MARK: - Class
 final class AllListViewController: UIViewController {
-    // MARK: - Variables
+    // MARK: Variables
+    // Genaral variables
     private var viewModel: AllListViewModelProtocol? {
         didSet {
             tableView.reloadData()
         }
     }
     
+    // UI elements
     private let navigationBar = CustomNavigationBar()
     
     private let backgroundView = UIView()
     private let tableView = UITableView()
  
-    // MARK: - Body
+    // MARK: Body
+    // View did load
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,7 +29,8 @@ final class AllListViewController: UIViewController {
         setCollectionAndTable()
     }
     
-    // MARK: - Functions
+    // MARK: Private functions
+    // Setting up constraints
     private func setupConstraints() {
         view.addSubviews([navigationBar,
                           backgroundView])
@@ -49,6 +54,7 @@ final class AllListViewController: UIViewController {
         }
     }
     
+    // Setting up ui elements
     private func setupUI() {
         view.backgroundColor = Constants.Colors.grayBackground
         
@@ -69,6 +75,7 @@ final class AllListViewController: UIViewController {
         backgroundView.addGestureRecognizer(swipeGesture)
     }
     
+    // Setting up collections and tables view
     private func setCollectionAndTable() {
         tableView.register(CalendarTableViewCell.self, 
                            forCellReuseIdentifier: Constants.System.calendarTableViewCell)
@@ -81,19 +88,24 @@ final class AllListViewController: UIViewController {
 }
 
 // MARK: - TableView
-extension AllListViewController: UITableViewDataSource {
+extension AllListViewController: UITableViewDataSource,
+                                 UITableViewDelegate {
+    // MARK: Functions
+    // Number of sectios
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let number = viewModel?.numberOfSections else {return 0}
         return number
     }
     
-    func tableView(_ tableView: UITableView, 
+    // Number of rows in section
+    func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
         guard let number = viewModel?.numberOfRows(in: section) else {return 0}
         return number
     }
     
-    func tableView(_ tableView: UITableView, 
+    // Cell for row
+    func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = Constants.System.calendarTableViewCell
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier,
@@ -111,7 +123,8 @@ extension AllListViewController: UITableViewDataSource {
         return cell ?? UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, 
+    // View for header
+    func tableView(_ tableView: UITableView,
                    viewForHeaderInSection section: Int) -> UIView? {
         let contentView = UIView()
         let background = UIView()
@@ -142,32 +155,29 @@ extension AllListViewController: UITableViewDataSource {
         return contentView
     }
     
-    func tableView(_ tableView: UITableView, 
+    // Height for header in section
+    func tableView(_ tableView: UITableView,
                    heightForHeaderInSection section: Int) -> CGFloat {
         return 24
     }
-}
-
-extension AllListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, 
+    
+    // Select row
+    func tableView(_ tableView: UITableView,
                    didSelectRowAt indexPath: IndexPath) {
         
     }
     
-    func tableView(_ tableView: UITableView, 
+    // Edit row
+    func tableView(_ tableView: UITableView,
                    canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
 }
 
 // MARK: - CustomNavigationBarDelegate
-extension AllListViewController {
-    @objc private func backButtonAction() {
-        navigationController?.popViewController(animated: true)
-    }
-}
-
 extension AllListViewController: CustomNavigationBarDelegate {
+    // MARK: Functions
+    // Button action passing by button
     func tapped(_ button: ButtonType) {
         switch button {
         case .left:
@@ -175,5 +185,11 @@ extension AllListViewController: CustomNavigationBarDelegate {
         case .right:
             break
         }
+    }
+    
+    // MARK: Private functions
+    // Button action
+    @objc private func backButtonAction() {
+        navigationController?.popViewController(animated: true)
     }
 }

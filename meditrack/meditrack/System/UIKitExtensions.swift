@@ -1,7 +1,9 @@
 import UIKit
 
+// MARK: - UIView
 extension UIView {
-    // Extension for adding each view to subview from array
+    // MARK: Functions
+    // Adding each view to subview from array
     func addSubviews(_ views: [UIView]) {
         for view in views {
             self.addSubview(view)
@@ -9,8 +11,10 @@ extension UIView {
     }
 }
 
+// MARK: - UIStackView
 extension UIStackView {
-    // Extension for adding each view to arranged subview from array
+    // MARK: Functions
+    // Adding each view to arranged subview from array
     func addArrangedSubviews(_ views: [UIView]) {
         for view in views {
             self.addArrangedSubview(view)
@@ -18,8 +22,10 @@ extension UIStackView {
     }
 }
 
+// MARK: - Date
 extension Date {
-    // Extension for checking if date between other two
+    // MARK: Functions
+    // Checking if date between other two
     func isBetween(start date1: Date, end date2: Date) -> Bool {
         let minDate = min(date1, date2)
         let maxDate = max(date1, date2)
@@ -29,6 +35,7 @@ extension Date {
         return result
     }
     
+    // Standartizing date
     func standartize() -> Date {
         let comps = Calendar.current.dateComponents([.year, .month, .day], from: self)
         let result = Calendar.current.date(from: comps) ?? Date()
@@ -36,6 +43,7 @@ extension Date {
         return result
     }
     
+    // Convert date to time string
     func convertToTime() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
@@ -45,8 +53,11 @@ extension Date {
     }
 }
 
+// MARK: - UITextField
 extension UITextField {
-    func setHorizontalPaddings(left leftPadding: CGFloat? = nil, 
+    // MARK: Functions
+    // Set horizontal insets
+    func setHorizontalPaddings(left leftPadding: CGFloat? = nil,
                                right rightPadding: CGFloat? = nil) {
         let leftPadding = leftPadding ?? self.frame.size.width
         let rightPadding = rightPadding ?? self.frame.size.width
@@ -68,7 +79,10 @@ extension UITextField {
     }
 }
 
+// MARK: - Array
 extension Array {
+    // MARK: Functions
+    // Convert date array to time string array
     func convertToTime() -> [String] {
         guard let array = self as? Array<Date> else { return [] }
         
@@ -80,7 +94,10 @@ extension Array {
     }
 }
 
+// MARK: - String
 extension String {
+    // MARK: Functions
+    // Getting NotificationMinutesType enum from string
     func getNotificationMinutesType() -> NotificationMinutesType {
         let subStringArray = self.components(separatedBy: " ")
         let subString = subStringArray.first ?? ""
@@ -90,6 +107,7 @@ extension String {
         return noficationType ?? .m5
     }
     
+    // Convert string duration to number of weeks
     func convertDuration() -> Int {
         let postfix = self.components(separatedBy: " ").last
         let numberString = self.components(separatedBy: " ").first ?? ""
@@ -107,6 +125,7 @@ extension String {
         }
     }
     
+    // Get dose number from string
     func getDose() -> Int {
         let stringNumber = self.components(separatedBy: "/").first ?? ""
         let number = Int(stringNumber) ?? 0

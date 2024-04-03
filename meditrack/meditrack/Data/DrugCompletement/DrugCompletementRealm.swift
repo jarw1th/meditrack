@@ -1,11 +1,15 @@
 import RealmSwift
 
-class DrugCompletementRealm: Object {
+// MARK: - Object
+final class DrugCompletementRealm: Object {
+    // MARK: Variables
     @Persisted(primaryKey: true) var objectId: ObjectId
     @Persisted var id: String
     @Persisted var isCompleted: Bool
     @Persisted var date: Date
     
+    // MARK: Body
+    // Initial
     convenience init(
         id: String,
         isCompleted: Bool,

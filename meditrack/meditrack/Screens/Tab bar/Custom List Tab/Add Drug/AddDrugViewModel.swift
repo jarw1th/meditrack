@@ -1,95 +1,176 @@
 import Foundation
 
+// MARK: - Protocol
 protocol AddDrugViewModelProtocol {
-    func getType(at indexPath: IndexPath) -> DrugType
-    
-    func getFood(at indexPath: IndexPath) -> FoodType
-    
-    func createDrug(_ item: DrugInfo)
-    
-    func getDoses() -> [String]
-    
-    func getDurations() -> [String]
-    
-    func getFrequency() -> [String]
-    
-    func getNotifications() -> [String]
-    
-    func convertDuration(_ duration: String) -> Int
-    
+    // Number of drug types
     var numberOfTypes: Int { get }
     
+    // Number of food types
     var numberOfFood: Int { get }
     
-    // Drug
+    // Time interval array
     var timeInterval: [Date]? { get set }
     
+    // Duration
     var duration: Int? { get set }
     
+    // Frequency type
     var frequency: FrequencyType? { get set }
     
+    // Drug type
     var drugType: DrugType? { get }
     
+    // Food type
     var foodType: FoodType? { get }
     
+    // Selected drug type
     var selectedType: Int? { get set }
     
+    // Selected food type
     var selectedFood: Int? { get set }
     
+    // Notifications array
     var notifications: [NotificationMinutesType]? { get set }
     
+    // Dose
     var dose: Int? { get set }
     
+    // Get drug type by indexpath
+    func getType(at indexPath: IndexPath) -> DrugType
+    
+    // Get food type by indexpath
+    func getFood(at indexPath: IndexPath) -> FoodType
+    
+    // Create DrugInfo object
+    func createDrug(_ item: DrugInfo)
+    
+    // Get doses array
+    func getDoses() -> [String]
+    
+    // Get durations array
+    func getDurations() -> [String]
+    
+    // Get frequency array
+    func getFrequency() -> [String]
+    
+    // Get notifications array
+    func getNotifications() -> [String]
+    
+    // Convert duration from string to int
+    func convertDuration(_ duration: String) -> Int
+
+    // Remove time interval from array
     func deleteInterval(_ time: String)
     
+    // Remove notification from array
     func deleteNotification(_ notify: String)
     
-    func checkOptional(name: String?, 
+    // Check if fields ara filled
+    func checkOptional(name: String?,
                        description: String?) -> Bool
 }
 
+// MARK: - Class
 final class AddDrugViewModel: AddDrugViewModelProtocol {
-    // MARK: - Variables
+    // MARK: Variables
+    // Genaral variables
     private let drugInfoRepository: DrugInfoRepositoryProtocol
-    
     private let model = PickerModel()
     
+    // Number of drug types
+    var numberOfTypes: Int {
+        return DrugType.allCases.count
+    }
+    
+    // Number of food types
+    var numberOfFood: Int {
+        return FoodType.allCases.count
+    }
+    
+    // Time interval array
+    var timeInterval: [Date]? = []
+    
+    // Duration
+    var duration: Int? = nil
+    
+    // Frequency type
+    var frequency: FrequencyType? = nil
+    
+    // Drug type
+    var drugType: DrugType? {
+        guard let selectedType = selectedType else { return nil }
+        let type = DrugType.allCases[selectedType]
+        
+        return type
+    }
+    
+    // Food type
+    var foodType: FoodType? {
+        guard let selectedType = selectedFood else { return nil }
+        let type = FoodType.allCases[selectedType]
+        
+        return type
+    }
+    
+    // Selected drug type
+    var selectedType: Int? = nil
+    
+    // Selected food type
+    var selectedFood: Int? = nil
+    
+    // Notifications array
+    var notifications: [NotificationMinutesType]? = []
+    
+    // Dose
+    var dose: Int? = nil
+    
+    // MARK: Body
+    // Initial
     init(drugInfoRepository: DrugInfoRepositoryProtocol = DrugInfoRepository()) {
         self.drugInfoRepository = drugInfoRepository
     }
     
+    // MARK: Functions
+    // Get drug type by indexpath
     func getType(at indexPath: IndexPath) -> DrugType {
         return DrugType.allCases[indexPath.row]
     }
     
+    // Get food type by indexpath
     func getFood(at indexPath: IndexPath) -> FoodType {
         return FoodType.allCases[indexPath.row]
     }
     
+    // Create DrugInfo object
     func createDrug(_ item: DrugInfo) {
         drugInfoRepository.saveDrugList([item])
     }
     
+    // Get doses array
     func getDoses() -> [String] {
         let doses = model.doses
         return doses
     }
     
+    // Get durations array
     func getDurations() -> [String] {
         let durations = model.duration
         return durations
     }
     
+    // Get frequency array
     func getFrequency() -> [String] {
         let frequency = model.frequency
         return frequency
     }
     
+    // Get notifications array
     func getNotifications() -> [String] {
         let notifications = model.notifications
         return notifications
     }
     
+    // Convert duration from string to int
     func convertDuration(_ duration: String) -> Int {
         let postfix = duration.split(separator: " ").suffix(1).joined()
         let duration = Int(duration.split(separator: " ").prefix(1).joined()) ?? 0
@@ -106,56 +187,22 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
         }
     }
     
-    var numberOfTypes: Int {
-        return DrugType.allCases.count
-    }
-    
-    var numberOfFood: Int {
-        return FoodType.allCases.count
-    }
-    
-    // Drug
-    var timeInterval: [Date]? = []
-    
-    var duration: Int? = nil
-    
-    var frequency: FrequencyType? = nil
-    
-    var drugType: DrugType? {
-        guard let selectedType = selectedType else { return nil }
-        let type = DrugType.allCases[selectedType]
-        
-        return type
-    }
-    
-    var foodType: FoodType? {
-        guard let selectedType = selectedFood else { return nil }
-        let type = FoodType.allCases[selectedType]
-        
-        return type
-    }
-    
-    var selectedType: Int? = nil
-    
-    var selectedFood: Int? = nil
-    
-    var notifications: [NotificationMinutesType]? = []
-    
-    var dose: Int? = nil
-    
+    // Remove time interval from array
     func deleteInterval(_ time: String) {
         let timeInterval = self.timeInterval?.convertToTime()
         guard let index = timeInterval?.firstIndex(of: time) else { return }
         self.timeInterval?.remove(at: index)
     }
     
+    // Remove notification from array
     func deleteNotification(_ notify: String) {
         let notifications = self.notifications?.map({ $0.rawValue })
         guard let index = notifications?.firstIndex(of: notify) else { return }
         self.timeInterval?.remove(at: index)
     }
     
-    func checkOptional(name: String?, 
+    // Check if fields ara filled
+    func checkOptional(name: String?,
                        description: String?) -> Bool {
         let reason1 = (timeInterval != [])
         let reason2 = (duration != nil)

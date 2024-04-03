@@ -1,11 +1,16 @@
 import UIKit
 import SnapKit
 
-class DateCollectionViewCell: UICollectionViewCell {
+// MARK: - Class
+final class DateCollectionViewCell: UICollectionViewCell {
+    // MARK: Variables
+    // UI elements
     private let weekDayLabel = UILabel()
     private let dateLabel = UILabel()
     private let selectedBackground = UIView()
 
+    // MARK: Body
+    // Initial
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -17,6 +22,7 @@ class DateCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // Prepare for reuse
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -25,10 +31,13 @@ class DateCollectionViewCell: UICollectionViewCell {
         elementsArray.forEach { $0.text = nil }
     }
     
+    // Identifier
     override var reuseIdentifier: String? {
         return Constants.System.dateCollectionViewCell
     }
     
+    // MARK: Private functions
+    // Setting up constraints
     private func setupConstraints() {
         contentView.addSubviews([weekDayLabel, 
                                  selectedBackground,
@@ -48,14 +57,16 @@ class DateCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    // Setting up ui elements
     private func setupUI() {
         selectedBackground.isHidden = true
         selectedBackground.backgroundColor = Constants.Colors.greenAccent
         selectedBackground.layer.cornerRadius = 8
     }
     
-    // MARK: - Setup
-    func setup(date: Date, 
+    // MARK: Functions
+    // Setting up
+    func setup(date: Date,
                isSelected: Bool,
                isToday: Bool) {
         let formatter = DateFormatter()

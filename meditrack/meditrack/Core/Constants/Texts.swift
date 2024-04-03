@@ -1,5 +1,6 @@
-// rule: (ui element)(name)(level of importancy)
+// MARK: - Texts
 extension Constants {
+    // rule: (ui element)(name)(level of importancy)
     enum Texts {
         // Labels
         static let labelRemidersMain = "Reminders"

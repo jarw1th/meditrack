@@ -1,22 +1,29 @@
 import UIKit
 
+// MARK: - Delegate
 protocol CustomNavigationBarDelegate {
     func tapped(_ button: ButtonType)
 }
 
+// MARK: - ButtonType Enum
 enum ButtonType {
     case left, right
 }
 
+// MARK: - Class
 final class CustomNavigationBar: UIView {
-    // MARK: - Variables
+    // MARK: Variables
+    // General variables
     private var delegate: CustomNavigationBarDelegate?
     
+    // UI elements
     private let background = UIView()
     private let titleLabel = UILabel()
     private var leftButton = UIButton()
     private var rightButton = UIButton()
     
+    // MARK: Body
+    // Initial
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -28,7 +35,8 @@ final class CustomNavigationBar: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Private Functions
+    // MARK: Private functions
+    // Setting up constaraints
     private func setupConstraints() {
         self.addSubview(background)
         background.snp.makeConstraints({ make in
@@ -58,6 +66,7 @@ final class CustomNavigationBar: UIView {
         }
     }
     
+    // Setting up ui elements
     private func setupUI() {
         background.backgroundColor = .white
         
@@ -73,21 +82,24 @@ final class CustomNavigationBar: UIView {
                               for: .touchUpInside)
     }
     
+    // Left button action
     @objc private func leftButtonAction() {
         delegate?.tapped(.left)
     }
     
+    // Right button action
     @objc private func rightButtonAction() {
         delegate?.tapped(.right)
     }
     
-    // MARK: - Background Functions
+    // MARK: Functions
+    // Setting back
     func setBackgroundColor(_ color: UIColor) {
         background.backgroundColor = color
     }
     
-    // MARK: - Buttons Functions
-    func setImage(_ button: ButtonType, 
+    // Setting image for button
+    func setImage(_ button: ButtonType,
                   image: UIImage,
                   for state: UIControl.State) {
         switch button {
@@ -100,19 +112,19 @@ final class CustomNavigationBar: UIView {
         }
     }
     
-    func setImage(_ button: ButtonType, 
+    func setImage(_ button: ButtonType,
                   image: UIImage) {
         setImage(button, 
                  image: image,
                  for: .normal)
     }
     
-    // MARK: - Title Functions
+    // Setting title for label
     func setTitle(_ title: String) {
         titleLabel.text = title
     }
     
-    // MARK: - Setting Delegate
+    // Setting delegate
     func setDelegate(_ view: CustomNavigationBarDelegate) {
         delegate = view
     }

@@ -1,21 +1,28 @@
 import UIKit
 import SnapKit
 
+// MARK: - Delegate
 protocol PickerEditedDelegate {
     func backTapped()
     
     func doneTapped(_ value: Date)
 }
 
+// MARK: - Class
 final class TimePicker: UIViewController {
+    // MARK: Variables
+    // General variables
     private var tapDelegate: PickerEditedDelegate?
     
+    // UI elements
     private let backButton = UIButton()
     private let doneButton = UIButton()
     private let nameLabel = UILabel()
     private let picker = UIDatePicker()
     
-    convenience init(name: String, 
+    // MARK: Body
+    // Initial
+    convenience init(name: String,
                      view: PickerEditedDelegate) {
         self.init()
         
@@ -23,6 +30,7 @@ final class TimePicker: UIViewController {
         tapDelegate = view
     }
     
+    // Layout
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -33,6 +41,7 @@ final class TimePicker: UIViewController {
         view.layer.masksToBounds = true
     }
     
+    // View did load
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,6 +49,8 @@ final class TimePicker: UIViewController {
         setupUI()
     }
     
+    // MARK: Private functions
+    // Setting up constraints
     private func setupConstraints() {
         view.addSubviews([backButton, 
                           nameLabel,
@@ -65,6 +76,7 @@ final class TimePicker: UIViewController {
         }
     }
     
+    // Setting up ui elements
     private func setupUI() {
         view.backgroundColor = Constants.Colors.white
         view.layer.cornerRadius = 12
@@ -100,12 +112,14 @@ final class TimePicker: UIViewController {
                         forKey: "textColor")
     }
     
+    // Back button action
     @objc private func backButtonAction() {
         dismiss(animated: true) {
             self.tapDelegate?.backTapped()
         }
     }
     
+    // Done button action
     @objc private func doneButtonAction() {
         dismiss(animated: true) {
             self.tapDelegate?.doneTapped(self.picker.date)

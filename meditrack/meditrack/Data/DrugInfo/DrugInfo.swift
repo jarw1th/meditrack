@@ -1,6 +1,8 @@
 import Foundation
 
+// MARK: - Object
 struct DrugInfo {
+    // MARK: Variables
     var id: String
     var name: String
     var descriptionDrug: String
@@ -13,6 +15,8 @@ struct DrugInfo {
     var dose: Int // per day
     let startDate: Date // start date
     
+    // MARK: Body
+    // Initial
     init(id: String?,
          name: String?,
          descriptionDrug: String?,
@@ -42,6 +46,7 @@ struct DrugInfo {
         }
     }
     
+    // Initia; by DrugInfoRealm object
     init(object: DrugInfoRealm) {
         let frequency = FrequencyType(rawValue: object.frequency) ?? .daily
         let drugType = DrugType(rawValue: object.drugType) ?? .capsule

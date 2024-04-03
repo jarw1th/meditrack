@@ -1,11 +1,16 @@
 import UIKit
 import SnapKit
 
-class TypeCollectionViewCell: UICollectionViewCell {
+// MARK: - Class
+final class TypeCollectionViewCell: UICollectionViewCell {
+    // MARK: Variables
+    // UI elements
     private let stackView = UIStackView()
     private let typeImage = UIImageView()
     private let typeLabel = UILabel()
 
+    // MARK: Body
+    // Initial
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -17,6 +22,7 @@ class TypeCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // Prepare for reuse
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -24,10 +30,13 @@ class TypeCollectionViewCell: UICollectionViewCell {
         typeImage.image = nil
     }
     
+    // Identifier
     override var reuseIdentifier: String? {
         return "TypeCollectionViewCell"
     }
     
+    // MARK: Private functions
+    // Setting up constraints
     private func setupConstraints() {
         contentView.addSubview(stackView)
         
@@ -48,6 +57,7 @@ class TypeCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    // Setting up ui elements
     private func setupUI() {
         stackView.axis = .vertical
         stackView.alignment = .center
@@ -55,8 +65,9 @@ class TypeCollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = 12
     }
     
-    // MARK: - Setup
-    func setup(type: DrugType, 
+    // MARK: Functions
+    // Setting up
+    func setup(type: DrugType,
                isSelected: Bool) {
         let color = GetColors().byType(type, style: .normal)
         let grayBackground = Constants.Colors.grayBackground

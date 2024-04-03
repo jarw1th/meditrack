@@ -1,11 +1,14 @@
-import Foundation
 
 struct PickerModel {
+    // MARK: Variables
+    // Genaral variables
     var doses: [String] = []
     var duration: [String] = []
     var frequency: [String] = []
     var notifications: [String] = []
     
+    // MARK: Body
+    // Initial
     init() {
         // Doses
         for i in 1...10 {

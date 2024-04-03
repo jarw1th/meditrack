@@ -1,7 +1,8 @@
 import UIKit
 
-// rule: (name)(number if needed)
+// MARK: - Images
 extension Constants {
+    // rule: (name)(second name)(number if needed)
     enum Images {
         // Default value
         private static let _none_ = UIImage()
@@ -38,7 +39,10 @@ extension Constants {
     }
 }
 
+// MARK: - Class
 class GetImages {
+    // MARK: functions
+    // Get image data by drug type
     func byType(_ drugType: DrugType) -> Data {
         let _none_ = Data()
         

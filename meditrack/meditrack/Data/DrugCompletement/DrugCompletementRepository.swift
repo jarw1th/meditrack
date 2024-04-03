@@ -1,29 +1,42 @@
 import Foundation
 import RealmSwift
 
+// MARK: - Protocol
 protocol DrugCompletementRepositoryProtocol {
+    // Get completment list by date
     func getCompletementList(date: Date) -> [String: (Bool, String)]
     
-    func getCompletementInfo(by id: String, 
+    // Get completment status by id and date
+    func getCompletementInfo(by id: String,
                              date: Date) -> Bool
     
-    func setCompletementInfo(by id: String, 
+    // Set completment status by id, object id, date
+    func setCompletementInfo(by id: String,
                              objectId: String,
                              date: Date,
                              value: Bool)
     
+    // Check cache by DrugInfo
     func checkCache(_ data: [DrugInfo])
     
+    // Clear everything
     func clearData()
 }
 
+// MARK: - Class
 final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
+    // MARK: Variables
+    // General variables
     private let storage: DataService
     
+    // MARK: Body
+    // Initial
     init(storage: DataService = DataService()) {
         self.storage = storage
     }
     
+    // MARK: Functions
+    // Get completment list by date
     func getCompletementList(date: Date) -> [String: (Bool, String)] {
         let data = storage.fetch(by: DrugCompletementRealm.self)
         
@@ -43,7 +56,8 @@ final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
         return resultData
     }
     
-    func getCompletementInfo(by id: String, 
+    // Get completment status by id and date
+    func getCompletementInfo(by id: String,
                              date: Date) -> Bool {
         let data = storage.fetch(by: DrugCompletementRealm.self)
         
@@ -57,7 +71,8 @@ final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
         return resultData
     }
     
-    func setCompletementInfo(by id: String, 
+    // Set completment status by id, object id, date
+    func setCompletementInfo(by id: String,
                              objectId: String,
                              date: Date,
                              value: Bool) {
@@ -69,6 +84,7 @@ final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
         try? storage.saveOrUpdateObject(object: object)
     }
     
+    // Check cache by DrugInfo
     func checkCache(_ data: [DrugInfo]) {
         for drug in data {
             var startDate = drug.startDate
@@ -104,11 +120,14 @@ final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
         }
     }
     
+    // Clear everything
     func clearData() {
         try? storage.deleteAll()
     }
     
-    private func checkExistens(objects: [DrugCompletementRealm], 
+    // MARK: Private functions
+    // Check object existens
+    private func checkExistens(objects: [DrugCompletementRealm],
                                object: DrugCompletementRealm) -> Bool {
         var resultBool = false
         objects.forEach { el in

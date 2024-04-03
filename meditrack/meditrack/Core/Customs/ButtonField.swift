@@ -1,22 +1,30 @@
 import UIKit
 import SnapKit
 
+// MARK: - Delegate
 protocol ButtonFieldDelegate {
     func tapped(_ type: FieldType)
 }
 
+// MARK: - FieldType Enum
 enum FieldType {
     case dose, duration, frequency, none
 }
 
+// MARK: - Class
 final class ButtonField: UIView {
+    // MARK: Variables
+    // General variables
     private var tapDelegate: ButtonFieldDelegate?
     private var menuType: FieldType = .none
     
+    // UI elements
     private let backgroundView = UIView()
     private let nameLabel = UILabel()
     private let button = UIButton()
     
+    // MARK: Body
+    // Initial
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
@@ -28,6 +36,8 @@ final class ButtonField: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Private functions
+    // Setting up constaraints
     private func setupConstraints() {
         self.addSubviews([backgroundView, 
                           nameLabel,
@@ -46,6 +56,7 @@ final class ButtonField: UIView {
         }
     }
     
+    // Setting up ui elements
     private func setupUI() {
         backgroundView.backgroundColor = Constants.Colors.grayBackground
         backgroundView.layer.cornerRadius = 10
@@ -63,11 +74,14 @@ final class ButtonField: UIView {
         button.titleLabel?.textAlignment = .right
     }
     
+    // Button action
     @objc private func tapped() {
         tapDelegate?.tapped(menuType)
     }
     
-    func setup(name: String, 
+    // MARK: Functions
+    // Setting up
+    func setup(name: String,
                buttonName: String,
                view: ButtonFieldDelegate,
                type: FieldType = .none) {
@@ -78,11 +92,13 @@ final class ButtonField: UIView {
         menuType = type
     }
     
+    // Changing button name
     func changeButtonName(_ buttonName: String) {
         button.setTitle(buttonName, 
                         for: .normal)
     }
     
+    // Getting button name
     func getButtonName() -> String {
         return button.title(for: .normal) ?? ""
     }

@@ -1,44 +1,95 @@
 import Foundation
 
+// MARK: - Protocol
 protocol CustomListViewModelProtocol {
-    func getItemId(at indexPath: IndexPath,
-                   completion: @escaping (String) -> Void) // getting id of item
+    // Number of sections
+    var numberOfSections: Int { get }
     
-    func getItemSetup(at indexPath: IndexPath,
-                      completion: @escaping (String, DrugType, Int, FoodType, Bool) -> Void) // getting name, drugtype, dose, iscompleted of item
+    // Number of items
+    var numberOfItems: Int { get }
     
-    func getSectionTitle(for section: Int) -> NSMutableAttributedString // section title
-    
-    func numberOfRows(in section: Int) -> Int // number of rows in table view
-    
-    func setCompletement(objectId: String,
-                         id: String,
-                         value: Bool) // setting completement of item
-    
-    func getCompletedList() -> [String: (Bool, String)] // getting list of completed items
-    
-    func getDate(at indexPath: IndexPath,
-                 completion: @escaping (Date) -> Void)
-    
-    var numberOfSections: Int { get } // number of sections in table view
-    
-    var numberOfItems: Int { get } // number of items in collection view
-    
+    // Today index
     var todayIndex: Int { get }
     
+    // Today date string
     var todayDate: String { get }
     
+    // Selected date index
     var selectedIndex: Int { get set }
+    
+    // Get item id by indexpath
+    func getItemId(at indexPath: IndexPath,
+                   completion: @escaping (String) -> Void)
+    
+    // Get item info by indexpath
+    func getItemSetup(at indexPath: IndexPath,
+                      completion: @escaping (String, DrugType, Int, FoodType, Bool) -> Void)
+    
+    // Get section title
+    func getSectionTitle(for section: Int) -> NSMutableAttributedString
+    
+    // Number of rows by section
+    func numberOfRows(in section: Int) -> Int
+    
+    // Set completement of item by ids
+    func setCompletement(objectId: String,
+                         id: String,
+                         value: Bool)
+    
+    // Get list of completed items
+    func getCompletedList() -> [String: (Bool, String)]
+    
+    // Get date by indexpath
+    func getDate(at indexPath: IndexPath,
+                 completion: @escaping (Date) -> Void)
 }
 
+// MARK: - Class
 final class CustomListViewModel: CustomListViewModelProtocol {
-    // MARK: - Variables
+    // MARK: Variables
+    // Genaral variables
     private let drugInfoRepository: DrugInfoRepositoryProtocol
     private let drugCompletementRepository: DrugCompletementRepositoryProtocol
-    
     private var datesModel = CustomListDatesModel()
     private var sectionModel = CustomListSectionModel()
     
+    // Number of sections
+    var numberOfSections: Int {
+        sectionModel.addSections(getItemsInterval(for: selectedDate))
+        
+        return sectionModel.sections.count
+    }
+    
+    // Number of items
+    var numberOfItems: Int {
+        return datesModel.dates.count
+    }
+    
+    // Today index
+    var todayIndex: Int {
+        let comps = Calendar.current.dateComponents([.year, .month, .day],
+                                                    from: Date())
+        let date = Calendar.current.date(from: comps) ?? Date()
+        let index = datesModel.dates.firstIndex(of: date) ?? 0
+        
+        return index
+    }
+    
+    // Today date string
+    var todayDate: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM dd"
+        let date = datesModel.dates[selectedIndex]
+        let selectedDateText = formatter.string(from: date)
+        
+        return selectedDateText
+    }
+    
+    // Selected date index
+    var selectedIndex: Int = 0
+    
+    // MARK: Body
+    // Initial
     init(drugInfoRepository: DrugInfoRepositoryProtocol = DrugInfoRepository(),
          drugCompletementRepository: DrugCompletementRepositoryProtocol = DrugCompletementRepository()) {
         self.drugInfoRepository = drugInfoRepository
@@ -51,8 +102,9 @@ final class CustomListViewModel: CustomListViewModelProtocol {
         selectedIndex = todayIndex
     }
     
-    // MARK: - Functions
-    func getItemId(at indexPath: IndexPath, 
+    // MARK: Functions
+    // Get item id by indexpath
+    func getItemId(at indexPath: IndexPath,
                    completion: @escaping (String) -> Void) {
         let lists = getItems(for: selectedDate,
                             in: indexPath.section)
@@ -60,9 +112,9 @@ final class CustomListViewModel: CustomListViewModelProtocol {
         completion(list.id)
     }
     
-    func getItemSetup(at indexPath: IndexPath, 
-                      completion: @escaping (String, DrugType, Int, FoodType, Bool) -> Void
-    ) {
+    // Get item info by indexpath
+    func getItemSetup(at indexPath: IndexPath,
+                      completion: @escaping (String, DrugType, Int, FoodType, Bool) -> Void) {
         let drugs = getItems(for: selectedDate,
                             in: indexPath.section)
         let drug = drugs[indexPath.row]
@@ -77,6 +129,7 @@ final class CustomListViewModel: CustomListViewModelProtocol {
                    isCompleted)
     }
     
+    // Get section title
     func getSectionTitle(for section: Int) -> NSMutableAttributedString {
         let section = sectionModel.sections[section]
         let converted = section.convertToTime()
@@ -104,6 +157,7 @@ final class CustomListViewModel: CustomListViewModelProtocol {
         return attributedString
     }
     
+    // Number of rows by section
     func numberOfRows(in section: Int) -> Int {
         let items = getItems(for: selectedDate,
                              in: section)
@@ -111,6 +165,7 @@ final class CustomListViewModel: CustomListViewModelProtocol {
         return items.count
     }
     
+    // Get list of completed items
     func getCompletedList() -> [String: (Bool, String)] {
         let date = datesModel.dates[selectedIndex]
         let list = drugCompletementRepository.getCompletementList(date: date)
@@ -118,6 +173,7 @@ final class CustomListViewModel: CustomListViewModelProtocol {
         return list
     }
     
+    // Set completement of item by ids
     func setCompletement(objectId: String,
                          id: String,
                          value: Bool) {
@@ -128,51 +184,27 @@ final class CustomListViewModel: CustomListViewModelProtocol {
                                                        value: value)
     }
     
-    func getDate(at indexPath: IndexPath, 
+    // Get date by indexpath
+    func getDate(at indexPath: IndexPath,
                  completion: @escaping (Date) -> Void) {
         let date = datesModel.dates[indexPath.row]
         
         completion(date)
     }
     
-    // MARK: - Protocol Variables
-    var numberOfSections: Int {
-        sectionModel.addSections(getItemsInterval(for: selectedDate))
-        
-        return sectionModel.sections.count
+    // MARK: Private variables
+    // Selected date
+    private var selectedDate: Date {
+        return datesModel.dates[selectedIndex]
     }
     
-    var numberOfItems: Int {
-        return datesModel.dates.count
-    }
-    
-    var todayIndex: Int {
-        let comps = Calendar.current.dateComponents([.year, .month, .day], 
-                                                    from: Date())
-        let date = Calendar.current.date(from: comps) ?? Date()
-        let index = datesModel.dates.firstIndex(of: date) ?? 0
-        
-        return index
-    }
-    
-    var todayDate: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM dd"
-        let date = datesModel.dates[selectedIndex]
-        let selectedDateText = formatter.string(from: date)
-        
-        return selectedDateText
-    }
-    
-    var selectedIndex: Int = 0
-    
-    // MARK: - Private Functions
-    // All drugs
+    // MARK: Private functions
+    // Get DrugInfo objects
     private func getDrugInfoList() -> [DrugInfo] {
         return drugInfoRepository.getDrugList()
     }
     
-    // All days of month
+    // Get days array by today date
     private func getDays(for day: Date = Date()) -> [Date] {
         let cal = Calendar.current
         var startDate = cal.date(byAdding: .day, 
@@ -195,8 +227,8 @@ final class CustomListViewModel: CustomListViewModelProtocol {
         return dates
     }
     
-    // Drugs for day in section
-    private func getItems(for day: Date, 
+    // Get DrugInfo objects by day and section
+    private func getItems(for day: Date,
                           in section: Int) -> [DrugInfo] {
         var list: [DrugInfo] = []
         drugInfoRepository.getDrugList().forEach { drug in
@@ -222,12 +254,7 @@ final class CustomListViewModel: CustomListViewModelProtocol {
         return list
     }
     
-    // Selected date
-    private var selectedDate: Date {
-        return datesModel.dates[selectedIndex]
-    }
-    
-    // Time intervals for selected day
+    // Get time interval array by day
     private func getItemsInterval(for day: Date) -> [Date] {
         var list: Set<Date> = []
         drugInfoRepository.getDrugList().forEach { drug in
@@ -255,8 +282,8 @@ final class CustomListViewModel: CustomListViewModelProtocol {
         return resultList
     }
     
-    // Checking if date is in frequency position
-    private func checkFrequency(for difference: Int, 
+    // Check frequency by difference and frequency
+    private func checkFrequency(for difference: Int,
                                 frequency: FrequencyType) -> Bool {
         var addNumber: Int = 1
         switch frequency {

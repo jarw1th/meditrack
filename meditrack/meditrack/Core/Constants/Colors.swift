@@ -1,7 +1,8 @@
 import UIKit
 
-// rule: (name)(number if needed)
+// MARK: - Colors
 extension Constants {
+    // rule: (name)(type)(number if needed)
     enum Colors {
         // Default value
         private static let _none_ = UIColor.white
@@ -64,7 +65,10 @@ extension Constants {
     }
 }
 
+// MARK: - Class
 class GetColors {
+    // MARK: Functions
+    // Get color by drug type and icon style
     func byType(_ drugType: DrugType, style: Constants.Colors.IconStyle) -> UIColor {
         switch style {
         case .normal:
@@ -74,6 +78,8 @@ class GetColors {
         }
     }
     
+    // MARK: Private functions
+    // Normal icons
     private func normalIcons(_ drugType: DrugType) -> UIColor {
         switch drugType {
         case .capsule:
@@ -95,6 +101,7 @@ class GetColors {
         }
     }
     
+    // Light icons
     private func lightIcons(_ drugType: DrugType) -> UIColor {
         switch drugType {
         case .capsule:

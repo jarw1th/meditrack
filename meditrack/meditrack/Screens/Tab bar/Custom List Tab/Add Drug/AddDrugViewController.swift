@@ -1,10 +1,13 @@
 import UIKit
 import SnapKit
 
+// MARK: - Class
 final class AddDrugViewController: UIViewController {
-    // MARK: - Variables
+    // MARK: Variables
+    // Genaral variables
     private var viewModel: AddDrugViewModelProtocol?
     
+    // UI elements
     private let navigationBar = CustomNavigationBar()
     private let scrollView = UIScrollView()
     private let doneButton = UIButton()
@@ -55,7 +58,8 @@ final class AddDrugViewController: UIViewController {
     private let notificationsScrollView = UIScrollView()
     private let notificationsStackView = UIStackView()
     
-    // MARK: - Body
+    // MARK: Body
+    // View did load
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,7 +70,8 @@ final class AddDrugViewController: UIViewController {
         setCollectionAndTable()
     }
     
-    // MARK: - Functions
+    // MARK: Private functions
+    // Setting up constraints
     private func setupConstraints() {
         view.addSubviews([navigationBar,
                           scrollView,
@@ -212,6 +217,7 @@ final class AddDrugViewController: UIViewController {
         }
     }
     
+    // Setting up ui elements
     private func setupUI() {
         view.backgroundColor = .white
         title = Constants.Texts.titleMedicationMain
@@ -344,6 +350,7 @@ final class AddDrugViewController: UIViewController {
         notificationsStackView.contentMode = .center
     }
     
+    // Setting up collections and tables view
     private func setCollectionAndTable() {
         typeCollectionView.register(TypeCollectionViewCell.self, 
                                     forCellWithReuseIdentifier: Constants.System.typeCollectionViewCell)
@@ -356,6 +363,7 @@ final class AddDrugViewController: UIViewController {
         foodCollectionView.delegate = self
     }
     
+    // Done button action
     @objc private func doneButtonAction() {
         let name = nameTextField.text
         let description = descriptionTextField.text
@@ -396,6 +404,7 @@ final class AddDrugViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    // Showing alert
     private func showAlert() {
         let attributes = [NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16,
                           NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary]
@@ -414,12 +423,14 @@ final class AddDrugViewController: UIViewController {
         present(alert, animated: true)
     }
     
+    // Interval button action
     @objc private func intervalButtonAction() {
         let timePicker = TimePicker(name: Constants.Texts.timepickerTimeintervalSub, 
                                     view: self)
         present(timePicker, animated: true)
     }
     
+    // Notification button action
     @objc private func notificationsButtonAction() {
         let dropDownMenu = DropDownMenu(name: Constants.Texts.pickerNotificationsSub,
                                         elements: viewModel?.getNotifications() ?? [],
@@ -429,14 +440,19 @@ final class AddDrugViewController: UIViewController {
                 animated: true)
     }
     
+    // Hide keyboard action by gesture
     @objc private func hideKeyboard(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
 }
 
-// MARK: - CollectionView
-extension AddDrugViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, 
+// MARK: - Collection View
+extension AddDrugViewController: UICollectionViewDataSource, 
+                                 UICollectionViewDelegate,
+                                 UICollectionViewDelegateFlowLayout {
+    // MARK: Functions
+    // Number of items in section
+    func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case typeCollectionView:
@@ -448,7 +464,8 @@ extension AddDrugViewController: UICollectionViewDataSource {
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, 
+    // Cell for item
+    func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView {
         case typeCollectionView:
@@ -464,6 +481,66 @@ extension AddDrugViewController: UICollectionViewDataSource {
         }
     }
     
+    // Number of sections
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    // Did select item
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
+        collectionView.scrollToItem(at: indexPath,
+                                    at: .centeredHorizontally,
+                                    animated: true)
+        
+        switch collectionView {
+        case typeCollectionView:
+            let selectedIndex = IndexPath(row: viewModel?.selectedType ?? 0,
+                                          section: 0)
+            viewModel?.selectedType = indexPath.row
+            collectionView.reloadItems(at: [indexPath, selectedIndex])
+        case foodCollectionView:
+            let selectedIndex = IndexPath(row: viewModel?.selectedFood ?? 0,
+                                          section: 0)
+            viewModel?.selectedFood = indexPath.row
+            collectionView.reloadItems(at: [indexPath, selectedIndex])
+        default:
+            break
+        }
+    }
+    
+    // Minimum inter item spacing
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    // Size for item
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        switch collectionView {
+        case typeCollectionView:
+            return CGSize(width: 88,
+                          height: 88)
+        case foodCollectionView:
+            return CGSize(width: 64,
+                          height: 64)
+        default:
+            return CGSize.zero
+        }
+    }
+    
+    // Minimum line spacing
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+    
+    // MARK: Private functions
+    // Cell for type collection view item
     private func typeCollectionViewCell(_ collectionView: UICollectionView,
                                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let identifier = Constants.System.typeCollectionViewCell
@@ -477,6 +554,7 @@ extension AddDrugViewController: UICollectionViewDataSource {
         return cell
     }
     
+    // Cell for food collection view item
     private func foodCollectionViewCell(_ collectionView: UICollectionView,
                                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let identifier = Constants.System.foodCollectionViewCell
@@ -491,65 +569,10 @@ extension AddDrugViewController: UICollectionViewDataSource {
     }
 }
 
-extension AddDrugViewController: UICollectionViewDelegate {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, 
-                        didSelectItemAt indexPath: IndexPath) {
-        collectionView.scrollToItem(at: indexPath, 
-                                    at: .centeredHorizontally,
-                                    animated: true)
-        
-        switch collectionView {
-        case typeCollectionView:
-            let selectedIndex = IndexPath(row: viewModel?.selectedType ?? 0, 
-                                          section: 0)
-            viewModel?.selectedType = indexPath.row
-            collectionView.reloadItems(at: [indexPath, selectedIndex])
-        case foodCollectionView:
-            let selectedIndex = IndexPath(row: viewModel?.selectedFood ?? 0, 
-                                          section: 0)
-            viewModel?.selectedFood = indexPath.row
-            collectionView.reloadItems(at: [indexPath, selectedIndex])
-        default:
-            break
-        }
-    }
-}
-
-extension AddDrugViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, 
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, 
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch collectionView {
-        case typeCollectionView:
-            return CGSize(width: 88, 
-                          height: 88)
-        case foodCollectionView:
-            return CGSize(width: 64, 
-                          height: 64)
-        default:
-            return CGSize.zero
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, 
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
-    }
-}
-
 // MARK: - ButtonFieldDelegate
 extension AddDrugViewController: ButtonFieldDelegate {
+    // MARK: Functions
+    // Button action
     func tapped(_ type: FieldType) {
         switch type {
         case .dose:
@@ -577,13 +600,30 @@ extension AddDrugViewController: ButtonFieldDelegate {
 }
 
 // MARK: - PickerEditedDelegate
-extension AddDrugViewController {
+extension AddDrugViewController: PickerEditedDelegate {
+    // MARK: Functions
+    // Back button action
+    func backTapped() {
+       
+    }
+    
+    // Done button action
+    func doneTapped(_ value: Date) {
+        viewModel?.timeInterval?.append(value)
+        let title = value.convertToTime()
+        createInterval(title,
+                       value: value)
+    }
+    
+    // MARK: Private functions
+    // Delete interval action
     @objc private func deleteInterval(sender: UIButton) {
         let title = sender.attributedTitle(for: .normal)?.string ?? ""
         viewModel?.deleteInterval(title)
         sender.removeFromSuperview()
     }
     
+    // Creating button by interval title and value
     private func createInterval(_ title: String, value: Date) {
         let button = UIButton()
         let attributes = [NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary,
@@ -606,27 +646,43 @@ extension AddDrugViewController {
     }
 }
 
-extension AddDrugViewController: PickerEditedDelegate {
-    func backTapped() {
+// MARK: - ButtonTapDelegate
+extension AddDrugViewController: DropDownMenuDelegate {
+    // MARK: Functions
+    // Back button action
+    func backButtonTapped() {
        
     }
     
-    func doneTapped(_ value: Date) {
-        viewModel?.timeInterval?.append(value)
-        let title = value.convertToTime()
-        createInterval(title, 
-                       value: value)
+    // Done button action
+    func doneButtonTapped(_ value: String,
+                          type: FieldType) {
+        switch type {
+        case .dose:
+            viewModel?.dose = value.getDose()
+            doseField.changeButtonName(value)
+        case .duration:
+            viewModel?.duration = value.convertDuration()
+            durationField.changeButtonName(value)
+        case .frequency:
+            viewModel?.frequency = FrequencyType(rawValue: value)
+            frequencyField.changeButtonName(value)
+        case .none:
+            let notification = value.getNotificationMinutesType()
+            viewModel?.notifications?.append(notification)
+            createNotification(value)
+        }
     }
-}
-
-// MARK: - ButtonTapDelegate
-extension AddDrugViewController {
+    
+    // MARK: Private functions
+    // Delete notification action
     @objc private func deleteNotification(sender: UIButton) {
         let title = sender.attributedTitle(for: .normal)?.string ?? ""
         viewModel?.deleteNotification(title)
         sender.removeFromSuperview()
     }
     
+    // Creating button by notification title
     private func createNotification(_ title: String) {
         let button = UIButton()
         let attributes = [NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary,
@@ -648,33 +704,10 @@ extension AddDrugViewController {
     }
 }
 
-extension AddDrugViewController: DropDownMenuDelegate {
-    func backButtonTapped() {
-       
-    }
-    
-    func doneButtonTapped(_ value: String, 
-                          type: FieldType) {
-        switch type {
-        case .dose:
-            viewModel?.dose = value.getDose()
-            doseField.changeButtonName(value)
-        case .duration:
-            viewModel?.duration = value.convertDuration()
-            durationField.changeButtonName(value)
-        case .frequency:
-            viewModel?.frequency = FrequencyType(rawValue: value)
-            frequencyField.changeButtonName(value)
-        case .none:
-            let notification = value.getNotificationMinutesType()
-            viewModel?.notifications?.append(notification)
-            createNotification(value)
-        }
-    }
-}
-
 // MARK: - UITextFieldDelegate
 extension AddDrugViewController: UITextFieldDelegate {
+    // MARK: Functions
+    // Text field action on pressing return
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return false
@@ -682,13 +715,9 @@ extension AddDrugViewController: UITextFieldDelegate {
 }
 
 // MARK: - CustomNavigationBarDelegate
-extension AddDrugViewController {
-    @objc private func backButtonAction() {
-        navigationController?.popViewController(animated: true)
-    }
-}
-
 extension AddDrugViewController: CustomNavigationBarDelegate {
+    // MARK: Functions
+    // Button action passing by button
     func tapped(_ button: ButtonType) {
         switch button {
         case .left:
@@ -696,5 +725,11 @@ extension AddDrugViewController: CustomNavigationBarDelegate {
         case .right:
             break
         }
+    }
+    
+    // MARK: Private functions
+    // Button action
+    @objc private func backButtonAction() {
+        navigationController?.popViewController(animated: true)
     }
 }

@@ -1,9 +1,14 @@
 import UIKit
 import SnapKit
 
-class FoodCollectionViewCell: UICollectionViewCell {
+// MARK: - Class
+final class FoodCollectionViewCell: UICollectionViewCell {
+    // MARK: Variables
+    // UI elements
     private let typeLabel = UILabel()
 
+    // MARK: Body
+    // Initial
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -15,16 +20,20 @@ class FoodCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // Prepare for reuse
     override func prepareForReuse() {
         super.prepareForReuse()
         
         typeLabel.text = nil
     }
     
+    // Identifier
     override var reuseIdentifier: String? {
         return Constants.System.foodCollectionViewCell
     }
     
+    // MARK: Private functions
+    // Setting up constraints
     private func setupConstraints() {
         contentView.addSubview(typeLabel)
         
@@ -33,12 +42,14 @@ class FoodCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    // Setting up ui elements
     private func setupUI() {
         layer.cornerRadius = 12
     }
     
-    // MARK: - Setup
-    func setup(type: FoodType, 
+    // MARK: Functions
+    // Setting up
+    func setup(type: FoodType,
                isSelected: Bool) {
         let graySecondary = Constants.Colors.graySecondary
         let grayBackground = Constants.Colors.grayBackground

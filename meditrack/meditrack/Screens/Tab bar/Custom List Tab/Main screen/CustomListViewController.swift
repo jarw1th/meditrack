@@ -1,14 +1,17 @@
 import UIKit
 import SnapKit
 
+// MARK: - Class
 final class CustomListViewController: UIViewController {
-    // MARK: - Variables
+    // MARK: Variables
+    // Genaral variables
     private var viewModel: CustomListViewModelProtocol? {
         didSet {
             tableView.reloadData()
         }
     }
     
+    // UI elements
     private let addButton = UIButton()
     
     private let selectedDate = UILabel()
@@ -31,7 +34,8 @@ final class CustomListViewController: UIViewController {
     private let allMedicationsButton = UIButton()
     private let tableView = UITableView()
  
-    // MARK: - Body
+    // MARK: Body
+    // View did load
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,7 +46,8 @@ final class CustomListViewController: UIViewController {
         setCollectionAndTable()
     }
     
-    // MARK: - Functions
+    // MARK: Private functions
+    // Setting up constraints
     private func setupConstraints() {
         view.addSubview(addButton)
         
@@ -99,6 +104,7 @@ final class CustomListViewController: UIViewController {
         }
     }
     
+    // Setting up ui elements
     private func setupUI() {
         view.backgroundColor = Constants.Colors.grayBackground
         
@@ -161,6 +167,7 @@ final class CustomListViewController: UIViewController {
         allMedicationsButton.semanticContentAttribute = .forceRightToLeft
     }
     
+    // Setting up collections and tables view
     private func setCollectionAndTable() {
         dateCollectionView.register(DateCollectionViewCell.self, 
                                     forCellWithReuseIdentifier: Constants.System.dateCollectionViewCell)
@@ -185,11 +192,13 @@ final class CustomListViewController: UIViewController {
         }
     }
     
+    // Push add drug screen action
     @objc private func pushAddDrug() {
         navigationController?.pushViewController(AddDrugViewController(), 
                                                  animated: true)
     }
     
+    // Push all drugs screen action
     @objc private func pushAllDrugs() {
         navigationController?.pushViewController(AllListViewController(), 
                                                  animated: true)
@@ -197,19 +206,24 @@ final class CustomListViewController: UIViewController {
 }
 
 // MARK: - TableView
-extension CustomListViewController: UITableViewDataSource {
+extension CustomListViewController: UITableViewDataSource,
+                                    UITableViewDelegate {
+    // MARK: Functions
+    // Number of sectios
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let number = viewModel?.numberOfSections else {return 0}
         return number
     }
     
-    func tableView(_ tableView: UITableView, 
+    // Number of rows in section
+    func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
         guard let number = viewModel?.numberOfRows(in: section) else {return 0}
         return number
     }
     
-    func tableView(_ tableView: UITableView, 
+    // Cell for row
+    func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = Constants.System.calendarTableViewCell
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier,
@@ -227,7 +241,8 @@ extension CustomListViewController: UITableViewDataSource {
         return cell ?? UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, 
+    // View for header
+    func tableView(_ tableView: UITableView,
                    viewForHeaderInSection section: Int) -> UIView? {
         let contentView = UIView()
         let background = UIView()
@@ -258,14 +273,14 @@ extension CustomListViewController: UITableViewDataSource {
         return contentView
     }
     
-    func tableView(_ tableView: UITableView, 
+    // Height for header in section
+    func tableView(_ tableView: UITableView,
                    heightForHeaderInSection section: Int) -> CGFloat {
         return 24
     }
-}
-
-extension CustomListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, 
+    
+    // Select row
+    func tableView(_ tableView: UITableView,
                    didSelectRowAt indexPath: IndexPath) {
         var objectId = String()
         viewModel?.getItemId(at: indexPath) { id in
@@ -281,25 +296,25 @@ extension CustomListViewController: UITableViewDelegate {
                                    id: objectId,
                                    value: !reason)
         
-        tableView.reloadRows(at: [indexPath], 
+        tableView.reloadRows(at: [indexPath],
                              with: .automatic)
-    }
-    
-    func tableView(_ tableView: UITableView, 
-                   canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
     }
 }
 
 // MARK: - CollectionView
-extension CustomListViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, 
+extension CustomListViewController: UICollectionViewDataSource,
+                                    UICollectionViewDelegate,
+                                    UICollectionViewDelegateFlowLayout {
+    // MARK: Functions
+    // Number of items
+    func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
         guard let number = viewModel?.numberOfItems else {return 0}
         return number
     }
     
-    func collectionView(_ collectionView: UICollectionView, 
+    // Cell for item
+    func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let identifier = Constants.System.dateCollectionViewCell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier,
@@ -315,16 +330,16 @@ extension CustomListViewController: UICollectionViewDataSource {
 
         return cell
     }
-}
-
-extension CustomListViewController: UICollectionViewDelegate {
+    
+    // Number of sections
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, 
+    // Select item
+    func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
-        collectionView.scrollToItem(at: indexPath, 
+        collectionView.scrollToItem(at: indexPath,
                                     at: .centeredHorizontally,
                                     animated: true)
         
@@ -342,23 +357,24 @@ extension CustomListViewController: UICollectionViewDelegate {
         collectionView.reloadItems(at: [indexPath, selectedIndex])
         tableView.reloadData()
     }
-}
-
-extension CustomListViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, 
+    
+    // Minimum inter item spacing
+    func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
     
-    func collectionView(_ collectionView: UICollectionView, 
+    // Size for item
+    func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 50, 
+        return CGSize(width: 50,
                       height: 80)
     }
     
-    func collectionView(_ collectionView: UICollectionView, 
+    // Minimum line spacing
+    func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0

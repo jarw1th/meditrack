@@ -1,7 +1,8 @@
 import UIKit
 
-// rule: (font name)(weight)(size)
+// MARK: - Fonts
 extension Constants {
+    // rule: (font name)(weight)(size)
     enum Fonts {
         // Default value
         private static let _none_ = UIFont.systemFont(ofSize: 100)

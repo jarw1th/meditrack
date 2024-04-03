@@ -1,6 +1,6 @@
-import Foundation
-
+// MARK: - System
 extension Constants {
+    // rule: (name)
     enum System {
         // Cell identifiers
         static let dateCollectionViewCell = "DateCollectionViewCell"

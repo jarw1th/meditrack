@@ -1,6 +1,8 @@
 import RealmSwift
 
+// MARK: - Object
 class DrugInfoRealm: Object {
+    // MARK: Variables
     @Persisted(primaryKey: true) var _id: ObjectId
     @Persisted var name: String
     @Persisted var descriptionDrug: String
@@ -13,6 +15,8 @@ class DrugInfoRealm: Object {
     @Persisted var dose: Int // per day
     @Persisted var startDate: Date // start date
     
+    // MARK: Body
+    // Initial
     convenience init(structure: DrugInfo) {
         let frequency = structure.frequency.rawValue
         let drugType = structure.drugType.rawValue

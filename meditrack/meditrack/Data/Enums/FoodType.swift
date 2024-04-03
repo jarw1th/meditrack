@@ -1,10 +1,14 @@
 import Foundation
 
+// MARK: - FoodType Enum
 enum FoodType: String, CaseIterable {
     case noMatter, beforeMeal, duringMeal, afterMeal
 }
 
+// MARK: - Extension Functions
 extension FoodType {
+    // MARK: Functions
+    // Getting string
     func getString() -> String {
         switch Locale.current.languageCode {
         case "ru":

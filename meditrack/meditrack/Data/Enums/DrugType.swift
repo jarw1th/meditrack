@@ -1,10 +1,14 @@
 import Foundation
 
+// MARK: - DrugType Enum
 enum DrugType: String, CaseIterable {
     case capsule, tablet, liquid, powder, drop, inhale, injection, other
 }
 
+// MARK: - Extension Functions
 extension DrugType {
+    // MARK: Functions
+    // Getting string with number
     func getString(_ number: Int) -> String {
         switch Locale.current.languageCode {
         case "ru":
