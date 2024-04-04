@@ -1,7 +1,7 @@
 import Foundation
 
 // MARK: - Model
-struct CustomListSectionModel {
+struct MainScreenSectionModel {
     // MARK: Variables
     // Genaral variables
     var sections: [Date] = []

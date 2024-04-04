@@ -35,6 +35,12 @@ protocol AddDrugViewModelProtocol {
     // Dose
     var dose: Int? { get set }
     
+    // Popping view controller
+    func close()
+    
+    // Dismiss view controller
+    func dismiss()
+    
     // Get drug type by indexpath
     func getType(at indexPath: IndexPath) -> DrugType
     
@@ -73,7 +79,11 @@ protocol AddDrugViewModelProtocol {
 // MARK: - Class
 final class AddDrugViewModel: AddDrugViewModelProtocol {
     // MARK: Variables
+    // Route
+    typealias Routes = AddDrugRoute & Closable & Dismissable
+    
     // Genaral variables
+    private let router: Routes
     private let drugInfoRepository: DrugInfoRepositoryProtocol
     private let model = PickerModel()
     
@@ -126,11 +136,23 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
     
     // MARK: Body
     // Initial
-    init(drugInfoRepository: DrugInfoRepositoryProtocol = DrugInfoRepository()) {
+    init(drugInfoRepository: DrugInfoRepositoryProtocol = DrugInfoRepository(),
+         router: Routes) {
         self.drugInfoRepository = drugInfoRepository
+        self.router = router
     }
     
     // MARK: Functions
+    // Popping view controller
+    func close() {
+        router.close()
+    }
+    
+    // Dismiss view controller
+    func dismiss() {
+        router.dismiss()
+    }
+    
     // Get drug type by indexpath
     func getType(at indexPath: IndexPath) -> DrugType {
         return DrugType.allCases[indexPath.row]

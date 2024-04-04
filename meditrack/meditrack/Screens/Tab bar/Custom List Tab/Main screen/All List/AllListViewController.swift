@@ -18,11 +18,16 @@ final class AllListViewController: UIViewController {
     private let tableView = UITableView()
  
     // MARK: Body
+    // Initial
+    convenience init(viewModel: AllListViewModelProtocol?) {
+        self.init()
+        
+        self.viewModel = viewModel
+    }
+    
     // View did load
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        viewModel = AllListViewModel()
         
         setupConstraints()
         setupUI()
@@ -190,6 +195,6 @@ extension AllListViewController: CustomNavigationBarDelegate {
     // MARK: Private functions
     // Button action
     @objc private func backButtonAction() {
-        navigationController?.popViewController(animated: true)
+        viewModel?.close()
     }
 }

@@ -59,11 +59,16 @@ final class AddDrugViewController: UIViewController {
     private let notificationsStackView = UIStackView()
     
     // MARK: Body
+    // Initial
+    convenience init(viewModel: AddDrugViewModelProtocol?) {
+        self.init()
+        
+        self.viewModel = viewModel
+    }
+    
     // View did load
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        viewModel = AddDrugViewModel()
         
         setupConstraints()
         setupUI()
@@ -401,7 +406,7 @@ final class AddDrugViewController: UIViewController {
                             startDate: Date())
         viewModel?.createDrug(drug)
         
-        navigationController?.popViewController(animated: true)
+        viewModel?.close()
     }
     
     // Showing alert
@@ -730,6 +735,6 @@ extension AddDrugViewController: CustomNavigationBarDelegate {
     // MARK: Private functions
     // Button action
     @objc private func backButtonAction() {
-        navigationController?.popViewController(animated: true)
+        viewModel?.close()
     }
 }

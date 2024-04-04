@@ -5,6 +5,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // MARK: Variables
     // General variables
     var window: UIWindow?
+    private let wireframe = Wireframe()
 
     // MARK: Functions
     // Main scene
@@ -12,7 +13,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = UINavigationController(rootViewController: CustomListViewController())
+        window?.rootViewController = wireframe.tabBar
         window?.makeKeyAndVisible()
     }
 

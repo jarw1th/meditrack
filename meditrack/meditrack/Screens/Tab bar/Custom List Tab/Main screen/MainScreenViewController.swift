@@ -2,10 +2,10 @@ import UIKit
 import SnapKit
 
 // MARK: - Class
-final class CustomListViewController: UIViewController {
+final class MainScreenViewController: UIViewController {
     // MARK: Variables
     // Genaral variables
-    private var viewModel: CustomListViewModelProtocol? {
+    private var viewModel: MainScreenViewModelProtocol? {
         didSet {
             tableView.reloadData()
         }
@@ -35,11 +35,16 @@ final class CustomListViewController: UIViewController {
     private let tableView = UITableView()
  
     // MARK: Body
+    // Initial
+    convenience init(viewModel: MainScreenViewModelProtocol?) {
+        self.init()
+        
+        self.viewModel = viewModel
+    }
+    
     // View did load
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        viewModel = CustomListViewModel()
         
         setupConstraints()
         setupUI()
@@ -194,19 +199,17 @@ final class CustomListViewController: UIViewController {
     
     // Push add drug screen action
     @objc private func pushAddDrug() {
-        navigationController?.pushViewController(AddDrugViewController(), 
-                                                 animated: true)
+        viewModel?.goToAddDrug()
     }
     
     // Push all drugs screen action
     @objc private func pushAllDrugs() {
-        navigationController?.pushViewController(AllListViewController(), 
-                                                 animated: true)
+        viewModel?.goToAllList()
     }
 }
 
 // MARK: - TableView
-extension CustomListViewController: UITableViewDataSource,
+extension MainScreenViewController: UITableViewDataSource,
                                     UITableViewDelegate {
     // MARK: Functions
     // Number of sectios
@@ -302,7 +305,7 @@ extension CustomListViewController: UITableViewDataSource,
 }
 
 // MARK: - CollectionView
-extension CustomListViewController: UICollectionViewDataSource,
+extension MainScreenViewController: UICollectionViewDataSource,
                                     UICollectionViewDelegate,
                                     UICollectionViewDelegateFlowLayout {
     // MARK: Functions

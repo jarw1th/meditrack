@@ -1,7 +1,7 @@
 import Foundation
 
 // MARK: - Model
-struct CustomListDatesModel {
+struct MainScreenDatesModel {
     // MARK: Variables
     // Genaral variables
     var dates: [Date] = []

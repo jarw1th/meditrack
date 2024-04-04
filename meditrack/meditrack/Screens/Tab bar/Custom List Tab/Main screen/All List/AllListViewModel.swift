@@ -3,23 +3,33 @@ import Foundation
 // MARK: - Protocol
 protocol AllListViewModelProtocol {
     // Get number of sections
-    var numberOfSections: Int { get } // number of sections in table view
+    var numberOfSections: Int { get }
+    
+    // Pop view controller
+    func close()
+    
+    // Dismiss view controller
+    func dismiss()
     
     // Get item setup information by indexpath
     func getItemSetup(at indexPath: IndexPath,
-                      completion: @escaping (String, DrugType, Int, FoodType, Bool) -> Void) // getting name, drugtype, dose, iscompleted of item
+                      completion: @escaping (String, DrugType, Int, FoodType, Bool) -> Void)
     
     // Get section title by section index
-    func getSectionTitle(for section: Int) -> NSMutableAttributedString // section title
+    func getSectionTitle(for section: Int) -> NSMutableAttributedString
     
     // Get number of rows by section index
-    func numberOfRows(in section: Int) -> Int // number of rows in table view
+    func numberOfRows(in section: Int) -> Int
 }
 
 // MARK: - Class
 final class AllListViewModel: AllListViewModelProtocol {
     // MARK: Variables
+    // Route
+    typealias Routes = AllListRoute & Closable & Dismissable
+    
     // Genaral variables
+    private let router: Routes
     private let drugInfoRepository: DrugInfoRepositoryProtocol
     private let drugCompletementRepository: DrugCompletementRepositoryProtocol
     private var model = DrugTypeModel()
@@ -33,9 +43,11 @@ final class AllListViewModel: AllListViewModelProtocol {
     // MARK: Body
     // Initial
     init(drugInfoRepository: DrugInfoRepositoryProtocol = DrugInfoRepository(),
-         drugCompletementRepository: DrugCompletementRepositoryProtocol = DrugCompletementRepository()) {
+         drugCompletementRepository: DrugCompletementRepositoryProtocol = DrugCompletementRepository(),
+         router: Routes) {
         self.drugInfoRepository = drugInfoRepository
         self.drugCompletementRepository = drugCompletementRepository
+        self.router = router
         
         drugCompletementRepository.checkCache(drugInfoRepository.getDrugList())
         
@@ -43,6 +55,16 @@ final class AllListViewModel: AllListViewModelProtocol {
     }
     
     // MARK: Functions
+    // Pop view controller
+    func close() {
+        router.close()
+    }
+    
+    // Dismiss view controller
+    func dismiss() {
+        router.dismiss()
+    }
+    
     // Get item setup information by indexpath
     func getItemSetup(at indexPath: IndexPath,
                       completion: @escaping (String, DrugType, Int, FoodType, Bool) -> Void) {

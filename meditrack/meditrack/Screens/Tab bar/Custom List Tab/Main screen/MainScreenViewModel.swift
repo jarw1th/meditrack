@@ -1,7 +1,7 @@
 import Foundation
 
 // MARK: - Protocol
-protocol CustomListViewModelProtocol {
+protocol MainScreenViewModelProtocol {
     // Number of sections
     var numberOfSections: Int { get }
     
@@ -16,6 +16,12 @@ protocol CustomListViewModelProtocol {
     
     // Selected date index
     var selectedIndex: Int { get set }
+    
+    // Push all list view controller
+    func goToAllList()
+    
+    // Push add drug view controller
+    func goToAddDrug()
     
     // Get item id by indexpath
     func getItemId(at indexPath: IndexPath,
@@ -45,14 +51,18 @@ protocol CustomListViewModelProtocol {
 }
 
 // MARK: - Class
-final class CustomListViewModel: CustomListViewModelProtocol {
+final class MainScreenViewModel: MainScreenViewModelProtocol {
     // MARK: Variables
+    // Route
+    typealias Routes = MainScreenRoute
+    
     // Genaral variables
+    private let router: Routes
     private let drugInfoRepository: DrugInfoRepositoryProtocol
     private let drugCompletementRepository: DrugCompletementRepositoryProtocol
-    private var datesModel = CustomListDatesModel()
-    private var sectionModel = CustomListSectionModel()
-    
+    private var datesModel = MainScreenDatesModel()
+    private var sectionModel = MainScreenSectionModel()
+
     // Number of sections
     var numberOfSections: Int {
         sectionModel.addSections(getItemsInterval(for: selectedDate))
@@ -91,9 +101,11 @@ final class CustomListViewModel: CustomListViewModelProtocol {
     // MARK: Body
     // Initial
     init(drugInfoRepository: DrugInfoRepositoryProtocol = DrugInfoRepository(),
-         drugCompletementRepository: DrugCompletementRepositoryProtocol = DrugCompletementRepository()) {
+         drugCompletementRepository: DrugCompletementRepositoryProtocol = DrugCompletementRepository(),
+         router: Routes) {
         self.drugInfoRepository = drugInfoRepository
         self.drugCompletementRepository = drugCompletementRepository
+        self.router = router
         
         drugCompletementRepository.checkCache(drugInfoRepository.getDrugList())
         
@@ -103,6 +115,16 @@ final class CustomListViewModel: CustomListViewModelProtocol {
     }
     
     // MARK: Functions
+    // Push all list view controller
+    func goToAllList() {
+        router.toAllList(with: PushTransition())
+    }
+    
+    // Push add drug view controller
+    func goToAddDrug() {
+        router.toAddDrug(with: PushTransition())
+    }
+    
     // Get item id by indexpath
     func getItemId(at indexPath: IndexPath,
                    completion: @escaping (String) -> Void) {
