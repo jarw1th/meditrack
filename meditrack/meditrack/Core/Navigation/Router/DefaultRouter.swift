@@ -27,7 +27,7 @@ final class DefaultRouter: NSObject, Router, Closable, Dismissable {
     func close(completion: (() -> Void)?) {
         guard let root = root else { return }
         rootTransition.close(root,
-                         completion: completion)
+                             completion: completion)
     }
     
     func close() {

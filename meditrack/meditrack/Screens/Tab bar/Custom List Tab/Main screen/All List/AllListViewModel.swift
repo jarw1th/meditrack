@@ -6,7 +6,7 @@ protocol AllListViewModelProtocol {
     var numberOfSections: Int { get }
     
     // Pop view controller
-    func close()
+    func close(_ animated: Bool)
     
     // Dismiss view controller
     func dismiss()
@@ -56,7 +56,7 @@ final class AllListViewModel: AllListViewModelProtocol {
     
     // MARK: Functions
     // Pop view controller
-    func close() {
+    func close(_ animated: Bool) {
         router.close()
     }
     

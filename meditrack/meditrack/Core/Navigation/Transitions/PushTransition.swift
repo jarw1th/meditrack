@@ -1,7 +1,8 @@
 import UIKit
 
 final class PushTransition: NSObject {
-    var isAnimated: Bool = true
+    var isOpenAnimated: Bool = true
+    var isCloseAnimated: Bool = true
     
     private weak var from: UIViewController?
     private var openCompletionHandler: (() -> Void)?
@@ -12,8 +13,10 @@ final class PushTransition: NSObject {
         return navigation
     }
     
-    init(isAnimated: Bool = true) {
-        self.isAnimated = isAnimated
+    init(isOpenAnimated: Bool = true,
+         isCloseAnimated: Bool = true) {
+        self.isOpenAnimated = isOpenAnimated
+        self.isCloseAnimated = isCloseAnimated
     }
 }
 
@@ -25,13 +28,13 @@ extension PushTransition: Transition {
         openCompletionHandler = completion
         navigationController?.delegate = self
         navigationController?.pushViewController(viewController, 
-                                                 animated: isAnimated)
+                                                 animated: isOpenAnimated)
     }
     
     func close(_ viewController: UIViewController, 
                completion: (() -> Void)?) {
         closeCompletionHandler = completion
-        navigationController?.popViewController(animated: isAnimated)
+        navigationController?.popViewController(animated: isCloseAnimated)
     }
 }
 

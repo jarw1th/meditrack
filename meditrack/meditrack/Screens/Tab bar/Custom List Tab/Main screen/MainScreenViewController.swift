@@ -228,12 +228,14 @@ final class MainScreenViewController: UIViewController {
     }
     
     private func reloadData() {
-        dateCollectionView.reloadData()
-        tableView.reloadData()
-        dateCollectionView.scrollToItem(at: IndexPath(row: self.viewModel?.selectedIndex ?? 0,
-                                                           section: 0),
-                                        at: .centeredHorizontally,
-                                        animated: false)
+        UIView.animate(withDuration: 0.4, animations: {
+            self.dateCollectionView.reloadData()
+            self.tableView.reloadData()
+            self.dateCollectionView.scrollToItem(at: IndexPath(row: self.viewModel?.selectedIndex ?? 0,
+                                                               section: 0),
+                                            at: .centeredHorizontally,
+                                            animated: false)
+        })
     }
 }
 

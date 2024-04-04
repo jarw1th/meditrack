@@ -123,7 +123,7 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
     // MARK: Functions
     // Push all list view controller
     func goToAllList() {
-        router.toAllList(with: PushTransition())
+        router.toAllList(with: PushTransition(isCloseAnimated: false))
     }
     
     // Push add drug view controller
