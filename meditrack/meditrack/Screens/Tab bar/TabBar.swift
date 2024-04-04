@@ -21,7 +21,10 @@ final class TabBar: UITabBarController {
         router.root = viewController
         
         let navigation = UINavigationController(rootViewController: viewController)
-        navigation.tabBarItem = UITabBarItem(title: "", image: nil, tag: 0)
+        navigation.tabBarItem = UITabBarItem(title: "", 
+                                             image: nil,
+                                             tag: 0)
+        
         return navigation
     }
     
@@ -31,7 +34,10 @@ final class TabBar: UITabBarController {
         router.root = viewController
         
         let navigation = UINavigationController(rootViewController: viewController)
-        navigation.tabBarItem = UITabBarItem(title: "", image: nil, tag: 1)
+        navigation.tabBarItem = UITabBarItem(title: "", 
+                                             image: nil,
+                                             tag: 1)
+        
         return navigation
     }
 }

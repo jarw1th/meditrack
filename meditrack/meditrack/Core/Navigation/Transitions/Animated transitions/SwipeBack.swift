@@ -26,9 +26,10 @@ final class SwipeBack: NSObject, UIViewControllerAnimatedTransitioning {
         
         containerView.addSubview(toView)
         
-        UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {img.alpha = 0.0}, completion: {_ in
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), 
+                       animations: { img.alpha = 0.0 }) {_ in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-        })
+        }
     }
     
     private func dismiss(using transitionContext: UIViewControllerContextTransitioning) {
@@ -42,8 +43,9 @@ final class SwipeBack: NSObject, UIViewControllerAnimatedTransitioning {
         
         containerView.addSubview(fromView)
         
-        UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {img.alpha = 0.0}, completion: {_ in
+        UIView.animate(withDuration: transitionDuration(using: transitionContext),
+                       animations: { img.alpha = 0.0 }) { _ in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-        })
+        }
     }
 }

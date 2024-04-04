@@ -48,6 +48,12 @@ protocol MainScreenViewModelProtocol {
     // Get date by indexpath
     func getDate(at indexPath: IndexPath,
                  completion: @escaping (Date) -> Void)
+    
+    // Indecrement selected date index
+    func selectedIndexIncrement()
+    
+    // Decrement selected date index
+    func selectedIndexDecrement()
 }
 
 // MARK: - Class
@@ -212,6 +218,20 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
         let date = datesModel.dates[indexPath.row]
         
         completion(date)
+    }
+    
+    // Indecrement selected date index
+    @objc func selectedIndexIncrement() {
+        if selectedIndex < datesModel.dates.count {
+            selectedIndex += 1
+        }
+    }
+    
+    // Decrement selected date index
+    func selectedIndexDecrement() {
+        if selectedIndex > 0 {
+            selectedIndex -= 1
+        }
     }
     
     // MARK: Private variables

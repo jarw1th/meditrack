@@ -151,6 +151,16 @@ final class MainScreenViewController: UIViewController {
         
         backgroundView.backgroundColor = Constants.Colors.white
         backgroundView.layer.cornerRadius = 48
+        let leftSwipeGesture = UISwipeGestureRecognizer(target: self,
+                                                        action: #selector(selectedIndexIncrement))
+        leftSwipeGesture.cancelsTouchesInView = false
+        leftSwipeGesture.direction = .right
+        let rightSwipeGesture = UISwipeGestureRecognizer(target: self,
+                                                        action: #selector(selectedIndexDecrement))
+        leftSwipeGesture.cancelsTouchesInView = false
+        leftSwipeGesture.direction = .left
+        backgroundView.addGestureRecognizer(leftSwipeGesture)
+        backgroundView.addGestureRecognizer(rightSwipeGesture)
         
         medicationTitleLabel.text = Constants.Texts.labelMedicationMain
         medicationTitleLabel.font = Constants.Fonts.nunitoRegular16
@@ -205,6 +215,25 @@ final class MainScreenViewController: UIViewController {
     // Push all drugs screen action
     @objc private func pushAllDrugs() {
         viewModel?.goToAllList()
+    }
+    
+    @objc private func selectedIndexIncrement() {
+        viewModel?.selectedIndexIncrement()
+        reloadData()
+    }
+    
+    @objc private func selectedIndexDecrement() {
+        viewModel?.selectedIndexDecrement()
+        reloadData()
+    }
+    
+    private func reloadData() {
+        dateCollectionView.reloadData()
+        tableView.reloadData()
+        dateCollectionView.scrollToItem(at: IndexPath(row: self.viewModel?.selectedIndex ?? 0,
+                                                           section: 0),
+                                        at: .centeredHorizontally,
+                                        animated: false)
     }
 }
 
