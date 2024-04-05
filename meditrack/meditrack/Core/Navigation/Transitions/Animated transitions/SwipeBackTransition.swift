@@ -14,6 +14,7 @@ final class SwipeBackTransition: NSObject {
 extension SwipeBackTransition: Transition {
     func open(_ viewController: UIViewController, 
               from: UIViewController,
+              animated: Bool,
               completion: (() -> Void)?) {
         viewController.transitioningDelegate = self
         viewController.modalPresentationStyle = .custom
@@ -22,8 +23,10 @@ extension SwipeBackTransition: Transition {
                      completion: completion)
     }
     
-    func close(_ viewController: UIViewController, completion: (() -> Void)?) {
-        viewController.dismiss(animated: isAnimated, 
+    func close(_ viewController: UIViewController,
+               animated: Bool,
+               completion: (() -> Void)?) {
+        viewController.dismiss(animated: isAnimated,
                                completion: completion)
     }
 }

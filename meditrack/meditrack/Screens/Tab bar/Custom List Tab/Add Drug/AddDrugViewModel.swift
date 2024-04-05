@@ -35,8 +35,8 @@ protocol AddDrugViewModelProtocol {
     // Dose
     var dose: Int? { get set }
     
-    // Popping view controller
-    func close()
+    // Pop view controller
+    func close(_ animated: Bool)
     
     // Dismiss view controller
     func dismiss()
@@ -144,8 +144,8 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
     
     // MARK: Functions
     // Popping view controller
-    func close() {
-        router.close()
+    func close(_ animated: Bool) {
+        router.close(animated: animated)
     }
     
     // Dismiss view controller

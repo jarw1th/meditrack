@@ -57,7 +57,7 @@ final class AllListViewModel: AllListViewModelProtocol {
     // MARK: Functions
     // Pop view controller
     func close(_ animated: Bool) {
-        router.close()
+        router.close(animated: animated)
     }
     
     // Dismiss view controller

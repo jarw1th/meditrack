@@ -14,6 +14,7 @@ final class AllListViewController: UIViewController {
     private var previousViewControllerSnapshot: UIView?
     
     // UI elements
+    private let backgroundLayer = UIView()
     private let navigationBar = CustomNavigationBar()
     
     private let backgroundView = UIView()
@@ -75,10 +76,11 @@ final class AllListViewController: UIViewController {
         
         backgroundView.backgroundColor = Constants.Colors.white
         backgroundView.layer.cornerRadius = 48
-        let panGesture = UIPanGestureRecognizer(target: self,
-                                                action: #selector(handlePan))
-        panGesture.cancelsTouchesInView = false
-        backgroundView.addGestureRecognizer(panGesture)
+        
+        backgroundLayer.frame = view.bounds
+        backgroundLayer.backgroundColor = Constants.Colors.grayBackground
+        view.addSubview(backgroundLayer)
+        view.sendSubviewToBack(backgroundLayer)
     }
     
     // Setting up collections and tables view
@@ -90,49 +92,6 @@ final class AllListViewController: UIViewController {
         
         tableView.separatorStyle = .none
         tableView.backgroundColor = Constants.Colors.white
-    }
-    
-    // Swipe back animation
-    @objc private func handlePan(_ gesture: UIPanGestureRecognizer) {
-        switch gesture.state {
-        case .began:
-            initPosition = view.center
-            if let previousViewController = navigationController?.viewControllers.dropLast().last,
-               let snapshot = previousViewController.view.snapshotView(afterScreenUpdates: true) {
-                let overlay = UIView()
-                overlay.frame = view.bounds
-                overlay.backgroundColor = Constants.Colors.grayBackground
-                view.addSubview(overlay)
-                view.sendSubviewToBack(overlay)
-                
-                snapshot.frame = view.bounds
-                view.addSubview(snapshot)
-                view.sendSubviewToBack(snapshot)
-                previousViewControllerSnapshot = snapshot
-            }
-        case .changed:
-            let translation = gesture.translation(in: view)
-            view.center.x = initPosition.x + translation.x
-            view.center.x = max(view.center.x, view.bounds.width / 2)
-            previousViewControllerSnapshot?.center.x = initPosition.x - translation.x
-        case .ended, .cancelled:
-            let shouldDismiss = (view.center.x > view.bounds.width * 0.75)
-            UIView.animate(withDuration: 0.3) {
-                if shouldDismiss {
-                    self.view.center.x += self.view.bounds.width
-                    self.previousViewControllerSnapshot?.center.x -= self.view.bounds.width
-                } else {
-                    self.view.center = self.initPosition
-                    self.previousViewControllerSnapshot?.center = self.initPosition
-                }
-            } completion: { _ in
-                if shouldDismiss {
-                    self.viewModel?.close(false)
-                }
-            }
-        default:
-            break
-        }
     }
 }
 

@@ -8,6 +8,7 @@ final class AddDrugViewController: UIViewController {
     private var viewModel: AddDrugViewModelProtocol?
     
     // UI elements
+    private let backgroundLayer = UIView()
     private let navigationBar = CustomNavigationBar()
     private let scrollView = UIScrollView()
     private let doneButton = UIButton()
@@ -353,6 +354,11 @@ final class AddDrugViewController: UIViewController {
         notificationsStackView.axis = .horizontal
         notificationsStackView.spacing = 16
         notificationsStackView.contentMode = .center
+        
+        backgroundLayer.frame = view.bounds
+        backgroundLayer.backgroundColor = Constants.Colors.white
+        view.addSubview(backgroundLayer)
+        view.sendSubviewToBack(backgroundLayer)
     }
     
     // Setting up collections and tables view
@@ -406,7 +412,7 @@ final class AddDrugViewController: UIViewController {
                             startDate: Date())
         viewModel?.createDrug(drug)
         
-        viewModel?.close()
+        viewModel?.close(true)
     }
     
     // Showing alert
@@ -735,6 +741,6 @@ extension AddDrugViewController: CustomNavigationBarDelegate {
     // MARK: Private functions
     // Button action
     @objc private func backButtonAction() {
-        viewModel?.close()
+        viewModel?.close(true)
     }
 }

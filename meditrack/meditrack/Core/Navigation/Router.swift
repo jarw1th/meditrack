@@ -3,7 +3,10 @@ import UIKit
 protocol Closable: AnyObject {
     func close()
     
-    func close(completion: (() -> Void)?)
+    func close(animated: Bool,
+               completion: (() -> Void)?)
+    
+    func close(animated: Bool)
 }
 
 protocol Dismissable: AnyObject {
@@ -13,11 +16,16 @@ protocol Dismissable: AnyObject {
 }
 
 protocol Routable: AnyObject {
-    func route(to viewController: UIViewController, 
+    func route(to viewController: UIViewController,
                as transition: Transition)
     
-    func route(to viewController: UIViewController, 
+    func route(to viewController: UIViewController,
                as transition: Transition,
+               animated: Bool)
+    
+    func route(to viewController: UIViewController,
+               as transition: Transition,
+               animated: Bool,
                completion: (() -> Void)?)
 }
 

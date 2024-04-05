@@ -10,28 +10,46 @@ final class DefaultRouter: NSObject, Router, Closable, Dismissable {
     
     func route(to viewController: UIViewController, 
                as transition: Transition,
+               animated: Bool,
                completion: (() -> Void)?) {
         guard let root = root else { return }
         transition.open(viewController,
                         from: root,
+                        animated: animated,
                         completion: completion)
     }
     
-    func route(to viewController: UIViewController, 
-               as transition: Transition) {
-        route(to: viewController, 
+    func route(to viewController: UIViewController,
+               as transition: Transition,
+               animated: Bool) {
+        route(to: viewController,
               as: transition,
+              animated: animated,
               completion: nil)
     }
     
-    func close(completion: (() -> Void)?) {
+    func route(to viewController: UIViewController,
+               as transition: Transition) {
+        route(to: viewController,
+              as: transition,
+              animated: true,
+              completion: nil)
+    }
+    
+    func close(animated: Bool,
+               completion: (() -> Void)?) {
         guard let root = root else { return }
         rootTransition.close(root,
+                             animated: animated,
                              completion: completion)
     }
     
+    func close(animated: Bool) {
+        close(animated: animated, completion: nil)
+    }
+    
     func close() {
-        close(completion: nil)
+        close(animated: true, completion: nil)
     }
     
     func dismiss(completion: (() -> Void)?) {
