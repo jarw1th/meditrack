@@ -1,6 +1,6 @@
 import UIKit
 
-final class TabBar: UITabBarController {
+final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -9,7 +9,8 @@ final class TabBar: UITabBarController {
     
     private func viewControllers() -> [UIViewController] {
         let viewControllers = [mainScreen(),
-                               emptyScreen()]
+                               emptyScreen1(),
+                               emptyScreen2()]
         
         return viewControllers
     }
@@ -28,7 +29,7 @@ final class TabBar: UITabBarController {
         return navigation
     }
     
-    private func emptyScreen() -> UIViewController {
+    private func emptyScreen1() -> UIViewController {
         let router = DefaultRouter(rootTranstion: EmptyTransition())
         let viewController = UIViewController()
         router.root = viewController
@@ -37,6 +38,19 @@ final class TabBar: UITabBarController {
         navigation.tabBarItem = UITabBarItem(title: "", 
                                              image: nil,
                                              tag: 1)
+        
+        return navigation
+    }
+    
+    private func emptyScreen2() -> UIViewController {
+        let router = DefaultRouter(rootTranstion: EmptyTransition())
+        let viewController = UIViewController()
+        router.root = viewController
+        
+        let navigation = UINavigationController(rootViewController: viewController)
+        navigation.tabBarItem = UITabBarItem(title: "",
+                                             image: nil,
+                                             tag: 2)
         
         return navigation
     }

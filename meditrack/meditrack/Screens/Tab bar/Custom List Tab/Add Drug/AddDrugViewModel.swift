@@ -35,6 +35,9 @@ protocol AddDrugViewModelProtocol {
     // Dose
     var dose: Int? { get set }
     
+    // Push view controller
+    func goToQr()
+    
     // Pop view controller
     func close(_ animated: Bool)
     
@@ -143,7 +146,12 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
     }
     
     // MARK: Functions
-    // Popping view controller
+    // Push view controller
+    func goToQr() {
+        router.toQR(with: PushTransition())
+    }
+    
+    // Pop view controller
     func close(_ animated: Bool) {
         router.close(animated: animated)
     }

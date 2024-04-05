@@ -10,11 +10,8 @@ final class AllListViewController: UIViewController {
             tableView.reloadData()
         }
     }
-    private var initPosition = CGPoint.zero
-    private var previousViewControllerSnapshot: UIView?
     
     // UI elements
-    private let backgroundLayer = UIView()
     private let navigationBar = CustomNavigationBar()
     
     private let backgroundView = UIView()
@@ -73,14 +70,10 @@ final class AllListViewController: UIViewController {
         navigationBar.setImage(.left, 
                                image: Constants.Images.backIcon)
         navigationBar.setBackgroundColor(Constants.Colors.grayBackground)
+        navigationBar.setBackgroundLayerColor(Constants.Colors.grayBackground)
         
         backgroundView.backgroundColor = Constants.Colors.white
         backgroundView.layer.cornerRadius = 48
-        
-        backgroundLayer.frame = view.bounds
-        backgroundLayer.backgroundColor = Constants.Colors.grayBackground
-        view.addSubview(backgroundLayer)
-        view.sendSubviewToBack(backgroundLayer)
     }
     
     // Setting up collections and tables view
@@ -172,7 +165,8 @@ extension AllListViewController: UITableViewDataSource,
     // Select row
     func tableView(_ tableView: UITableView,
                    didSelectRowAt indexPath: IndexPath) {
-        
+        guard let item = viewModel?.getItem(at: indexPath) else { return }
+        viewModel?.goToDetailedScreen(item)
     }
     
     // Edit row

@@ -17,14 +17,26 @@ extension Constants {
         
         static let labelTimelineMain = "Timeline & schedule"
         
+        static let labelScheduleMain = "Schedule"
+        
         static let labelTimepickerSub = "start"
         
         static let labelNotificationsMain = "Notifications"
         
         static let labelFoodMain = "Compatibility with food"
         
+        static let labelProgressMain = "Progress"
+        
+        static let labelProgressSub = "You started the course:"
+        
+        static let labelDetailsMain = "Details"
+        
         // Titles
         static let titleMedicationMain = "New Medication"
+        
+        static let titleScanmedicationMain = "Scan Medication"
+        
+        static let titleMedicationdetailsMain = "Medication Details"
         
         static let titleAllSub = "all"
         
@@ -46,6 +58,8 @@ extension Constants {
         static let alertOkSub = "Ok"
         
         static let alertTitleMain = "Please, check again medication form"
+        
+        static let alertFailscanMain = "Scanning not supported"
         
         // Customs
         static let menuDoseSub = "/day"

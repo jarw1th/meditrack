@@ -39,6 +39,8 @@ final class CustomNavigationBar: UIView {
     private var leftButton = UIButton()
     private var rightButton = UIButton()
     
+    private let backgroundLayer = UIView()
+    
     // MARK: Body
     // Initial
     override init(frame: CGRect) {
@@ -85,7 +87,9 @@ final class CustomNavigationBar: UIView {
     
     // Setting up ui elements
     private func setupUI() {
-        background.backgroundColor = .white
+        background.backgroundColor = Constants.Colors.white
+        
+        backgroundLayer.backgroundColor = Constants.Colors.white
         
         titleLabel.font = Constants.Fonts.nunitoMedium20
         titleLabel.textAlignment = .center
@@ -152,6 +156,11 @@ final class CustomNavigationBar: UIView {
         background.backgroundColor = color
     }
     
+    // Setting background layer
+    func setBackgroundLayerColor(_ color: UIColor) {
+        backgroundLayer.backgroundColor = color
+    }
+    
     // Setting image for button
     func setImage(_ button: ButtonType,
                   image: UIImage,
@@ -178,6 +187,11 @@ final class CustomNavigationBar: UIView {
         titleLabel.text = title
     }
     
+    // Setting title color
+    func setTitleColor(_ color: UIColor) {
+        titleLabel.textColor = color
+    }
+    
     // Setting delegate
     func setDelegate(_ view: CustomNavigationBarDelegate) {
         delegate = view
@@ -186,5 +200,9 @@ final class CustomNavigationBar: UIView {
                                              action: #selector(handlePan))
         gesture.cancelsTouchesInView = false
         viewController?.view.addGestureRecognizer(gesture)
+        
+        backgroundLayer.frame = viewController?.view.bounds ?? CGRect()
+        viewController?.view.addSubview(backgroundLayer)
+        viewController?.view.sendSubviewToBack(backgroundLayer)
     }
 }

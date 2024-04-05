@@ -10,6 +10,9 @@ protocol DrugCompletementRepositoryProtocol {
     func getCompletementInfo(by id: String,
                              date: Date) -> Bool
     
+    // Get completment status by id
+    func getCompletementInfo(by id: String) -> [Bool]
+    
     // Set completment status by id, object id, date
     func setCompletementInfo(by id: String,
                              objectId: String,
@@ -65,6 +68,20 @@ final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
         data.forEach { el in
             if (el.id == id) && (el.date.standartize() == date.standartize()) {
                 resultData = el.isCompleted
+            }
+        }
+        
+        return resultData
+    }
+    
+    // Get completment status by id
+    func getCompletementInfo(by id: String) -> [Bool] {
+        let data = storage.fetch(by: DrugCompletementRealm.self)
+        
+        var resultData: [Bool] = []
+        data.forEach { el in
+            if (el.id == id) {
+                resultData.append(el.isCompleted)
             }
         }
         

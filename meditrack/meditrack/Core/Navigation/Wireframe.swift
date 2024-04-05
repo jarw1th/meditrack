@@ -1,5 +1,5 @@
 import UIKit
 
 final class Wireframe {
-    let tabBar = TabBar()
+    let tabBar = TabBarController()
 }

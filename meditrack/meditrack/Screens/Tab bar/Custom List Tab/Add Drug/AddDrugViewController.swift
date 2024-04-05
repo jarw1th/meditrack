@@ -8,7 +8,6 @@ final class AddDrugViewController: UIViewController {
     private var viewModel: AddDrugViewModelProtocol?
     
     // UI elements
-    private let backgroundLayer = UIView()
     private let navigationBar = CustomNavigationBar()
     private let scrollView = UIScrollView()
     private let doneButton = UIButton()
@@ -241,12 +240,7 @@ final class AddDrugViewController: UIViewController {
         let gesture = UITapGestureRecognizer(target: self, 
                                              action: #selector(hideKeyboard))
         gesture.cancelsTouchesInView = false
-        let swipeGesture = UISwipeGestureRecognizer(target: self, 
-                                                    action: #selector(backButtonAction))
-        swipeGesture.cancelsTouchesInView = false
-        swipeGesture.direction = .right
         scrollView.addGestureRecognizer(gesture)
-        scrollView.addGestureRecognizer(swipeGesture)
         
         let doneButtonAttributest = [NSAttributedString.Key.font: Constants.Fonts.nunitoBold20,
                                      NSAttributedString.Key.foregroundColor: Constants.Colors.white]
@@ -354,11 +348,6 @@ final class AddDrugViewController: UIViewController {
         notificationsStackView.axis = .horizontal
         notificationsStackView.spacing = 16
         notificationsStackView.contentMode = .center
-        
-        backgroundLayer.frame = view.bounds
-        backgroundLayer.backgroundColor = Constants.Colors.white
-        view.addSubview(backgroundLayer)
-        view.sendSubviewToBack(backgroundLayer)
     }
     
     // Setting up collections and tables view
@@ -622,8 +611,7 @@ extension AddDrugViewController: PickerEditedDelegate {
     func doneTapped(_ value: Date) {
         viewModel?.timeInterval?.append(value)
         let title = value.convertToTime()
-        createInterval(title,
-                       value: value)
+        createInterval(title)
     }
     
     // MARK: Private functions
@@ -635,7 +623,7 @@ extension AddDrugViewController: PickerEditedDelegate {
     }
     
     // Creating button by interval title and value
-    private func createInterval(_ title: String, value: Date) {
+    private func createInterval(_ title: String) {
         let button = UIButton()
         let attributes = [NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary,
                          NSAttributedString.Key.font: Constants.Fonts.nunitoRegular12]
@@ -734,13 +722,18 @@ extension AddDrugViewController: CustomNavigationBarDelegate {
         case .left:
             backButtonAction()
         case .right:
-            break
+            qrButtonAction()
         }
     }
     
     // MARK: Private functions
-    // Button action
+    // Left button action
     @objc private func backButtonAction() {
         viewModel?.close(true)
+    }
+    
+    // Right button action
+    @objc private func qrButtonAction() {
+        viewModel?.goToQr()
     }
 }

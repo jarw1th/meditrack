@@ -20,13 +20,13 @@ Meditrack is the app that gives you opportunity to track your daily medication w
 
 **Usefull**
  
-- [Figma Prototype](https://www.figma.com/file/Zub8FsqvvlbyMaMqdGwKQP/MediTrack?type=design&node-id=0%3A1&mode=design&t=MTn0PDyfRt6TbusA-1) 
+- [Figma Prototype](https://www.figma.com/file/Zub8FsqvvlbyMaMqdGwKQP/MediTrack?type=design&node-id=43%3A2&mode=design&t=f8yFbzdUUSpL2w6t-1) 
 
 **Basic Information**
 
 - *Spent Time:* 2 weeks (in progress...)
 - *Platform:* UIKit (No Storyboard)
-- *Architecture:* MVVM
+- *Architecture:* MVVM + Router
 - *Data / Cache:* Realm and User Defaults
 - *Frameworks:* Alamofire, Snapkit, SwiftLint
 - *Languages:* English / Russian

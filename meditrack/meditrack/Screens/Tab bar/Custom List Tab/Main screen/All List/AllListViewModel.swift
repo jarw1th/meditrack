@@ -5,6 +5,9 @@ protocol AllListViewModelProtocol {
     // Get number of sections
     var numberOfSections: Int { get }
     
+    // Push view controller
+    func goToDetailedScreen(_ selectedDrug: DrugInfo)
+    
     // Pop view controller
     func close(_ animated: Bool)
     
@@ -14,6 +17,9 @@ protocol AllListViewModelProtocol {
     // Get item setup information by indexpath
     func getItemSetup(at indexPath: IndexPath,
                       completion: @escaping (String, DrugType, Int, FoodType, Bool) -> Void)
+    
+    // Get item setup information by indexpath
+    func getItem(at indexPath: IndexPath) -> DrugInfo
     
     // Get section title by section index
     func getSectionTitle(for section: Int) -> NSMutableAttributedString
@@ -55,6 +61,12 @@ final class AllListViewModel: AllListViewModelProtocol {
     }
     
     // MARK: Functions
+    // Push view controller
+    func goToDetailedScreen(_ selectedDrug: DrugInfo) {
+        router.toDetailedScreen(with: PushTransition(),
+                                model: selectedDrug)
+    }
+    
     // Pop view controller
     func close(_ animated: Bool) {
         router.close(animated: animated)
@@ -74,6 +86,11 @@ final class AllListViewModel: AllListViewModelProtocol {
                    drug.dose,
                    drug.foodType,
                    false)
+    }
+    
+    func getItem(at indexPath: IndexPath) -> DrugInfo {
+        let drug = getItems(in: indexPath.section)[indexPath.row]
+        return drug
     }
     
     // Get section title by section index

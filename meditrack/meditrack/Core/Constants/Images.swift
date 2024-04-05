@@ -14,6 +14,10 @@ extension Constants {
         
         static let qrIcon = UIImage(named: "QRReader") ?? _none_
         
+        static let picturesIcon = UIImage(named: "Pictures") ?? _none_
+        
+        static let settingsIcon = UIImage(named: "Settings") ?? _none_
+        
         static let nilIcon = UIImage(named: "NilIcon") ?? _none_
         
         static let downArrow = UIImage(named: "DownArrow") ?? _none_
