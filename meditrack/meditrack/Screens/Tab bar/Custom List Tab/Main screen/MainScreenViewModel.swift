@@ -222,7 +222,7 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
     
     // Indecrement selected date index
     @objc func selectedIndexIncrement() {
-        if selectedIndex < datesModel.dates.count {
+        if selectedIndex < datesModel.dates.count - 1 {
             selectedIndex += 1
         }
     }
