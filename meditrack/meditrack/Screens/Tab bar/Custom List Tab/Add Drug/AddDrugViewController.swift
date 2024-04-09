@@ -270,7 +270,7 @@ final class AddDrugViewController: UIViewController {
         nameTextField.font = Constants.Fonts.nunitoRegular12
         nameTextField.backgroundColor = Constants.Colors.grayBackground
         nameTextField.layer.cornerRadius = 12
-        nameTextField.setHorizontalPaddings(left: 16, 
+        nameTextField.setHorizontalPaddings(left: 16,
                                             right: 16)
         nameTextField.delegate = self
         
@@ -280,7 +280,8 @@ final class AddDrugViewController: UIViewController {
         descriptionTextField.font = Constants.Fonts.nunitoRegular12
         descriptionTextField.backgroundColor = Constants.Colors.grayBackground
         descriptionTextField.layer.cornerRadius = 12
-        descriptionTextField.setHorizontalPaddings(left: 16, 
+        descriptionTextField.autocapitalizationType = .sentences
+        descriptionTextField.setHorizontalPaddings(left: 16,
                                                    right: 16)
         descriptionTextField.delegate = self
         
@@ -365,10 +366,14 @@ final class AddDrugViewController: UIViewController {
     
     // Done button action
     @objc private func doneButtonAction() {
+        print(1)
         let name = nameTextField.text
+        print(2)
         let description = descriptionTextField.text
-        let checker = viewModel?.checkOptional(name: name, 
+        print(3)
+        let checker = viewModel?.checkOptional(name: name,
                                                description: description) ?? false
+        print(4)
         guard checker else {
             showAlert()
             
@@ -710,6 +715,14 @@ extension AddDrugViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return false
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return true }
+        
+        let newLength = text.count + string.count - range.length
+        
+        return (newLength <= 30)
     }
 }
 

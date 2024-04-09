@@ -162,6 +162,7 @@ extension QRViewController: AVCaptureMetadataOutputObjectsDelegate {
 
     func found(code: String) {
         
+        api(code: code)
         print(code)
     }
 
@@ -172,6 +173,23 @@ extension QRViewController: AVCaptureMetadataOutputObjectsDelegate {
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
+    
+    //
+    private func api(code: String) {
+        guard let url = URL(string: "https://api.fda.gov/drug/ndc.json?search=product_ndc:\(code)") else { return }
+        URLSession.shared.dataTask(with: url) { data, resonse, error in
+            if let error = error {
+                print("error")
+                return
+            }
+            guard let data = data else { return }
+            let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            print(json)
+            print("--------------------")
+            print(json?["results"] as? [[String: Any]])
+        }
+    }
+    //
 }
 
 // MARK: - CustomNavigationBarDelegate

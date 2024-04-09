@@ -19,6 +19,11 @@ extension Constants {
         
         static let grayBackground = UIColor(named: "GrayBackground") ?? _none_
         
+        // Action
+        static let deleteAccent = UIColor(named: "DeleteAccent") ?? _none_
+        
+        static let deleteBackground = UIColor(named: "DeleteBackground") ?? _none_
+        
         // Others
         static let white = UIColor.white
         

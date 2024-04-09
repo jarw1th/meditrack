@@ -12,6 +12,9 @@ protocol DrugInfoRepositoryProtocol {
     // Delete DrugInfo objects
     func deleteDrugList(_ data: [DrugInfo])
     
+    // Delete DrugInfo objects by id
+    func deleteDrugList(by id: String)
+    
     // Clear everything
     func clearData()
 }
@@ -51,6 +54,22 @@ final class DrugInfoRepository: DrugInfoRepositoryProtocol {
             objcts.append(item)
         }
         try? storage.delete(objects: objcts)
+    }
+    
+    // Delete DrugInfo objects by id
+    func deleteDrugList(by id: String) {
+        let data = storage.fetch(by: DrugInfoRealm.self)
+        
+        var sortedByIdData: [DrugInfoRealm] = []
+        data.forEach { el in
+            if el._id.stringValue == id {
+                sortedByIdData.append(el)
+            }
+        }
+        
+        guard !sortedByIdData.isEmpty else { return }
+        
+        try? storage.delete(objects: sortedByIdData)
     }
     
     // Clear everything

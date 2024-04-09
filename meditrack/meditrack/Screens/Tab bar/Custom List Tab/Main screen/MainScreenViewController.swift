@@ -51,6 +51,13 @@ final class MainScreenViewController: UIViewController {
         setCollectionAndTable()
     }
     
+    // View will appear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.reloadData()
+    }
+    
     // MARK: Private functions
     // Setting up constraints
     private func setupConstraints() {

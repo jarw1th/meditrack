@@ -174,6 +174,19 @@ extension AllListViewController: UITableViewDataSource,
                    canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
+    
+    // Actions for edit row
+    func tableView(_ tableView: UITableView,
+                   commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            viewModel?.deleteItem(at: indexPath)
+            tableView.reloadData()
+        default:
+            break
+        }
+    }
 }
 
 // MARK: - CustomNavigationBarDelegate

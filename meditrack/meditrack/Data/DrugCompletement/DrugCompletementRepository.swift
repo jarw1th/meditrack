@@ -22,6 +22,12 @@ protocol DrugCompletementRepositoryProtocol {
     // Check cache by DrugInfo
     func checkCache(_ data: [DrugInfo])
     
+    // Delete completment list by id
+    func deleteCompletement(_ id: String)
+    
+    // Delete completment list by object id
+    func deleteCompletement(by objectId: String)
+    
     // Clear everything
     func clearData()
 }
@@ -135,6 +141,38 @@ final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
                 if !reason { try? storage.saveOrUpdateAllObjects(objects: [object]) }
             }
         }
+    }
+    
+    // Delete completment list by id
+    func deleteCompletement(_ id: String) {
+        let data = storage.fetch(by: DrugCompletementRealm.self)
+        
+        var sortedByIdData: [DrugCompletementRealm] = []
+        data.forEach { el in
+            if el.id == id {
+                sortedByIdData.append(el)
+            }
+        }
+        
+        guard !sortedByIdData.isEmpty else { return }
+        
+        try? storage.delete(objects: sortedByIdData)
+    }
+    
+    // Delete completment list by object id
+    func deleteCompletement(by objectId: String) {
+        let data = storage.fetch(by: DrugCompletementRealm.self)
+        
+        var sortedByIdData: [DrugCompletementRealm] = []
+        data.forEach { el in
+            if el.objectId.stringValue == objectId {
+                sortedByIdData.append(el)
+            }
+        }
+        
+        guard !sortedByIdData.isEmpty else { return }
+        
+        try? storage.delete(objects: sortedByIdData)
     }
     
     // Clear everything
