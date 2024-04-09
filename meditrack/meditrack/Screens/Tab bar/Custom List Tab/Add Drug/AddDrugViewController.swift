@@ -366,14 +366,11 @@ final class AddDrugViewController: UIViewController {
     
     // Done button action
     @objc private func doneButtonAction() {
-        print(1)
         let name = nameTextField.text
-        print(2)
         let description = descriptionTextField.text
-        print(3)
         let checker = viewModel?.checkOptional(name: name,
                                                description: description) ?? false
-        print(4)
+        
         guard checker else {
             showAlert()
             

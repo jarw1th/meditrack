@@ -22,6 +22,7 @@ final class DetailedScreenViewController: UIViewController {
     private let informationColumns = InformationColumns()
     
     private let notificationsLabel = UILabel()
+    
     private let notificationsScrollView = UIScrollView()
     private let notificationsStackView = UIStackView()
     
@@ -64,6 +65,8 @@ final class DetailedScreenViewController: UIViewController {
         scrollView.addSubviews([notificationsLabel,
                                 notificationsScrollView])
         notificationsScrollView.addSubview(notificationsStackView)
+        
+        scrollView.addSubview(progressView)
         
         navigationBar.snp.makeConstraints { make in
             make.leading.trailing.top.equalToSuperview()
@@ -126,6 +129,13 @@ final class DetailedScreenViewController: UIViewController {
             make.top.bottom.leading.trailing.equalToSuperview()
         }
         
+        progressView.snp.makeConstraints { make in
+            make.height.equalTo(72)
+            make.top.equalTo(notificationsLabel.snp.bottom).inset(-76)
+            make.bottom.equalTo(-64)
+            make.leading.equalTo(24)
+            make.trailing.equalTo(-24)
+        }
     }
     
     // Setting up ui elements

@@ -56,6 +56,8 @@ final class ProgressView: UIView {
         stackView.axis = .vertical
         stackView.spacing = 4
         
+        background.layer.cornerRadius = 12
+        
         progressLabel.font = Constants.Fonts.nunitoSemiBold16
         progressLabel.textColor = Constants.Colors.grayPrimary
         progressLabel.text = Constants.Texts.labelProgressMain
@@ -75,7 +77,7 @@ final class ProgressView: UIView {
                percent: Int,
                startDate: Date) {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMMd"
+        dateFormatter.dateFormat = "MMMM d"
         
         let backgroundColor = GetColors().byType(type,
                                                  style: .light)
