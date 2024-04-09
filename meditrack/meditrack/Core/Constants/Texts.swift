@@ -38,6 +38,8 @@ extension Constants {
         
         static let titleMedicationdetailsMain = "Medication Details"
         
+        static let titleAllmedicationsMain = "All Medications"
+        
         static let titleAllSub = "all"
         
         // Buttons
@@ -49,6 +51,8 @@ extension Constants {
         
         static let buttonAllmedicationsSub = "view all"
         
+        static let buttonDeleteallSub = "delete all"
+        
         // Textfield
         static let textfieldNameSub = "Name"
         
@@ -57,9 +61,17 @@ extension Constants {
         // Alerts
         static let alertOkSub = "Ok"
         
+        static let alertDeleteSub = "Yes"
+        
+        static let alertCancelSub = "No"
+        
         static let alertTitleMain = "Please, check again medication form"
         
         static let alertFailscanMain = "Scanning not supported"
+        
+        static let alertDeleteallMain = "Are you sure that you want to delete all medications?"
+        
+        static let alertDeleteMain = "Are you sure that you want to delete the medication?"
         
         // Customs
         static let menuDoseSub = "/day"

@@ -15,6 +15,8 @@ final class AllListViewController: UIViewController {
     private let navigationBar = CustomNavigationBar()
     
     private let backgroundView = UIView()
+    private let medicationTitleLabel = UILabel()
+    private let allMedicationsButton = UIButton()
     private let tableView = UITableView()
  
     // MARK: Body
@@ -40,7 +42,7 @@ final class AllListViewController: UIViewController {
         view.addSubviews([navigationBar,
                           backgroundView])
         
-        backgroundView.addSubviews([tableView])
+        backgroundView.addSubviews([medicationTitleLabel, allMedicationsButton, tableView])
         
         navigationBar.snp.makeConstraints { make in
             make.leading.trailing.top.equalToSuperview()
@@ -51,11 +53,19 @@ final class AllListViewController: UIViewController {
             make.top.equalTo(navigationBar.snp.bottom).inset(-12)
         }
         
+        medicationTitleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(24)
+            make.top.equalTo(40)
+        }
+        allMedicationsButton.snp.makeConstraints { make in
+            make.trailing.equalTo(-24)
+            make.top.equalTo(40)
+        }
         tableView.snp.makeConstraints { make in
             make.leading.equalTo(16)
             make.trailing.equalTo(-16)
             make.bottom.equalTo(-64)
-            make.top.equalTo(16)
+            make.top.equalTo(medicationTitleLabel.snp.bottom)
         }
     }
     
@@ -66,20 +76,93 @@ final class AllListViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
         
         navigationBar.setDelegate(self)
-        navigationBar.setTitle(Constants.Texts.titleMedicationMain)
-        navigationBar.setImage(.left, 
+        navigationBar.setTitle(Constants.Texts.titleAllmedicationsMain)
+        navigationBar.setImage(.left,
                                image: Constants.Images.backIcon)
         navigationBar.setBackgroundColor(Constants.Colors.grayBackground)
         navigationBar.setBackgroundLayerColor(Constants.Colors.grayBackground)
         
         backgroundView.backgroundColor = Constants.Colors.white
         backgroundView.layer.cornerRadius = 48
+        
+        medicationTitleLabel.text = Constants.Texts.labelMedicationMain
+        medicationTitleLabel.font = Constants.Fonts.nunitoRegular16
+        medicationTitleLabel.textColor = Constants.Colors.graySecondary
+        
+        let attributes = [NSAttributedString.Key.foregroundColor: Constants.Colors.deleteAccent,
+                          NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16]
+        let attributedString = NSAttributedString(string: Constants.Texts.buttonDeleteallSub,
+                                                  attributes: attributes)
+        allMedicationsButton.setAttributedTitle(attributedString,
+                                                for: .normal)
+        allMedicationsButton.addTarget(self,
+                                       action: #selector(clearData),
+                                       for: .touchUpInside)
+    }
+    
+    // Clearing all data
+    @objc private func clearData() {
+        showAlertAll()
+    }
+    
+    // Showing alert for clearing all data
+    private func showAlertAll() {
+        let attributes = [NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16,
+                          NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary]
+        let titleAttributedString = NSAttributedString(string: Constants.Texts.alertDeleteallMain,
+                                                  attributes: attributes)
+        
+        let alert = UIAlertController(title: titleAttributedString.string,
+                                      message: "",
+                                      preferredStyle: .alert)
+        alert.setValue(titleAttributedString, forKey: "attributedTitle")
+        alert.backgroundColor = Constants.Colors.white
+        
+        let action = UIAlertAction(title: Constants.Texts.alertCancelSub,
+                                   style: .cancel)
+        alert.addAction(action)
+        
+        let deleteAction = UIAlertAction(title: Constants.Texts.alertDeleteSub,
+                                         style: .destructive) { action in
+            self.viewModel?.clearData()
+            self.tableView.reloadData()
+        }
+        alert.addAction(deleteAction)
+        
+        present(alert, animated: true)
+    }
+    
+    // Showing alert for deleting one drug
+    private func showAlertSingle(_ indexPath: IndexPath) {
+        let attributes = [NSAttributedString.Key.font: Constants.Fonts.nunitoRegular16,
+                          NSAttributedString.Key.foregroundColor: Constants.Colors.grayPrimary]
+        let titleAttributedString = NSAttributedString(string: Constants.Texts.alertDeleteMain,
+                                                  attributes: attributes)
+        
+        let alert = UIAlertController(title: titleAttributedString.string,
+                                      message: "",
+                                      preferredStyle: .alert)
+        alert.setValue(titleAttributedString, forKey: "attributedTitle")
+        alert.backgroundColor = Constants.Colors.white
+        
+        let action = UIAlertAction(title: Constants.Texts.alertCancelSub,
+                                   style: .cancel)
+        alert.addAction(action)
+        
+        let deleteAction = UIAlertAction(title: Constants.Texts.alertDeleteSub,
+                                         style: .destructive) { _ in
+            self.viewModel?.deleteItem(at: indexPath)
+            self.tableView.reloadData()
+        }
+        alert.addAction(deleteAction)
+        
+        present(alert, animated: true)
     }
     
     // Setting up collections and tables view
     private func setCollectionAndTable() {
-        tableView.register(CalendarTableViewCell.self, 
-                           forCellReuseIdentifier: Constants.System.calendarTableViewCell)
+        tableView.register(AllListTableViewCell.self, 
+                           forCellReuseIdentifier: Constants.System.allListTableViewCell)
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -108,17 +191,17 @@ extension AllListViewController: UITableViewDataSource,
     // Cell for row
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let identifier = Constants.System.calendarTableViewCell
+        let identifier = Constants.System.allListTableViewCell
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier,
-                                                 for: indexPath) as? CalendarTableViewCell
+                                                 for: indexPath) as? AllListTableViewCell
         cell?.selectionStyle = .none
         
-        viewModel?.getItemSetup(at: indexPath) { name, type, dose, foodType, isCompleted in
+        viewModel?.getItemSetup(at: indexPath) { name, type, dose, foodType in
             cell?.setup(name: name, 
                         drug: type,
                         dose: dose,
                         food: foodType,
-                        isCompleted: isCompleted)
+                        view: self)
         }
         
         return cell ?? UITableViewCell()
@@ -161,31 +244,17 @@ extension AllListViewController: UITableViewDataSource,
                    heightForHeaderInSection section: Int) -> CGFloat {
         return 24
     }
-    
-    // Select row
-    func tableView(_ tableView: UITableView,
-                   didSelectRowAt indexPath: IndexPath) {
+}
+
+// MARK: - AllListTableViewCellDelegate
+extension AllListViewController: AllListTableViewCellDelegate {
+    func tapped(_ indexPath: IndexPath) {
         guard let item = viewModel?.getItem(at: indexPath) else { return }
         viewModel?.goToDetailedScreen(item)
     }
     
-    // Edit row
-    func tableView(_ tableView: UITableView,
-                   canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    // Actions for edit row
-    func tableView(_ tableView: UITableView,
-                   commit editingStyle: UITableViewCell.EditingStyle,
-                   forRowAt indexPath: IndexPath) {
-        switch editingStyle {
-        case .delete:
-            viewModel?.deleteItem(at: indexPath)
-            tableView.reloadData()
-        default:
-            break
-        }
+    func buttonTapped(_ indexPath: IndexPath) {
+        showAlertSingle(indexPath)
     }
 }
 

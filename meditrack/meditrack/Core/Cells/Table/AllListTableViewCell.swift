@@ -1,15 +1,25 @@
 import UIKit
 import SnapKit
 
+// MARK: - Delegate
+protocol AllListTableViewCellDelegate {
+    func tapped(_ indexPath: IndexPath)
+    
+    func buttonTapped(_ indexPath: IndexPath)
+}
+
 // MARK: - Class
-final class CalendarTableViewCell: UITableViewCell {
+final class AllListTableViewCell: UITableViewCell {
     // MARK: Variables
+    // General variables
+    private var delegate: AllListTableViewCellDelegate?
+    
     // UI elements
     private let background = UIView()
     private let stackView = UIStackView()
     private let drugName = UILabel()
     private let drugInformation = UILabel()
-    private let drugImage = UIImageView()
+    private let deleteImage = UIImageView()
     private let imageBackground = UIView()
 
     // MARK: Body
@@ -21,6 +31,7 @@ final class CalendarTableViewCell: UITableViewCell {
         
         setupConstraints()
         setupUI()
+        setupGestures()
     }
     
     required init?(coder: NSCoder) {
@@ -38,12 +49,12 @@ final class CalendarTableViewCell: UITableViewCell {
             $0.attributedText = nil
             $0.layer.opacity = 1.0
         }
-        drugImage.image = nil
+        deleteImage.image = nil
     }
     
     // Identifier
     override var reuseIdentifier: String? {
-        return Constants.System.calendarTableViewCell
+        return Constants.System.allListTableViewCell
     }
     
     // MARK: Private functions
@@ -57,21 +68,21 @@ final class CalendarTableViewCell: UITableViewCell {
         
         background.addSubviews([stackView, 
                                 imageBackground,
-                                drugImage])
+                                deleteImage])
         
         stackView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(23)
             make.leading.equalTo(28)
-            make.trailing.equalTo(drugImage.snp.leading).inset(-32)
+            make.trailing.equalTo(deleteImage.snp.leading).inset(-32)
         }
         imageBackground.snp.makeConstraints { make in
             make.width.height.equalTo(40)
             make.centerY.equalTo(stackView)
             make.trailing.equalTo(-28)
         }
-        drugImage.snp.makeConstraints { make in
+        deleteImage.snp.makeConstraints { make in
             make.centerY.centerX.equalTo(imageBackground)
-            make.width.height.lessThanOrEqualTo(28)
+            make.width.height.lessThanOrEqualTo(20)
         }
         
         stackView.addArrangedSubviews([drugName, 
@@ -90,58 +101,62 @@ final class CalendarTableViewCell: UITableViewCell {
         background.layer.cornerRadius = 20
     }
     
+    private func setupGestures() {
+        let tapGesture = UITapGestureRecognizer(target: self,
+                                                action: #selector(tapGestureAction))
+        let deleteTapGesture = UITapGestureRecognizer(target: self,
+                                                      action: #selector(deleteTapGestureAction))
+        self.addGestureRecognizer(tapGesture)
+        imageBackground.addGestureRecognizer(deleteTapGesture)
+    }
+    
+    @objc private func tapGestureAction(_ gesture: UITapGestureRecognizer) {
+        if let tableView = superview as? UITableView,
+           let indexPath = tableView.indexPath(for: self) {
+            delegate?.tapped(indexPath)
+        }
+    }
+    
+    @objc private func deleteTapGestureAction(_ gesture: UITapGestureRecognizer) {
+        if let tableView = superview as? UITableView,
+           let indexPath = tableView.indexPath(for: self) {
+            delegate?.buttonTapped(indexPath)
+        }
+    }
+    
     // MARK: Functions
     // Setting up
     func setup(name: String,
                drug: DrugType,
                dose: Int,
                food: FoodType,
-               isCompleted: Bool) {
+               view: AllListTableViewCellDelegate) {
+        self.delegate = view
+        
         let backgroundColor = GetColors().byType(drug, style: .light)
-        let grayBackground = Constants.Colors.grayBackground
-        let graySecondaryLight = Constants.Colors.graySecondaryLight
         let grayPrimary = Constants.Colors.grayPrimary
         let graySecondary = Constants.Colors.graySecondary
-        let white = Constants.Colors.white
         
-        background.backgroundColor = isCompleted ? grayBackground : backgroundColor
+        background.backgroundColor = backgroundColor
         
         drugName.font = Constants.Fonts.nunitoSemiBold16
         drugInformation.font = Constants.Fonts.nunitoMedium12
-        drugName.textColor = isCompleted ? graySecondaryLight : grayPrimary
-        drugInformation.textColor = isCompleted ? graySecondaryLight : graySecondary
+        drugName.textColor = grayPrimary
+        drugInformation.textColor = graySecondary
+        
         let foodString = food.getString()
         let food = (food == .noMatter) ? "" : "(\(foodString))"
         
-        var nameAttributedString: NSAttributedString = NSAttributedString()
-        var infoAttributedString: NSAttributedString = NSAttributedString()
-        if isCompleted {
-            let attributes = [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue]
-            
-            nameAttributedString = NSAttributedString(string: name,
-                                                  attributes: attributes)
-            
-            infoAttributedString = NSAttributedString(string: "\(drug.getString(dose)) \(food)",
-                                                  attributes: attributes)
-        } else {
-            let attributes = [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle()] as [NSAttributedString.Key : Any]
-            
-            nameAttributedString = NSAttributedString(string: name,
-                                                  attributes: attributes)
-            
-            infoAttributedString = NSAttributedString(string: "\(drug.getString(dose)) \(food)",
-                                                  attributes: attributes)
-        }
-        drugName.attributedText = nameAttributedString
-        drugInformation.attributedText = infoAttributedString
+        drugName.text = name
+        drugInformation.text = "\(drug.getString(dose)) \(food)"
         
-        let imageData = GetImages().byType(drug)
-        let image = UIImage(data: imageData)
-        let color = GetColors().byType(drug, style: .normal)
-        drugImage.image = image?.withTintColor(white, 
-                                               renderingMode: .alwaysOriginal)
-        drugImage.contentMode = .scaleAspectFit
-        imageBackground.backgroundColor = isCompleted ? backgroundColor : color
+        let image = Constants.Images.trashIcon
+        let color = Constants.Colors.deleteBackground
+        let imageColor = Constants.Colors.deleteAccent
+        deleteImage.image = image.withTintColor(imageColor,
+                                                renderingMode: .alwaysOriginal)
+        deleteImage.contentMode = .scaleAspectFit
+        imageBackground.backgroundColor = color
         imageBackground.layer.cornerRadius = 8
     }
 }

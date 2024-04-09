@@ -133,3 +133,20 @@ extension String {
         return number
     }
 }
+
+// MARK: - UIAlertController
+extension UIAlertController {
+    // Set backgroundColor
+    var backgroundColor: UIColor? {
+        get {
+            return nil
+        }
+        set {
+            if let background = self.view.subviews.first,
+                let group = background.subviews.first,
+                let contentView = group.subviews.first {
+                contentView.backgroundColor = newValue
+            }
+        }
+    }
+}

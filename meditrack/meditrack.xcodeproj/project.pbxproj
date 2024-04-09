@@ -25,6 +25,7 @@
 		2101B7A22BBE8F3A001B0683 /* AddDrugRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2101B7A12BBE8F3A001B0683 /* AddDrugRoute.swift */; };
 		2101B7A42BBE9D4B001B0683 /* SwipeBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2101B7A32BBE9D4B001B0683 /* SwipeBack.swift */; };
 		2101B7A72BBEA17E001B0683 /* SwipeBackTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2101B7A62BBEA17E001B0683 /* SwipeBackTransition.swift */; };
+		211CD9652BC594D800DE4317 /* AllListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211CD9642BC594D800DE4317 /* AllListTableViewCell.swift */; };
 		215797D62B9F9233000B190A /* AddDrugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215797D52B9F9233000B190A /* AddDrugViewController.swift */; };
 		215797D82B9F949E000B190A /* AddDrugViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215797D72B9F949E000B190A /* AddDrugViewModel.swift */; };
 		215797DA2BA044C6000B190A /* TypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215797D92BA044C6000B190A /* TypeCollectionViewCell.swift */; };
@@ -101,6 +102,7 @@
 		2101B7A12BBE8F3A001B0683 /* AddDrugRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDrugRoute.swift; sourceTree = "<group>"; };
 		2101B7A32BBE9D4B001B0683 /* SwipeBack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeBack.swift; sourceTree = "<group>"; };
 		2101B7A62BBEA17E001B0683 /* SwipeBackTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeBackTransition.swift; sourceTree = "<group>"; };
+		211CD9642BC594D800DE4317 /* AllListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllListTableViewCell.swift; sourceTree = "<group>"; };
 		215797D52B9F9233000B190A /* AddDrugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDrugViewController.swift; sourceTree = "<group>"; };
 		215797D72B9F949E000B190A /* AddDrugViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDrugViewModel.swift; sourceTree = "<group>"; };
 		215797D92BA044C6000B190A /* TypeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				21F438AF2B9DDF9D004408EF /* CalendarTableViewCell.swift */,
+				211CD9642BC594D800DE4317 /* AllListTableViewCell.swift */,
 			);
 			path = Table;
 			sourceTree = "<group>";
@@ -657,6 +660,7 @@
 				2101B79C2BBE7F26001B0683 /* TabBarController.swift in Sources */,
 				21F438AA2B9DAA46004408EF /* DateCollectionViewCell.swift in Sources */,
 				21F438912B9D8481004408EF /* Texts.swift in Sources */,
+				211CD9652BC594D800DE4317 /* AllListTableViewCell.swift in Sources */,
 				21B088302BC07194005E00A2 /* InformationColumns.swift in Sources */,
 				21F4388F2B9D845D004408EF /* Constants.swift in Sources */,
 				2101B79A2BBE7ED1001B0683 /* Wireframe.swift in Sources */,

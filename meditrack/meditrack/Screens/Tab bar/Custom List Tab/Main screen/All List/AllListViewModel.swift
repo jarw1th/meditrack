@@ -16,13 +16,16 @@ protocol AllListViewModelProtocol {
     
     // Get item setup information by indexpath
     func getItemSetup(at indexPath: IndexPath,
-                      completion: @escaping (String, DrugType, Int, FoodType, Bool) -> Void)
+                      completion: @escaping (String, DrugType, Int, FoodType) -> Void)
     
     // Get item information by indexpath
     func getItem(at indexPath: IndexPath) -> DrugInfo
     
     // Delete item by indexpath
     func deleteItem(at indexPath: IndexPath)
+    
+    // Clear data
+    func clearData()
     
     // Get section title by section index
     func getSectionTitle(for section: Int) -> NSMutableAttributedString
@@ -82,13 +85,12 @@ final class AllListViewModel: AllListViewModelProtocol {
     
     // Get item setup information by indexpath
     func getItemSetup(at indexPath: IndexPath,
-                      completion: @escaping (String, DrugType, Int, FoodType, Bool) -> Void) {
+                      completion: @escaping (String, DrugType, Int, FoodType) -> Void) {
         let drug = getItems(in: indexPath.section)[indexPath.row]
         completion(drug.name, 
                    drug.drugType,
                    drug.dose,
-                   drug.foodType,
-                   false)
+                   drug.foodType)
     }
     
     func getItem(at indexPath: IndexPath) -> DrugInfo {
@@ -102,6 +104,12 @@ final class AllListViewModel: AllListViewModelProtocol {
         
         drugInfoRepository.deleteDrugList(by: drug.id)
         drugCompletementRepository.deleteCompletement(drug.id)
+    }
+    
+    // Clear data
+    func clearData() {
+        drugInfoRepository.clearData()
+        drugCompletementRepository.clearData()
     }
     
     // Get section title by section index

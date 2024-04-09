@@ -26,6 +26,8 @@ extension Constants {
         
         static let checkIcon = UIImage(named: "Check") ?? _none_
         
+        static let trashIcon = UIImage(named: "Trash") ?? _none_
+        
         // Drug icons
         static let capsuleIcon = UIImage(named: "CapsuleIcon") ?? _none_
         

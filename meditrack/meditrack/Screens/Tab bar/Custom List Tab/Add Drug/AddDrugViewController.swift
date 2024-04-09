@@ -420,6 +420,7 @@ final class AddDrugViewController: UIViewController {
                                       message: "",
                                       preferredStyle: .alert)
         alert.setValue(titleAttributedString, forKey: "attributedTitle")
+        alert.backgroundColor = Constants.Colors.white
         
         let action = UIAlertAction(title: Constants.Texts.alertOkSub,
                                    style: .default)

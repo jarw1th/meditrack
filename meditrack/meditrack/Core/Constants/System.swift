@@ -10,5 +10,7 @@ extension Constants {
         static let foodCollectionViewCell = "FoodCollectionViewCell"
         
         static let calendarTableViewCell = "CalendarTableViewCell"
+        
+        static let allListTableViewCell = "AllListTableViewCell"
     }
 }
