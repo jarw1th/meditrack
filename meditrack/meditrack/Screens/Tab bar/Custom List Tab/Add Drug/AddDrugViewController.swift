@@ -105,7 +105,7 @@ final class AddDrugViewController: UIViewController {
                                            typeCollectionView])
         
         
-        container.addArrangedSubview(informationLabel)
+        container.addArrangedSubview(informationContainer)
         informationContainer.addArrangedSubviews([informationLabel,
                                                   nameTextField,
                                                   descriptionTextField,
@@ -159,6 +159,7 @@ final class AddDrugViewController: UIViewController {
         typeCollectionView.snp.makeConstraints { make in
             make.height.equalTo(heightOfType)
         }
+        
         nameTextField.snp.makeConstraints { make in
             make.height.equalTo(heightOfFields)
         }
