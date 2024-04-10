@@ -15,8 +15,12 @@ final class AllListViewController: UIViewController {
     private let navigationBar = CustomNavigationBar()
     
     private let backgroundView = UIView()
+    private let container = UIStackView()
+    
+    private let topBarContainer = UIStackView()
     private let medicationTitleLabel = UILabel()
     private let allMedicationsButton = UIButton()
+    
     private let tableView = UITableView()
  
     // MARK: Body
@@ -39,10 +43,16 @@ final class AllListViewController: UIViewController {
     // MARK: Private functions
     // Setting up constraints
     private func setupConstraints() {
+        let topOfContainer = view.frame.size.width / 9.5
+        
         view.addSubviews([navigationBar,
                           backgroundView])
         
-        backgroundView.addSubviews([medicationTitleLabel, allMedicationsButton, tableView])
+        backgroundView.addSubview(container)
+        container.addArrangedSubviews([topBarContainer,
+                                       tableView])
+        
+        topBarContainer.addArrangedSubviews([medicationTitleLabel, allMedicationsButton])
         
         navigationBar.snp.makeConstraints { make in
             make.leading.trailing.top.equalToSuperview()
@@ -52,20 +62,11 @@ final class AllListViewController: UIViewController {
             make.bottom.equalTo(64)
             make.top.equalTo(navigationBar.snp.bottom).inset(-12)
         }
-        
-        medicationTitleLabel.snp.makeConstraints { make in
+        container.snp.makeConstraints { make in
             make.leading.equalTo(24)
-            make.top.equalTo(40)
-        }
-        allMedicationsButton.snp.makeConstraints { make in
             make.trailing.equalTo(-24)
-            make.top.equalTo(40)
-        }
-        tableView.snp.makeConstraints { make in
-            make.leading.equalTo(16)
-            make.trailing.equalTo(-16)
+            make.top.equalTo(topOfContainer)
             make.bottom.equalTo(-64)
-            make.top.equalTo(medicationTitleLabel.snp.bottom)
         }
     }
     
@@ -84,6 +85,13 @@ final class AllListViewController: UIViewController {
         
         backgroundView.backgroundColor = Constants.Colors.white
         backgroundView.layer.cornerRadius = 48
+        
+        container.axis = .vertical
+        container.spacing = 0
+        
+        
+        topBarContainer.axis = .horizontal
+        topBarContainer.spacing = 16
         
         medicationTitleLabel.text = Constants.Texts.labelMedicationMain
         medicationTitleLabel.font = Constants.Fonts.nunitoRegular16

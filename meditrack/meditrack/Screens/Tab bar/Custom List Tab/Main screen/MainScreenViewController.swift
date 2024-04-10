@@ -14,6 +14,7 @@ final class MainScreenViewController: UIViewController {
     // UI elements
     private let addButton = UIButton()
     
+    private let informationContainer = UIStackView()
     private let selectedDate = UILabel()
     private let nameLabel = UILabel()
     private lazy var dateCollectionView: UICollectionView = {
@@ -30,8 +31,11 @@ final class MainScreenViewController: UIViewController {
     }()
     
     private let backgroundView = UIView()
+    
+    private let topBarContainer = UIStackView()
     private let medicationTitleLabel = UILabel()
     private let allMedicationsButton = UIButton()
+    
     private let tableView = UITableView()
  
     // MARK: Body
@@ -61,38 +65,39 @@ final class MainScreenViewController: UIViewController {
     // MARK: Private functions
     // Setting up constraints
     private func setupConstraints() {
+        let widthOfAddButton = view.frame.size.width / 9.5
+        let topOfContainer = view.frame.size.width / 9.5
+        let heightOfCollectionView = view.frame.size.width / 4
+        
         view.addSubview(addButton)
         
-        view.addSubviews([selectedDate,
-                          nameLabel,
+        view.addSubviews([informationContainer,
                           dateCollectionView,
                           backgroundView])
+        informationContainer.addArrangedSubviews([selectedDate,
+                                             nameLabel])
         
-        backgroundView.addSubviews([medicationTitleLabel,
-                                    allMedicationsButton,
+        backgroundView.addSubviews([topBarContainer,
                                     tableView])
+        topBarContainer.addArrangedSubviews([medicationTitleLabel,
+                                             allMedicationsButton])
         
         addButton.snp.makeConstraints { make in
-            make.width.height.equalTo(40)
+            make.width.height.equalTo(widthOfAddButton)
             make.trailing.equalTo(-24)
-            make.top.equalTo(view.snp.top).inset(72)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(24)
         }
         
-        selectedDate.snp.makeConstraints { make in
+        informationContainer.snp.makeConstraints { make in
             make.leading.equalTo(24)
             make.trailing.equalTo(-24)
-            make.top.equalTo(view.snp.top).inset(112)
-        }
-        nameLabel.snp.makeConstraints { make in
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
-            make.top.equalTo(selectedDate.snp.bottom)
+            make.top.equalTo(addButton.snp.bottom)
         }
         dateCollectionView.snp.makeConstraints { make in
-            make.height.equalTo(100)
+            make.height.equalTo(heightOfCollectionView)
             make.leading.equalTo(24)
             make.trailing.equalTo(-24)
-            make.top.equalTo(nameLabel.snp.bottom)
+            make.top.equalTo(informationContainer.snp.bottom)
         }
         backgroundView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
@@ -100,19 +105,16 @@ final class MainScreenViewController: UIViewController {
             make.top.equalTo(dateCollectionView.snp.bottom).inset(-12)
         }
         
-        medicationTitleLabel.snp.makeConstraints { make in
+        topBarContainer.snp.makeConstraints { make in
             make.leading.equalTo(24)
-            make.top.equalTo(40)
-        }
-        allMedicationsButton.snp.makeConstraints { make in
             make.trailing.equalTo(-24)
-            make.top.equalTo(40)
+            make.top.equalTo(topOfContainer)
         }
         tableView.snp.makeConstraints { make in
             make.leading.equalTo(16)
             make.trailing.equalTo(-16)
             make.bottom.equalTo(-64)
-            make.top.equalTo(medicationTitleLabel.snp.bottom)
+            make.top.equalTo(topBarContainer.snp.bottom)
         }
     }
     
@@ -146,6 +148,9 @@ final class MainScreenViewController: UIViewController {
                             for: .touchUpInside)
         
         
+        informationContainer.axis = .vertical
+        informationContainer.spacing = 0
+        
         selectedDate.font = Constants.Fonts.nunitoRegular24
         selectedDate.textColor = Constants.Colors.graySecondary
         selectedDate.text = viewModel?.todayDate
@@ -168,6 +173,10 @@ final class MainScreenViewController: UIViewController {
         leftSwipeGesture.direction = .left
         backgroundView.addGestureRecognizer(leftSwipeGesture)
         backgroundView.addGestureRecognizer(rightSwipeGesture)
+        
+        
+        topBarContainer.axis = .horizontal
+        topBarContainer.spacing = 16
         
         medicationTitleLabel.text = Constants.Texts.labelMedicationMain
         medicationTitleLabel.font = Constants.Fonts.nunitoRegular16
@@ -410,8 +419,10 @@ extension MainScreenViewController: UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 50,
-                      height: 80)
+        let height = view.frame.size.width / 5
+        let width = view.frame.size.width / 8
+        return CGSize(width: width,
+                      height: height)
     }
     
     // Minimum line spacing

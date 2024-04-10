@@ -10,8 +10,10 @@ final class AddDrugViewController: UIViewController {
     // UI elements
     private let navigationBar = CustomNavigationBar()
     private let scrollView = UIScrollView()
+    private let container = UIStackView()
     private let doneButton = UIButton()
     
+    private let typeContainer = UIStackView()
     private let typeLabel = UILabel()
     private lazy var typeCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -26,18 +28,23 @@ final class AddDrugViewController: UIViewController {
         collection.backgroundColor = Constants.Colors.white
         return collection
     }()
+    
+    private let informationContainer = UIStackView()
     private let informationLabel = UILabel()
     private let nameTextField = UITextField()
     private let descriptionTextField = UITextField()
     private let doseField = ButtonField()
     
+    private let timelineContainer = UIStackView()
     private let timelineLabel = UILabel()
+    private let intervalContainer = UIStackView()
     private let intervalButton = UIButton()
     private let intervalScrollView = UIScrollView()
     private let intervalStackView = UIStackView()
     private let durationField = ButtonField()
     private let frequencyField = ButtonField()
     
+    private let foodContainer = UIStackView()
     private let foodLabel = UILabel()
     private lazy var foodCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -53,7 +60,9 @@ final class AddDrugViewController: UIViewController {
         return collection
     }()
     
+    private let notificationsContainer = UIStackView()
     private let notificationsLabel = UILabel()
+    private let notifContainer = UIStackView()
     private let notificationsButton = UIButton()
     private let notificationsScrollView = UIScrollView()
     private let notificationsStackView = UIStackView()
@@ -78,144 +87,113 @@ final class AddDrugViewController: UIViewController {
     // MARK: Private functions
     // Setting up constraints
     private func setupConstraints() {
+        let heightOfScrolls = view.frame.size.width / 11
+        let bottomOfButton = (view.frame.size.width / 8) * -1
+        let widthOfScreenElements = view.frame.size.width - 48
+        let heightOfButtonAndCollection = view.frame.size.width / 6
+        let heightOfFields = view.frame.size.width / 8
+        let heightOfType = view.frame.size.width / 4.5
+        
         view.addSubviews([navigationBar,
                           scrollView,
                           doneButton])
         
-        scrollView.addSubviews([typeLabel,
-                                typeCollectionView,
-                                informationLabel,
-                                nameTextField,
-                                descriptionTextField,
-                                doseField])
+        scrollView.addSubview(container)
         
-        scrollView.addSubviews([timelineLabel,
-                                intervalButton,
-                                intervalScrollView,
-                                durationField,
-                                frequencyField])
+        container.addArrangedSubview(typeContainer)
+        typeContainer.addArrangedSubviews([typeLabel,
+                                           typeCollectionView])
         
+        
+        container.addArrangedSubview(informationLabel)
+        informationContainer.addArrangedSubviews([informationLabel,
+                                                  nameTextField,
+                                                  descriptionTextField,
+                                                  doseField])
+        
+        container.addArrangedSubview(timelineContainer)
+        timelineContainer.addArrangedSubviews([timelineLabel,
+                                               intervalContainer,
+                                               durationField,
+                                               frequencyField])
+        intervalContainer.addArrangedSubviews([intervalButton,
+                                               intervalScrollView])
         intervalScrollView.addSubview(intervalStackView)
         
-        scrollView.addSubviews([foodLabel,
-                                foodCollectionView])
+        container.addArrangedSubview(foodContainer)
+        foodContainer.addArrangedSubviews([foodLabel,
+                                           foodCollectionView])
         
-        scrollView.addSubviews([notificationsLabel,
-                                notificationsButton,
-                                notificationsScrollView])
-        
+        container.addArrangedSubview(notificationsContainer)
+        notificationsContainer.addArrangedSubviews([notificationsLabel,
+                                                    notifContainer])
+        notifContainer.addArrangedSubviews([notificationsButton,
+                                            notificationsScrollView])
         notificationsScrollView.addSubview(notificationsStackView)
+        
         
         navigationBar.snp.makeConstraints { make in
             make.leading.trailing.top.equalToSuperview()
         }
         scrollView.snp.makeConstraints { make in
-            make.top.equalTo(navigationBar.snp.bottom).inset(-8)
+            make.top.equalTo(navigationBar.snp.bottom).inset(-16)
             make.leading.trailing.bottom.equalToSuperview()
         }
-        doneButton.snp.makeConstraints { make in
-            make.height.equalTo(64)
+        container.snp.makeConstraints { make in
+            make.top.equalToSuperview()
             make.leading.equalTo(24)
             make.trailing.equalTo(-24)
-            make.bottom.equalTo(-48)
+            make.bottom.equalTo(-heightOfButtonAndCollection)
+        }
+        doneButton.snp.makeConstraints { make in
+            make.height.equalTo(heightOfButtonAndCollection)
+            make.leading.equalTo(24)
+            make.trailing.equalTo(-24)
+            make.bottom.equalTo(bottomOfButton)
         }
         
-        typeLabel.snp.makeConstraints { make in
-            make.width.equalTo(view.frame.size.width - 48)
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
+        typeContainer.snp.makeConstraints { make in
+            make.width.equalTo(widthOfScreenElements)
             make.top.equalToSuperview()
         }
         typeCollectionView.snp.makeConstraints { make in
-            make.height.equalTo(88)
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
-            make.top.equalTo(typeLabel.snp.bottom).inset(-16)
-        }
-        informationLabel.snp.makeConstraints { make in
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
-            make.top.equalTo(typeCollectionView.snp.bottom).inset(-24)
+            make.height.equalTo(heightOfType)
         }
         nameTextField.snp.makeConstraints { make in
-            make.height.equalTo(48)
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
-            make.top.equalTo(informationLabel.snp.bottom).inset(-16)
+            make.height.equalTo(heightOfFields)
         }
         descriptionTextField.snp.makeConstraints { make in
-            make.height.equalTo(48)
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
-            make.top.equalTo(nameTextField.snp.bottom).inset(-16)
+            make.height.equalTo(heightOfFields)
         }
         doseField.snp.makeConstraints { make in
-            make.height.equalTo(48)
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
-            make.top.equalTo(descriptionTextField.snp.bottom).inset(-16)
+            make.height.equalTo(heightOfFields)
         }
         
-        timelineLabel.snp.makeConstraints { make in
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
-            make.top.equalTo(doseField.snp.bottom).inset(-24)
-        }
         intervalButton.snp.makeConstraints { make in
-            make.height.width.equalTo(36)
-            make.leading.equalTo(24)
-            make.top.equalTo(timelineLabel.snp.bottom).inset(-16)
+            make.height.width.equalTo(heightOfScrolls)
         }
         intervalScrollView.snp.makeConstraints { make in
-            make.height.equalTo(36)
-            make.top.equalTo(timelineLabel.snp.bottom).inset(-16)
-            make.leading.equalTo(intervalButton.snp.trailing).inset(-16)
-            make.trailing.equalTo(-24)
+            make.height.equalTo(heightOfScrolls)
         }
         intervalStackView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalToSuperview()
         }
         durationField.snp.makeConstraints { make in
-            make.height.equalTo(48)
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
-            make.top.equalTo(intervalButton.snp.bottom).inset(-16)
+            make.height.equalTo(heightOfFields)
         }
         frequencyField.snp.makeConstraints { make in
-            make.height.equalTo(48)
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
-            make.top.equalTo(durationField.snp.bottom).inset(-16)
+            make.height.equalTo(heightOfFields)
         }
         
-        foodLabel.snp.makeConstraints { make in
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
-            make.top.equalTo(frequencyField.snp.bottom).inset(-24)
-        }
         foodCollectionView.snp.makeConstraints { make in
-            make.height.equalTo(64)
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
-            make.top.equalTo(foodLabel.snp.bottom).inset(-16)
+            make.height.equalTo(heightOfButtonAndCollection)
         }
         
-        notificationsLabel.snp.makeConstraints { make in
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
-            make.top.equalTo(foodCollectionView.snp.bottom).inset(-24)
-        }
         notificationsButton.snp.makeConstraints { make in
-            make.height.width.equalTo(36)
-            make.leading.equalTo(24)
-            make.top.equalTo(notificationsLabel.snp.bottom).inset(-16)
-            make.bottom.equalTo(-120)
+            make.height.width.equalTo(heightOfScrolls)
         }
         notificationsScrollView.snp.makeConstraints { make in
-            make.height.equalTo(36)
-            make.top.equalTo(notificationsLabel.snp.bottom).inset(-16)
-            make.leading.equalTo(notificationsButton.snp.trailing).inset(-16)
-            make.trailing.equalTo(-24)
+            make.height.equalTo(heightOfScrolls)
         }
         notificationsStackView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalToSuperview()
@@ -242,6 +220,9 @@ final class AddDrugViewController: UIViewController {
         gesture.cancelsTouchesInView = false
         scrollView.addGestureRecognizer(gesture)
         
+        container.axis = .vertical
+        container.spacing = 24
+        
         let doneButtonAttributest = [NSAttributedString.Key.font: Constants.Fonts.nunitoBold20,
                                      NSAttributedString.Key.foregroundColor: Constants.Colors.white]
         doneButton.setAttributedTitle(NSAttributedString(string: Constants.Texts.buttonDoneMain,
@@ -254,9 +235,16 @@ final class AddDrugViewController: UIViewController {
         doneButton.layer.cornerRadius = 16
         
         
+        typeContainer.axis = .vertical
+        typeContainer.spacing = 16
+        
         typeLabel.text = Constants.Texts.labelTypeMain
         typeLabel.font = Constants.Fonts.nunitoBold20
         typeLabel.textColor = Constants.Colors.grayPrimary
+        
+        
+        informationContainer.axis = .vertical
+        informationContainer.spacing = 16
         
         informationLabel.text = Constants.Texts.labelInformationMain
         informationLabel.font = Constants.Fonts.nunitoBold20
@@ -292,9 +280,15 @@ final class AddDrugViewController: UIViewController {
                         type: .dose)
         
         
+        timelineContainer.axis = .vertical
+        timelineContainer.spacing = 16
+        
         timelineLabel.text = Constants.Texts.labelTimelineMain
         timelineLabel.font = Constants.Fonts.nunitoBold20
         timelineLabel.textColor = Constants.Colors.grayPrimary
+        
+        intervalContainer.axis = .horizontal
+        intervalContainer.spacing = 16
         
         intervalButton.setImage(Constants.Images.plusIcon.withTintColor(Constants.Colors.white,
                                                                         renderingMode: .alwaysOriginal),
@@ -308,6 +302,7 @@ final class AddDrugViewController: UIViewController {
         intervalScrollView.bounces = false
         intervalScrollView.isScrollEnabled = true
         intervalScrollView.showsHorizontalScrollIndicator = false
+        intervalScrollView.showsVerticalScrollIndicator = false
         intervalStackView.axis = .horizontal
         intervalStackView.spacing = 16
         intervalStackView.contentMode = .center
@@ -325,14 +320,23 @@ final class AddDrugViewController: UIViewController {
                              type: .frequency)
         
         
+        foodContainer.axis = .vertical
+        foodContainer.spacing = 16
+        
         foodLabel.text = Constants.Texts.labelFoodMain
         foodLabel.font = Constants.Fonts.nunitoBold20
         foodLabel.textColor = Constants.Colors.grayPrimary
         
         
+        notificationsContainer.axis = .vertical
+        notificationsContainer.spacing = 16
+        
         notificationsLabel.text = Constants.Texts.labelNotificationsMain
         notificationsLabel.font = Constants.Fonts.nunitoBold20
         notificationsLabel.textColor = Constants.Colors.grayPrimary
+        
+        notifContainer.axis = .horizontal
+        notifContainer.spacing = 16
         
         notificationsButton.setImage(Constants.Images.plusIcon.withTintColor(Constants.Colors.white,
                                                                              renderingMode: .alwaysOriginal),
@@ -346,6 +350,7 @@ final class AddDrugViewController: UIViewController {
         notificationsScrollView.bounces = false
         notificationsScrollView.isScrollEnabled = true
         notificationsScrollView.showsHorizontalScrollIndicator = false
+        notificationsScrollView.showsVerticalScrollIndicator = false
         notificationsStackView.axis = .horizontal
         notificationsStackView.spacing = 16
         notificationsStackView.contentMode = .center
@@ -525,11 +530,13 @@ extension AddDrugViewController: UICollectionViewDataSource,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch collectionView {
         case typeCollectionView:
-            return CGSize(width: 88,
-                          height: 88)
+            let widthAndHeight = view.frame.width / 4.5
+            return CGSize(width: widthAndHeight,
+                          height: widthAndHeight)
         case foodCollectionView:
-            return CGSize(width: 64,
-                          height: 64)
+            let widthAndHeight = view.frame.size.width / 6
+            return CGSize(width: widthAndHeight,
+                          height: widthAndHeight)
         default:
             return CGSize.zero
         }
@@ -638,10 +645,12 @@ extension AddDrugViewController: PickerEditedDelegate {
                          action: #selector(deleteInterval),
                          for: .touchUpInside)
         button.backgroundColor = Constants.Colors.grayBackground
-        button.contentEdgeInsets = UIEdgeInsets(top: 10, 
-                                                left: 16,
-                                                bottom: 10,
-                                                right: 16)
+        let topAndBottom = view.frame.width / 40
+        let leftAndRight = view.frame.width / 25
+        button.contentEdgeInsets = UIEdgeInsets(top: topAndBottom,
+                                                left: leftAndRight,
+                                                bottom: topAndBottom,
+                                                right: leftAndRight)
         button.layer.cornerRadius = 8
         
         intervalStackView.addArrangedSubview(button)
@@ -697,10 +706,12 @@ extension AddDrugViewController: DropDownMenuDelegate {
                          action: #selector(deleteNotification),
                          for: .touchUpInside)
         button.backgroundColor = Constants.Colors.grayBackground
-        button.contentEdgeInsets = UIEdgeInsets(top: 10, 
-                                                left: 16,
-                                                bottom: 10,
-                                                right: 16)
+        let topAndBottom = view.frame.width / 40
+        let leftAndRight = view.frame.width / 25
+        button.contentEdgeInsets = UIEdgeInsets(top: topAndBottom,
+                                                left: leftAndRight,
+                                                bottom: topAndBottom,
+                                                right: leftAndRight)
         button.layer.cornerRadius = 8
         notificationsStackView.addArrangedSubview(button)
     }

@@ -57,6 +57,9 @@ final class CustomNavigationBar: UIView {
     // MARK: Private functions
     // Setting up constaraints
     private func setupConstraints() {
+        let topOfContainer = UIScreen.main.bounds.width / 5
+        let widthOfButtons = UIScreen.main.bounds.width / 16
+        
         self.addSubview(background)
         background.snp.makeConstraints({ make in
             make.top.bottom.leading.trailing.equalToSuperview()
@@ -67,20 +70,20 @@ final class CustomNavigationBar: UIView {
                                 rightButton])
         
         leftButton.snp.makeConstraints { make in
-            make.width.height.equalTo(24)
+            make.width.height.equalTo(widthOfButtons)
             make.leading.equalTo(24)
-            make.top.equalTo(80)
+            make.top.equalTo(topOfContainer)
             make.bottom.equalTo(-16)
         }
         titleLabel.snp.makeConstraints { make in
             make.leading.equalTo(leftButton.snp.trailing).inset(-24)
             make.trailing.equalTo(rightButton.snp.leading).inset(-24)
-            make.top.equalTo(80)
+            make.centerY.equalTo(rightButton.snp.centerY)
         }
         rightButton.snp.makeConstraints { make in
-            make.width.height.equalTo(24)
+            make.width.height.equalTo(widthOfButtons)
             make.trailing.equalTo(-24)
-            make.top.equalTo(80)
+            make.top.equalTo(topOfContainer)
             make.bottom.equalTo(-16)
         }
     }

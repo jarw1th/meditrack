@@ -10,19 +10,23 @@ final class DetailedScreenViewController: UIViewController {
     // UI elements
     private let navigationBar = CustomNavigationBar()
     private let scrollView = UIScrollView()
+    private let container = UIStackView()
     
+    private let drugInfoContainer = UIStackView()
     private let drugNameLabel = UILabel()
     private let drugDescriptionLabel = UILabel()
     
+    private let scheduleContainer = UIStackView()
     private let scheduleLabel = UILabel()
     private let intervalScrollView = UIScrollView()
     private let intervalStackView = UIStackView()
     
+    private let detailsContainer = UIStackView()
     private let detailsLabel = UILabel()
     private let informationColumns = InformationColumns()
     
+    private let notificationsContainer = UIStackView()
     private let notificationsLabel = UILabel()
-    
     private let notificationsScrollView = UIScrollView()
     private let notificationsStackView = UIStackView()
     
@@ -49,92 +53,68 @@ final class DetailedScreenViewController: UIViewController {
     // MARK: Private functions
     // Setting up constraints
     private func setupConstraints() {
+        let heightOfScrolls = view.frame.size.width / 11
+        let heightOfProgress = view.frame.size.width / 5.5
+        let widthOfScreenElements = view.frame.size.width - 48
+        
         view.addSubviews([navigationBar,
                           scrollView])
+        scrollView.addSubview(container)
         
-        scrollView.addSubviews([drugNameLabel,
-                                drugDescriptionLabel])
+        container.addArrangedSubview(drugInfoContainer)
+        drugInfoContainer.addArrangedSubviews([drugNameLabel,
+                                               drugDescriptionLabel])
         
-        scrollView.addSubviews([scheduleLabel,
-                                intervalScrollView])
+        container.addArrangedSubview(scheduleContainer)
+        scheduleContainer.addArrangedSubviews([scheduleLabel,
+                                               intervalScrollView])
         intervalScrollView.addSubview(intervalStackView)
         
-        scrollView.addSubviews([detailsLabel,
-                                informationColumns])
+        container.addArrangedSubview(detailsContainer)
+        detailsContainer.addArrangedSubviews([detailsLabel,
+                                              informationColumns])
         
-        scrollView.addSubviews([notificationsLabel,
-                                notificationsScrollView])
+        container.addArrangedSubview(notificationsContainer)
+        notificationsContainer.addArrangedSubviews([notificationsLabel,
+                                                    notificationsScrollView])
         notificationsScrollView.addSubview(notificationsStackView)
         
-        scrollView.addSubview(progressView)
+        container.addArrangedSubview(progressView)
         
         navigationBar.snp.makeConstraints { make in
             make.leading.trailing.top.equalToSuperview()
         }
         scrollView.snp.makeConstraints { make in
-            make.top.equalTo(navigationBar.snp.bottom).inset(-8)
+            make.top.equalTo(navigationBar.snp.bottom).inset(-16)
             make.leading.trailing.bottom.equalToSuperview()
         }
-        
-        drugNameLabel.snp.makeConstraints { make in
-            make.width.equalTo(view.frame.size.width - 48)
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
+        container.snp.makeConstraints { make in
             make.top.equalToSuperview()
-        }
-        drugDescriptionLabel.snp.makeConstraints { make in
             make.leading.equalTo(24)
             make.trailing.equalTo(-24)
-            make.top.equalTo(drugNameLabel.snp.bottom).inset(-16)
+            make.bottom.equalTo(-64)
         }
         
-        scheduleLabel.snp.makeConstraints { make in
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
-            make.top.equalTo(drugDescriptionLabel.snp.bottom).inset(-24)
+        drugInfoContainer.snp.makeConstraints { make in
+            make.width.equalTo(widthOfScreenElements)
         }
+        
         intervalScrollView.snp.makeConstraints { make in
-            make.height.equalTo(36)
-            make.top.equalTo(scheduleLabel.snp.bottom).inset(-16)
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
+            make.height.equalTo(heightOfScrolls)
         }
         intervalStackView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalToSuperview()
         }
         
-        detailsLabel.snp.makeConstraints { make in
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
-            make.top.equalTo(scheduleLabel.snp.bottom).inset(-76)
-        }
-        informationColumns.snp.makeConstraints { make in
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
-            make.top.equalTo(detailsLabel.snp.bottom).inset(-16)
-        }
-        
-        notificationsLabel.snp.makeConstraints { make in
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
-            make.top.equalTo(informationColumns.snp.bottom).inset(-24)
-        }
         notificationsScrollView.snp.makeConstraints { make in
-            make.height.equalTo(36)
-            make.top.equalTo(notificationsLabel.snp.bottom).inset(-16)
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
+            make.height.equalTo(heightOfScrolls)
         }
         notificationsStackView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalToSuperview()
         }
         
         progressView.snp.makeConstraints { make in
-            make.height.equalTo(72)
-            make.top.equalTo(notificationsLabel.snp.bottom).inset(-76)
-            make.bottom.equalTo(-64)
-            make.leading.equalTo(24)
-            make.trailing.equalTo(-24)
+            make.height.equalTo(heightOfProgress)
         }
     }
     
@@ -156,10 +136,26 @@ final class DetailedScreenViewController: UIViewController {
         scrollView.isScrollEnabled = true
         scrollView.showsVerticalScrollIndicator = false
         
+        container.axis = .vertical
+        container.spacing = 24
+        
+        
+        drugInfoContainer.axis = .vertical
+        drugInfoContainer.spacing = 16
+        
+        scheduleContainer.axis = .vertical
+        scheduleContainer.spacing = 16
+        
+        detailsContainer.axis = .vertical
+        detailsContainer.spacing = 16
+        
+        notificationsContainer.axis = .vertical
+        notificationsContainer.spacing = 16
+        
         
         drugNameLabel.text = viewModel?.selectedDrug?.name
         drugNameLabel.font = Constants.Fonts.nunitoBold20
-        drugNameLabel.textColor = Constants.Colors.grayPrimary
+        drugNameLabel.textColor = Constants.Colors.greenAccent
         
         drugDescriptionLabel.text = viewModel?.selectedDrug?.descriptionDrug
         drugDescriptionLabel.font = Constants.Fonts.nunitoRegular12
@@ -173,6 +169,7 @@ final class DetailedScreenViewController: UIViewController {
         intervalScrollView.bounces = false
         intervalScrollView.isScrollEnabled = true
         intervalScrollView.showsHorizontalScrollIndicator = false
+        intervalScrollView.showsVerticalScrollIndicator = false
         intervalStackView.axis = .horizontal
         intervalStackView.spacing = 16
         intervalStackView.contentMode = .center
@@ -195,9 +192,14 @@ final class DetailedScreenViewController: UIViewController {
         notificationsScrollView.bounces = false
         notificationsScrollView.isScrollEnabled = true
         notificationsScrollView.showsHorizontalScrollIndicator = false
+        notificationsScrollView.showsVerticalScrollIndicator = false
         notificationsStackView.axis = .horizontal
         notificationsStackView.spacing = 16
         notificationsStackView.contentMode = .center
+        
+        
+        intervalScrollView.isHidden = viewModel?.selectedDrug?.timeInterval.isEmpty ?? true
+        notificationsScrollView.isHidden = viewModel?.selectedDrug?.notifications.isEmpty ?? true
         
     
         progressView.setup(type: viewModel?.selectedDrug?.drugType ?? .capsule,
@@ -226,10 +228,12 @@ final class DetailedScreenViewController: UIViewController {
         button.setAttributedTitle(attributedString,
                                   for: .normal)
         button.backgroundColor = Constants.Colors.grayBackground
-        button.contentEdgeInsets = UIEdgeInsets(top: 10,
-                                                left: 16,
-                                                bottom: 10,
-                                                right: 16)
+        let topAndBottom = view.frame.width / 40
+        let leftAndRight = view.frame.width / 25
+        button.contentEdgeInsets = UIEdgeInsets(top: topAndBottom,
+                                                left: leftAndRight,
+                                                bottom: topAndBottom,
+                                                right: leftAndRight)
         button.layer.cornerRadius = 8
         
         intervalStackView.addArrangedSubview(button)
@@ -245,10 +249,12 @@ final class DetailedScreenViewController: UIViewController {
         button.setAttributedTitle(attributedString,
                                   for: .normal)
         button.backgroundColor = Constants.Colors.grayBackground
-        button.contentEdgeInsets = UIEdgeInsets(top: 10,
-                                                left: 16,
-                                                bottom: 10,
-                                                right: 16)
+        let topAndBottom = view.frame.width / 40
+        let leftAndRight = view.frame.width / 25
+        button.contentEdgeInsets = UIEdgeInsets(top: topAndBottom,
+                                                left: leftAndRight,
+                                                bottom: topAndBottom,
+                                                right: leftAndRight)
         button.layer.cornerRadius = 8
         notificationsStackView.addArrangedSubview(button)
     }
