@@ -10,7 +10,25 @@ extension DurationType {
     // MARK: Functions
     // Getting string
     func getString() -> String {
-        return "\(self.getNumberString()) \(Constants.Texts.enumNotificationsminutsSub)"
+        return "\(getNumberString()) \(getTypeString())"
+    }
+    
+    // Getting int
+    func getInt() -> Int {
+        let postfix = getTypeString()
+        let numberString = getNumberString()
+        let number = Int(numberString) ?? 0
+        
+        switch postfix {
+        case "week":
+            return number
+        case "month":
+            return number * 4
+        case "year":
+            return number * 52
+        default:
+            return number
+        }
     }
     
     // MARK: Private Functions
@@ -20,5 +38,22 @@ extension DurationType {
         string.removeFirst()
         
         return string
+    }
+    
+    // Get type string
+    private func getTypeString() -> String {
+        var string = self.rawValue
+        string.removeLast()
+        
+        switch string {
+        case "w":
+            return Constants.Texts.menuDuration1Sub
+        case "m":
+            return Constants.Texts.menuDuration2Sub
+        case "y":
+            return Constants.Texts.menuDuration3Sub
+        default:
+            return string
+        }
     }
 }

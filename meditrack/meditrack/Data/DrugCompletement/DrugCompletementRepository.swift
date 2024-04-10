@@ -112,7 +112,7 @@ final class DrugCompletementRepository: DrugCompletementRepositoryProtocol {
         for drug in data {
             var startDate = drug.startDate
             let endDate = Calendar.current.date(byAdding: .weekOfYear,
-                                                value: drug.duration,
+                                                value: drug.duration.getInt(),
                                                 to: startDate) ?? Date()
             var byAdding: Calendar.Component = .day
             

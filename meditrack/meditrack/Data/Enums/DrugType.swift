@@ -13,17 +13,59 @@ extension DrugType {
         switch Locale.current.languageCode {
         case "ru":
             if number == 1 {
-                return self.rawValue
+                return "\(number) \(string())"
             } else {
-                return "\(self.rawValue)s"
+                return "\(number) \(string())"
+            }
+        case "es":
+            if number == 1 {
+                return "\(number) \(string())"
+            } else {
+                return "\(number) \(string())s"
             }
         default:
             if number == 1 {
-                return "\(number) \(self.rawValue)"
+                return "\(number) \(string())"
             } else {
-                return "\(number) \(self.rawValue)s"
+                return "\(number) \(string())s"
             }
         }
         
+    }
+    
+    // Getting string
+    func getString() -> String {
+        switch Locale.current.languageCode {
+        case "ru":
+            return string()
+        case "es":
+            return string()
+        default:
+            return string()
+        }
+        
+    }
+    
+    // MARK: Private Functions
+    // Getting localized string
+    private func string() -> String {
+        switch self {
+        case .capsule:
+            return Constants.Texts.systemCapsuleMain
+        case .tablet:
+            return Constants.Texts.systemTabletMain
+        case .drop:
+            return Constants.Texts.systemDropMain
+        case .inhale:
+            return Constants.Texts.systemInhaleMain
+        case .injection:
+            return Constants.Texts.systemInjectionMain
+        case .liquid:
+            return Constants.Texts.systeLiquidMain
+        case .powder:
+            return Constants.Texts.systemPowderMain
+        case .other:
+            return Constants.Texts.systemOtherMain
+        }
     }
 }

@@ -7,7 +7,7 @@ struct DrugInfo {
     var name: String
     var descriptionDrug: String
     var timeInterval: [Date]
-    var duration: Int // weeks
+    var duration: DurationType // weeks
     var frequency: FrequencyType
     var drugType: DrugType
     var foodType: FoodType
@@ -21,7 +21,7 @@ struct DrugInfo {
          name: String?,
          descriptionDrug: String?,
          timeInterval: [Date]?,
-         duration: Int?,
+         duration: DurationType?,
          frequency: FrequencyType?,
          drugType: DrugType?,
          foodType: FoodType?,
@@ -33,7 +33,7 @@ struct DrugInfo {
         self.name = name ?? ""
         self.descriptionDrug = descriptionDrug ?? ""
         self.timeInterval = timeInterval ?? []
-        self.duration = duration ?? 0
+        self.duration = duration ?? .w1
         self.frequency = frequency ?? .daily
         self.drugType = drugType ?? .capsule
         self.foodType = foodType ?? .noMatter
@@ -50,6 +50,7 @@ struct DrugInfo {
     init(object: DrugInfoRealm) {
         let frequency = FrequencyType(rawValue: object.frequency) ?? .daily
         let drugType = DrugType(rawValue: object.drugType) ?? .capsule
+        let duration = DurationType(rawValue: object.duration) ?? .w1
         let id = object._id.stringValue
         let timeInterval = Array(object.timeInterval)
         let foodType = FoodType(rawValue: object.foodType) ?? .noMatter
@@ -59,7 +60,7 @@ struct DrugInfo {
                   name: object.name,
                   descriptionDrug: object.descriptionDrug,
                   timeInterval: timeInterval,
-                  duration: object.duration,
+                  duration: duration,
                   frequency: frequency,
                   drugType: drugType,
                   foodType: foodType,

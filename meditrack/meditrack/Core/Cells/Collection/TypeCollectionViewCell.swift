@@ -76,7 +76,7 @@ final class TypeCollectionViewCell: UICollectionViewCell {
         
         self.backgroundColor = isSelected ? color : grayBackground
         
-        typeLabel.text = type.rawValue
+        typeLabel.text = type.getString()
         typeLabel.font = Constants.Fonts.nunitoRegular12
         typeLabel.textColor = isSelected ? white : graySecondary
         typeLabel.textAlignment = .center

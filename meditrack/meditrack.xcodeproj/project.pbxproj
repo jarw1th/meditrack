@@ -26,6 +26,7 @@
 		2101B7A42BBE9D4B001B0683 /* SwipeBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2101B7A32BBE9D4B001B0683 /* SwipeBack.swift */; };
 		2101B7A72BBEA17E001B0683 /* SwipeBackTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2101B7A62BBEA17E001B0683 /* SwipeBackTransition.swift */; };
 		211CD9652BC594D800DE4317 /* AllListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211CD9642BC594D800DE4317 /* AllListTableViewCell.swift */; };
+		211CD9682BC7021A00DE4317 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 211CD9662BC7021A00DE4317 /* Localizable.strings */; };
 		215797D62B9F9233000B190A /* AddDrugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215797D52B9F9233000B190A /* AddDrugViewController.swift */; };
 		215797D82B9F949E000B190A /* AddDrugViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215797D72B9F949E000B190A /* AddDrugViewModel.swift */; };
 		215797DA2BA044C6000B190A /* TypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215797D92BA044C6000B190A /* TypeCollectionViewCell.swift */; };
@@ -103,6 +104,9 @@
 		2101B7A32BBE9D4B001B0683 /* SwipeBack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeBack.swift; sourceTree = "<group>"; };
 		2101B7A62BBEA17E001B0683 /* SwipeBackTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeBackTransition.swift; sourceTree = "<group>"; };
 		211CD9642BC594D800DE4317 /* AllListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllListTableViewCell.swift; sourceTree = "<group>"; };
+		211CD9672BC7021A00DE4317 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		211CD9692BC7031700DE4317 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		211CD96A2BC7032B00DE4317 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		215797D52B9F9233000B190A /* AddDrugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDrugViewController.swift; sourceTree = "<group>"; };
 		215797D72B9F949E000B190A /* AddDrugViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDrugViewModel.swift; sourceTree = "<group>"; };
 		215797D92BA044C6000B190A /* TypeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -340,6 +344,7 @@
 				21F438392B9B897E004408EF /* SceneDelegate.swift */,
 				21F4388A2B9D8323004408EF /* UIKitExtensions.swift */,
 				21F438372B9B897E004408EF /* AppDelegate.swift */,
+				211CD9662BC7021A00DE4317 /* Localizable.strings */,
 				21F438402B9B8980004408EF /* Assets.xcassets */,
 			);
 			path = System;
@@ -526,6 +531,8 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
+				es,
 			);
 			mainGroup = 21F4382B2B9B897E004408EF;
 			productRefGroup = 21F438352B9B897E004408EF /* Products */;
@@ -544,6 +551,7 @@
 			files = (
 				21F438662B9B8C1E004408EF /* Nunito-SemiBold.ttf in Resources */,
 				21F438442B9B8980004408EF /* LaunchScreen.storyboard in Resources */,
+				211CD9682BC7021A00DE4317 /* Localizable.strings in Resources */,
 				21F438412B9B8980004408EF /* Assets.xcassets in Resources */,
 				21F4385E2B9B8C1E004408EF /* Nunito-ExtraBold.ttf in Resources */,
 				21F438632B9B8C1E004408EF /* Nunito-Medium.ttf in Resources */,
@@ -673,6 +681,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		211CD9662BC7021A00DE4317 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				211CD9672BC7021A00DE4317 /* en */,
+				211CD9692BC7031700DE4317 /* ru */,
+				211CD96A2BC7032B00DE4317 /* es */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		21F438422B9B8980004408EF /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -689,6 +707,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -752,6 +771,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

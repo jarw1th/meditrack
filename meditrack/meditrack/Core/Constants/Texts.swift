@@ -1,106 +1,132 @@
+import Foundation
+
 // MARK: - Texts
 extension Constants {
     // rule: (ui element)(name)(level of importancy)
     enum Texts {
         // Labels
-        static let labelRemidersMain = "Reminders"
+        static let labelRemidersMain = NSLocalizedString("labelRemidersMain", comment: "")
         
-        static let labelTodayRemidersMain = "Today reminders"
+        static let labelTodayRemidersMain = NSLocalizedString("labelTodayRemidersMain", comment: "")
         
-        static let labelTimeMain = "Time"
+        static let labelTimeMain = NSLocalizedString("labelTimeMain", comment: "")
         
-        static let labelMedicationMain = "Medication"
+        static let labelMedicationMain = NSLocalizedString("labelMedicationMain", comment: "")
         
-        static let labelTypeMain = "Type"
+        static let labelTypeMain = NSLocalizedString("labelTypeMain", comment: "")
         
-        static let labelInformationMain = "General information"
+        static let labelInformationMain = NSLocalizedString("labelInformationMain", comment: "")
         
-        static let labelTimelineMain = "Timeline & schedule"
+        static let labelTimelineMain = NSLocalizedString("labelTimelineMain", comment: "")
         
-        static let labelScheduleMain = "Schedule"
+        static let labelScheduleMain = NSLocalizedString("labelScheduleMain", comment: "")
         
-        static let labelTimepickerSub = "start"
+        static let labelNotificationsMain = NSLocalizedString("labelNotificationsMain", comment: "")
         
-        static let labelNotificationsMain = "Notifications"
+        static let labelFoodMain = NSLocalizedString("labelFoodMain", comment: "")
         
-        static let labelFoodMain = "Compatibility with food"
+        static let labelProgressMain = NSLocalizedString("labelProgressMain", comment: "")
         
-        static let labelProgressMain = "Progress"
+        static let labelProgressSub = NSLocalizedString("labelProgressSub", comment: "")
         
-        static let labelProgressSub = "You started the course:"
-        
-        static let labelDetailsMain = "Details"
+        static let labelDetailsMain = NSLocalizedString("labelDetailsMain", comment: "")
         
         // Titles
-        static let titleMedicationMain = "New Medication"
+        static let titleMedicationMain = NSLocalizedString("titleMedicationMain", comment: "")
         
-        static let titleScanmedicationMain = "Scan Medication"
+        static let titleScanmedicationMain = NSLocalizedString("titleScanmedicationMain", comment: "")
         
-        static let titleMedicationdetailsMain = "Medication Details"
+        static let titleMedicationdetailsMain = NSLocalizedString("titleMedicationdetailsMain", comment: "")
         
-        static let titleAllmedicationsMain = "All Medications"
+        static let titleAllmedicationsMain = NSLocalizedString("titleAllmedicationsMain", comment: "")
         
-        static let titleAllSub = "all"
+        static let titleAllSub = NSLocalizedString("titleAllSub", comment: "")
         
         // Buttons
-        static let buttonDoneMain = "Done"
+        static let buttonDoneMain = NSLocalizedString("buttonDoneMain", comment: "")
         
-        static let buttonBackMain = "Back"
+        static let buttonBackMain = NSLocalizedString("buttonBackMain", comment: "")
         
-        static let buttonDefaultchooseSub = "Choose"
+        static let buttonDefaultchooseSub = NSLocalizedString("buttonDefaultchooseSub", comment: "")
         
-        static let buttonAllmedicationsSub = "view all"
+        static let buttonAllmedicationsSub = NSLocalizedString("buttonAllmedicationsSub", comment: "")
         
-        static let buttonDeleteallSub = "delete all"
+        static let buttonDeleteallSub = NSLocalizedString("buttonDeleteallSub", comment: "")
         
         // Textfield
-        static let textfieldNameSub = "Name"
+        static let textfieldNameSub = NSLocalizedString("textfieldNameSub", comment: "")
         
-        static let textfieldDescriptionSub = "Description"
+        static let textfieldDescriptionSub = NSLocalizedString("textfieldDescriptionSub", comment: "")
         
         // Alerts
-        static let alertOkSub = "Ok"
+        static let alertOkSub = NSLocalizedString("alertOkSub", comment: "")
         
-        static let alertDeleteSub = "Yes"
+        static let alertDeleteSub = NSLocalizedString("alertDeleteSub", comment: "")
         
-        static let alertCancelSub = "No"
+        static let alertCancelSub = NSLocalizedString("alertCancelSub", comment: "")
         
-        static let alertTitleMain = "Please, check again medication form"
+        static let alertTitleMain = NSLocalizedString("alertTitleMain", comment: "")
         
-        static let alertFailscanMain = "Scanning not supported"
+        static let alertFailscanMain = NSLocalizedString("alertFailscanMain", comment: "")
         
-        static let alertDeleteallMain = "Are you sure that you want to delete all medications?"
+        static let alertDeleteallMain = NSLocalizedString("alertDeleteallMain", comment: "")
         
-        static let alertDeleteMain = "Are you sure that you want to delete the medication?"
+        static let alertDeleteMain = NSLocalizedString("alertDeleteMain", comment: "")
         
         // Customs
-        static let menuDoseSub = "/day"
+        static let menuDoseSub = NSLocalizedString("menuDoseSub", comment: "")
         
-        static let menuDuration1Sub = "week"
+        static let menuDuration1Sub = NSLocalizedString("menuDuration1Sub", comment: "")
         
-        static let menuDuration2Sub = "month"
+        static let menuDuration2Sub = NSLocalizedString("menuDuration2Sub", comment: "")
         
-        static let menuDuration3Sub = "year"
+        static let menuDuration3Sub = NSLocalizedString("menuDuration3Sub", comment: "")
         
-        static let dropdownDoseSub = "Dose"
+        static let dropdownDoseSub = NSLocalizedString("dropdownDoseSub", comment: "")
         
-        static let dropdownDurationSub = "Duration"
+        static let dropdownDurationSub = NSLocalizedString("dropdownDurationSub", comment: "")
         
-        static let dropdownFrequencySub = "Frequency"
+        static let dropdownFrequencySub = NSLocalizedString("dropdownFrequencySub", comment: "")
         
-        static let timepickerTimeintervalSub = "Time interval"
+        static let timepickerTimeintervalSub = NSLocalizedString("timepickerTimeintervalSub", comment: "")
         
-        static let pickerNotificationsSub = "Notifications"
+        static let pickerNotificationsSub = NSLocalizedString("pickerNotificationsSub", comment: "")
         
-        static let enumNotificationsminutsSub = "min"
+        static let enumNotificationsminutsSub = NSLocalizedString("enumNotificationsminutsSub", comment: "")
         
         // Enum strings
-        static let systemNomatterMain = "No matter"
+        static let systemNomatterMain = NSLocalizedString("systemNomatterMain", comment: "")
         
-        static let systemBeforemealMain = "Before meal"
+        static let systemBeforemealMain = NSLocalizedString("systemBeforemealMain", comment: "")
         
-        static let systemDuringmealMain = "During meal"
+        static let systemDuringmealMain = NSLocalizedString("systemDuringmealMain", comment: "")
         
-        static let systemAftermealMain = "After meal"
+        static let systemAftermealMain = NSLocalizedString("systemAftermealMain", comment: "")
+        
+        
+        static let systemCapsuleMain = NSLocalizedString("capsule", comment: "")
+        
+        static let systemTabletMain = NSLocalizedString("tablet", comment: "")
+        
+        static let systeLiquidMain = NSLocalizedString("liquid", comment: "")
+        
+        static let systemPowderMain = NSLocalizedString("powder", comment: "")
+        
+        static let systemDropMain = NSLocalizedString("drop", comment: "")
+        
+        static let systemInhaleMain = NSLocalizedString("inhale", comment: "")
+        
+        static let systemInjectionMain = NSLocalizedString("injection", comment: "")
+        
+        static let systemOtherMain = NSLocalizedString("other", comment: "")
+        
+        
+        static let systemDailyMain = NSLocalizedString("daily", comment: "")
+        
+        static let systemWeeklyMain = NSLocalizedString("weekly", comment: "")
+        
+        static let systemMonthlyMain = NSLocalizedString("monthly", comment: "")
+        
+        static let systemAnnuallyMain = NSLocalizedString("annually", comment: "")
     }
 }

@@ -98,7 +98,7 @@ extension Array {
 extension String {
     // MARK: Functions
     // Getting NotificationMinutesType enum from string
-    func getNotificationMinutesType() -> NotificationMinutesType {
+    func convertNotificationMinutesType() -> NotificationMinutesType {
         let subStringArray = self.components(separatedBy: " ")
         let subString = subStringArray.first ?? ""
         let string = "m\(subString)"
@@ -108,29 +108,36 @@ extension String {
     }
     
     // Convert string duration to number of weeks
-    func convertDuration() -> Int {
+    func convertDuration() -> DurationType {
         let postfix = self.components(separatedBy: " ").last
         let numberString = self.components(separatedBy: " ").first ?? ""
         let number = Int(numberString) ?? 0
         
         switch postfix {
         case "week":
-            return number
+            return DurationType(rawValue: "w\(number)") ?? .w1
         case "month":
-            return number * 4
+            return DurationType(rawValue: "m\(number)") ?? .w1
         case "year":
-            return number * 52
+            return DurationType(rawValue: "y\(number)") ?? .w1
         default:
-            return number
+            return .w1
         }
     }
     
     // Get dose number from string
-    func getDose() -> Int {
+    func convertDose() -> Int {
         let stringNumber = self.components(separatedBy: "/").first ?? ""
         let number = Int(stringNumber) ?? 0
         
         return number
+    }
+    
+    // Get dose number from string
+    func convertFrequency() -> FrequencyType {
+        let result = FrequencyType(rawValue: self) ?? .daily
+        
+        return result
     }
 }
 

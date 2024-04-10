@@ -1,0 +1,126 @@
+// Labels
+"labelRemidersMain" = "Reminders";  
+        
+"labelTodayRemidersMain" = "Today reminders";
+
+"labelTimeMain" = "Time";
+        
+"labelMedicationMain" = "Medication";  
+        
+"labelTypeMain" = "Type";  
+        
+"labelInformationMain" = "General information";  
+        
+"labelTimelineMain" = "Timeline & schedule";  
+        
+"labelScheduleMain" = "Schedule";  
+        
+"labelTimepickerSub" = "start";  
+        
+"labelNotificationsMain" = "Notifications";  
+        
+"labelFoodMain" = "Compatibility with food";  
+        
+"labelProgressMain" = "Progress";  
+        
+"labelProgressSub" = "You started the course:";  
+        
+"labelDetailsMain" = "Details";  
+        
+// Titles
+"titleMedicationMain" = "New Medication";  
+        
+"titleScanmedicationMain" = "Scan Medication";  
+        
+"titleMedicationdetailsMain" = "Medication Details";  
+        
+"titleAllmedicationsMain" = "All Medications";  
+        
+"titleAllSub" = "all";  
+        
+// Buttons
+"buttonDoneMain" = "Done";  
+        
+"buttonBackMain" = "Back";  
+        
+"buttonDefaultchooseSub" = "Choose";  
+        
+"buttonAllmedicationsSub" = "view all";  
+        
+"buttonDeleteallSub" = "delete all";  
+        
+// Textfield
+"textfieldNameSub" = "Name";  
+        
+"textfieldDescriptionSub" = "Description";  
+        
+// Alerts
+"alertOkSub" = "Ok";  
+        
+"alertDeleteSub" = "Yes";  
+        
+"alertCancelSub" = "No";  
+        
+"alertTitleMain" = "Please, check again medication form";  
+        
+"alertFailscanMain" = "Scanning not supported";  
+        
+"alertDeleteallMain" = "Are you sure that you want to delete all medications?";  
+        
+"alertDeleteMain" = "Are you sure that you want to delete the medication?";  
+        
+// Customs
+"menuDoseSub" = "/day";  
+        
+"menuDuration1Sub" = "week";  
+        
+"menuDuration2Sub" = "month";  
+        
+"menuDuration3Sub" = "year";  
+        
+"dropdownDoseSub" = "Dose";  
+        
+"dropdownDurationSub" = "Duration";  
+        
+"dropdownFrequencySub" = "Frequency";  
+        
+"timepickerTimeintervalSub" = "Time interval";  
+        
+"pickerNotificationsSub" = "Notifications";  
+        
+"enumNotificationsminutsSub" = "min";  
+        
+// Enum strings
+"systemNomatterMain" = "no matter";
+        
+"systemBeforemealMain" = "before meal";
+        
+"systemDuringmealMain" = "during meal";
+        
+"systemAftermealMain" = "after meal";
+
+
+"capsule" = "capsule";
+
+"tablet" = "tablet";
+
+"liquid" = "liquid";
+
+"powder" = "powder";
+
+"drop" = "drop";
+
+"inhale" = "inhale";
+
+"injection" = "injection";
+
+"other" = "other";
+
+
+"daily" = "daily";
+
+"weekly" = "weekly";
+
+"monthly" = "monthly";
+
+"annually" = "annually";

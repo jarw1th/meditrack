@@ -15,6 +15,7 @@ final class DropDownMenu: UIViewController {
     // General variables
     private var tapDelegate: DropDownMenuDelegate?
     private var elements: [String] = []
+    private var frequencyElements: [FrequencyType]?
     private var type: FieldType?
     
     // UI elements
@@ -33,6 +34,19 @@ final class DropDownMenu: UIViewController {
         
         nameLabel.text = name
         self.elements = elements
+        self.type = type
+        tapDelegate = view
+        picker.reloadAllComponents()
+    }
+    
+    convenience init(name: String,
+                     frequencyElements: [FrequencyType],
+                     type: FieldType,
+                     view: DropDownMenuDelegate) {
+        self.init()
+        
+        nameLabel.text = name
+        self.frequencyElements = frequencyElements
         self.type = type
         tapDelegate = view
         picker.reloadAllComponents()
@@ -131,11 +145,16 @@ final class DropDownMenu: UIViewController {
     @objc private func doneButtonAction() {
         dismiss(animated: true) {
             let selectedRow = self.picker.selectedRow(inComponent: 0)
-            let title = self.pickerView(self.picker, 
+            let title = self.pickerView(self.picker,
                                         titleForRow: selectedRow,
                                         forComponent: 0) ?? ""
-            self.tapDelegate?.doneButtonTapped(title,
-                                               type: self.type ?? .none)
+            if let frequencyElements = self.frequencyElements {
+                self.tapDelegate?.doneButtonTapped(frequencyElements[selectedRow].rawValue,
+                                                   type: self.type ?? .none)
+            } else {
+                self.tapDelegate?.doneButtonTapped(title,
+                                                   type: self.type ?? .none)
+            }
         }
     }
 }
@@ -150,7 +169,11 @@ extension DropDownMenu: UIPickerViewDataSource, UIPickerViewDelegate {
     // Rows
     func pickerView(_ pickerView: UIPickerView, 
                     numberOfRowsInComponent component: Int) -> Int {
-        let number = elements.count
+        guard let frequencyElements = frequencyElements else {
+            let number = elements.count
+            return number
+        }
+        let number = frequencyElements.count
         return number
     }
     
@@ -158,8 +181,13 @@ extension DropDownMenu: UIPickerViewDataSource, UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, 
                     titleForRow row: Int,
                     forComponent component: Int) -> String? {
-        let title = elements[row]
+        guard let frequencyElements = frequencyElements else {
+            let title = elements[row]
+            return title
+        }
+        let title = frequencyElements[row].getString()
         return title
+        
     }
 }
 

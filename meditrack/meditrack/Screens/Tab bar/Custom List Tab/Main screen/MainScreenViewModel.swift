@@ -97,8 +97,9 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
         formatter.dateFormat = "MMMM dd"
         let date = datesModel.dates[selectedIndex]
         let selectedDateText = formatter.string(from: date)
+        let resultText = selectedDateText.capitalized
         
-        return selectedDateText
+        return resultText
     }
     
     // Selected date index
@@ -276,7 +277,7 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
         drugInfoRepository.getDrugList().forEach { drug in
             let startDate = drug.startDate
             let endDate = Calendar.current.date(byAdding: .weekOfYear,
-                                                value: drug.duration,
+                                                value: drug.duration.getInt(),
                                                 to: startDate) ?? Date()
             let difference = Calendar.current.dateComponents([.day], 
                                                              from: startDate,
@@ -303,7 +304,7 @@ final class MainScreenViewModel: MainScreenViewModelProtocol {
             drug.timeInterval.forEach { timeInterval in
                 let startDate = drug.startDate
                 let endDate = Calendar.current.date(byAdding: .weekOfYear, 
-                                                    value: drug.duration, 
+                                                    value: drug.duration.getInt(), 
                                                     to: startDate) ?? Date()
                 let difference = Calendar.current.dateComponents([.day], 
                                                                  from: startDate,

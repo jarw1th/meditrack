@@ -600,7 +600,7 @@ extension AddDrugViewController: ButtonFieldDelegate {
                     animated: true)
         case .frequency:
             present(DropDownMenu(name: Constants.Texts.dropdownFrequencySub,
-                                 elements: viewModel?.getFrequency() ?? [],
+                                 frequencyElements: viewModel?.getFrequency() ?? [],
                                  type: type,
                                  view: self),
                     animated: true)
@@ -671,16 +671,17 @@ extension AddDrugViewController: DropDownMenuDelegate {
                           type: FieldType) {
         switch type {
         case .dose:
-            viewModel?.dose = value.getDose()
+            viewModel?.dose = value.convertDose()
             doseField.changeButtonName(value)
         case .duration:
             viewModel?.duration = value.convertDuration()
             durationField.changeButtonName(value)
         case .frequency:
-            viewModel?.frequency = FrequencyType(rawValue: value)
+            viewModel?.frequency = value.convertFrequency()
+            let value = value.convertFrequency().getString()
             frequencyField.changeButtonName(value)
         case .none:
-            let notification = value.getNotificationMinutesType()
+            let notification = value.convertNotificationMinutesType()
             viewModel?.notifications?.append(notification)
             createNotification(value)
         }

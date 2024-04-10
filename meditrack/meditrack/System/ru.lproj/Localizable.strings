@@ -1,0 +1,124 @@
+// Labels
+"labelRemidersMain" = "Напоминания";
+        
+"labelTodayRemidersMain" = "Сегодняшние напоминания";
+
+"labelTimeMain" = "Время";
+        
+"labelMedicationMain" = "Лекарство";
+        
+"labelTypeMain" = "Тип";
+        
+"labelInformationMain" = "Основная информация";
+        
+"labelTimelineMain" = "Время & график приема";
+        
+"labelScheduleMain" = "График приема";
+        
+"labelNotificationsMain" = "Уведомления";
+        
+"labelFoodMain" = "Совместимость с едой";
+        
+"labelProgressMain" = "Прогресс";
+        
+"labelProgressSub" = "Вы начали курс приема:";
+        
+"labelDetailsMain" = "Детали";
+        
+// Titles
+"titleMedicationMain" = "Новое Лекарство";
+        
+"titleScanmedicationMain" = "Отсканируйте";
+        
+"titleMedicationdetailsMain" = "Лекарство";
+        
+"titleAllmedicationsMain" = "Все Лекарства";
+        
+"titleAllSub" = "все";
+        
+// Buttons
+"buttonDoneMain" = "Готово";
+        
+"buttonBackMain" = "Назад";
+        
+"buttonDefaultchooseSub" = "Выбрать";
+        
+"buttonAllmedicationsSub" = "посмотреть все";
+        
+"buttonDeleteallSub" = "удалить все";
+        
+// Textfield
+"textfieldNameSub" = "Имя";
+        
+"textfieldDescriptionSub" = "Описание";
+        
+// Alerts
+"alertOkSub" = "Ок";
+        
+"alertDeleteSub" = "Да";
+        
+"alertCancelSub" = "Нет";
+        
+"alertTitleMain" = "Пожалуйста, проверьте заполненую форму еще раз";
+        
+"alertFailscanMain" = "Сканирование не поддерживается";
+        
+"alertDeleteallMain" = "Вы уверены, что хотите удалиь все лекарства?";
+        
+"alertDeleteMain" = "Вы уверены, что хотите удалиь лекарство?";
+        
+// Customs
+"menuDoseSub" = "/день";
+        
+"menuDuration1Sub" = "неделя";
+        
+"menuDuration2Sub" = "месяц";
+        
+"menuDuration3Sub" = "год";
+        
+"dropdownDoseSub" = "Доза";
+        
+"dropdownDurationSub" = "Длительность";
+        
+"dropdownFrequencySub" = "Частота приема";
+        
+"timepickerTimeintervalSub" = "Время";
+        
+"pickerNotificationsSub" = "Уведомления";
+        
+"enumNotificationsminutsSub" = "мин";
+        
+// Enum strings
+"systemNomatterMain" = "любое";
+        
+"systemBeforemealMain" = "до еды";
+        
+"systemDuringmealMain" = "во время";
+        
+"systemAftermealMain" = "после еды";
+
+
+"capsule" = "капсула";
+
+"tablet" = "таблетка";
+
+"liquid" = "жидкость";
+
+"powder" = "порошок";
+
+"drop" = "капля";
+
+"inhale" = "ингаляция";
+
+"injection" = "укол";
+
+"other" = "другое";
+
+
+"daily" = "каждый день";
+
+"weekly" = "каждую неделю";
+
+"monthly" = "каждый месяц";
+
+"annually" = "каждый год";

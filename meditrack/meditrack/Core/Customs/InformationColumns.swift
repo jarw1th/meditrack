@@ -93,13 +93,13 @@ final class InformationColumns: UIView {
     // MARK: Internal functions
     // Setting up delegate
     func setup(type: DrugType?,
-               duration: Int?,
+               duration: DurationType?,
                frequency: FrequencyType?,
                food: FoodType?) {
-        typeValue.text = type?.rawValue
-        durationValue.text = String(duration ?? 0)
-        frequencyValue.text = frequency?.rawValue
-        foodValue.text = food?.rawValue
+        typeValue.text = type?.getString()
+        durationValue.text = duration?.getString()
+        frequencyValue.text = frequency?.getString()
+        foodValue.text = food?.getString()
     }
 }
 

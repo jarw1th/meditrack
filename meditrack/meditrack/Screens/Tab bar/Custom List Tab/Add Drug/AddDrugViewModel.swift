@@ -12,7 +12,7 @@ protocol AddDrugViewModelProtocol {
     var timeInterval: [Date]? { get set }
     
     // Duration
-    var duration: Int? { get set }
+    var duration: DurationType? { get set }
     
     // Frequency type
     var frequency: FrequencyType? { get set }
@@ -60,7 +60,7 @@ protocol AddDrugViewModelProtocol {
     func getDurations() -> [String]
     
     // Get frequency array
-    func getFrequency() -> [String]
+    func getFrequency() -> [FrequencyType]
     
     // Get notifications array
     func getNotifications() -> [String]
@@ -104,7 +104,7 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
     var timeInterval: [Date]? = []
     
     // Duration
-    var duration: Int? = nil
+    var duration: DurationType? = nil
     
     // Frequency type
     var frequency: FrequencyType? = nil
@@ -184,19 +184,19 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
     
     // Get durations array
     func getDurations() -> [String] {
-        let durations = model.duration
+        let durations = DurationType.allCases.map { $0.getString() }
         return durations
     }
     
     // Get frequency array
-    func getFrequency() -> [String] {
-        let frequency = model.frequency
+    func getFrequency() -> [FrequencyType] {
+        let frequency = FrequencyType.allCases
         return frequency
     }
     
     // Get notifications array
     func getNotifications() -> [String] {
-        let notifications = model.notifications
+        let notifications = NotificationMinutesType.allCases.map { $0.getString() }
         return notifications
     }
     
@@ -244,6 +244,7 @@ final class AddDrugViewModel: AddDrugViewModelProtocol {
         let reason8 = (description != nil) && (description?.trimmingCharacters(in: .whitespacesAndNewlines) != "")
         
         let result = reason1 && reason2 && reason3 && reason4 && reason5 && reason6 && reason7 && reason8
+        print(reason1, reason2, reason3, reason4, reason5, reason6, reason7, reason8)
         
         return result
     }

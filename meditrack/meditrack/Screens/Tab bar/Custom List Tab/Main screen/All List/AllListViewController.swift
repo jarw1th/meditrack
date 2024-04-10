@@ -15,7 +15,6 @@ final class AllListViewController: UIViewController {
     private let navigationBar = CustomNavigationBar()
     
     private let backgroundView = UIView()
-    private let container = UIStackView()
     
     private let topBarContainer = UIStackView()
     private let medicationTitleLabel = UILabel()
@@ -48,11 +47,11 @@ final class AllListViewController: UIViewController {
         view.addSubviews([navigationBar,
                           backgroundView])
         
-        backgroundView.addSubview(container)
-        container.addArrangedSubviews([topBarContainer,
-                                       tableView])
+        backgroundView.addSubviews([topBarContainer,
+                                    tableView])
         
-        topBarContainer.addArrangedSubviews([medicationTitleLabel, allMedicationsButton])
+        topBarContainer.addArrangedSubviews([medicationTitleLabel, 
+                                             allMedicationsButton])
         
         navigationBar.snp.makeConstraints { make in
             make.leading.trailing.top.equalToSuperview()
@@ -62,11 +61,17 @@ final class AllListViewController: UIViewController {
             make.bottom.equalTo(64)
             make.top.equalTo(navigationBar.snp.bottom).inset(-12)
         }
-        container.snp.makeConstraints { make in
+        
+        topBarContainer.snp.makeConstraints { make in
             make.leading.equalTo(24)
             make.trailing.equalTo(-24)
             make.top.equalTo(topOfContainer)
+        }
+        tableView.snp.makeConstraints { make in
+            make.leading.equalTo(16)
+            make.trailing.equalTo(-16)
             make.bottom.equalTo(-64)
+            make.top.equalTo(topBarContainer.snp.bottom)
         }
     }
     
@@ -86,9 +91,6 @@ final class AllListViewController: UIViewController {
         backgroundView.backgroundColor = Constants.Colors.white
         backgroundView.layer.cornerRadius = 48
         
-        container.axis = .vertical
-        container.spacing = 0
-        
         
         topBarContainer.axis = .horizontal
         topBarContainer.spacing = 16
@@ -106,6 +108,7 @@ final class AllListViewController: UIViewController {
         allMedicationsButton.addTarget(self,
                                        action: #selector(clearData),
                                        for: .touchUpInside)
+        allMedicationsButton.titleLabel?.textAlignment = .right
     }
     
     // Clearing all data
